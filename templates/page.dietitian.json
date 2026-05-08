@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "dietitian": {
+      "type": "dietitian",
+      "settings": {
+        "dietitian_name": "Dt. Priya Sharma",
+        "dietitian_role": "M.Sc. Clinical Nutrition · 8+ Years Experience",
+        "whatsapp_number": "9999988888"
+      }
+    }
+  },
+  "order": ["dietitian"]
+}

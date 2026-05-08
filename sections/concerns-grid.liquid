@@ -1,0 +1,157 @@
+<div class="concerns-grid" style="background-color: {{ section.settings.bg_color }};">
+  <div class="concerns-grid__header">
+    {% if section.settings.title != blank %}
+      <h2 class="concerns-grid__title">{{ section.settings.title }}</h2>
+    {% endif %}
+    {% if section.settings.subtitle != blank %}
+      <p class="concerns-grid__subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+
+  <div class="concerns-grid__items">
+    {% for block in section.blocks %}
+      <a href="{{ block.settings.link }}" class="concern-card">
+        <div class="concern-card__image-wrapper">
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 300 | image_tag: loading: 'lazy' }}
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        </div>
+        <div class="concern-card__label">
+          {{ block.settings.title }}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .concerns-grid {
+    padding: 4rem 5%;
+  }
+  .concerns-grid__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  .concerns-grid__title {
+    font-size: 2rem;
+    color: #1a4f44;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  .concerns-grid__subtitle {
+    color: #666;
+    font-size: 1rem;
+  }
+  .concerns-grid__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+  }
+  .concern-card {
+    display: block;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    text-decoration: none;
+    background-color: #f5f5f5;
+    transition: transform 0.3s;
+  }
+  .concern-card:hover {
+    transform: translateY(-5px);
+  }
+  .concern-card__image-wrapper {
+    width: 100%;
+    padding-top: 100%; /* 1:1 Aspect Ratio */
+    position: relative;
+  }
+  .concern-card__image-wrapper img,
+  .concern-card__image-wrapper svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .concern-card__image-wrapper svg {
+    background-color: #e0e0e0;
+  }
+  .concern-card__label {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1a4f44;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Concerns Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop by concerns"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Right product for your specific needs"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "concern",
+      "name": "Concern",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Immunity"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Concerns Grid",
+      "blocks": [
+        { "type": "concern" },
+        { "type": "concern" },
+        { "type": "concern" },
+        { "type": "concern" },
+        { "type": "concern" },
+        { "type": "concern" }
+      ]
+    }
+  ]
+}
+{% endschema %}

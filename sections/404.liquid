@@ -1,0 +1,100 @@
+{% comment %}
+  This section is used in the 404 template to render page shown when customers
+  enter an invalid store URL.
+
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/404
+{% endcomment %}
+
+<div class="not-found-wrapper fade-up-element">
+  <div class="not-found-content">
+    <div class="not-found-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#1a4f44" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+    </div>
+    <h1 class="not-found-title">Page Not Found</h1>
+    <p class="not-found-text">The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+    <a href="{{ routes.root_url }}" class="button-primary">Return to Homepage</a>
+  </div>
+</div>
+
+{% stylesheet %}
+  .not-found-wrapper {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5%;
+    text-align: center;
+    background: #fdfdfd;
+  }
+  .not-found-content {
+    max-width: 600px;
+    padding: 4rem;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.05);
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .not-found-content:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+  }
+  .not-found-icon {
+    margin-bottom: 2rem;
+    animation: floatingIcon 3s ease-in-out infinite;
+  }
+  .not-found-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #1a4f44;
+    margin-bottom: 1rem;
+    letter-spacing: -1px;
+  }
+  .not-found-text {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+  .button-primary {
+    display: inline-block;
+    background-color: #f47f20;
+    color: #ffffff;
+    padding: 16px 40px;
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 1.1rem;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(244, 127, 32, 0.3);
+  }
+  .button-primary:hover {
+    background-color: #d16b18;
+    transform: translateY(-3px);
+    box-shadow: 0 15px 25px rgba(244, 127, 32, 0.4);
+  }
+  
+  @keyframes floatingIcon {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .not-found-content {
+      padding: 3rem 2rem;
+    }
+    .not-found-title {
+      font-size: 2.2rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.404",
+  "settings": []
+}
+{% endschema %}

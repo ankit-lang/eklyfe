@@ -1,0 +1,144 @@
+<div class="tf-bar" style="background: {{ section.settings.bg_color }};">
+  <div class="tf-bar__inner">
+    {% for block in section.blocks %}
+      <div class="tf-item">
+        <div class="tf-item__icon">
+          {% if block.settings.icon != blank %}
+            {{ block.settings.icon | image_url: width: 56 | image_tag: loading: 'lazy' }}
+          {% else %}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          {% endif %}
+        </div>
+        <div class="tf-item__text">
+          <strong>{{ block.settings.title }}</strong>
+          {% if block.settings.subtitle != blank %}
+            <span>{{ block.settings.subtitle }}</span>
+          {% endif %}
+        </div>
+      </div>
+      {% unless forloop.last %}
+        <div class="tf-divider"></div>
+      {% endunless %}
+    {% endfor %}
+  </div>
+</div>
+
+{% stylesheet %}
+  .tf-bar {
+    padding: 2.25rem 5%;
+    border-top: 1px solid rgba(26,79,68,0.08);
+    border-bottom: 1px solid rgba(26,79,68,0.08);
+  }
+  .tf-bar__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .tf-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex: 1;
+    min-width: 180px;
+    padding: 0.5rem 1rem;
+    border-radius: 12px;
+    transition: background 0.3s;
+  }
+  .tf-item:hover { background: rgba(26,79,68,0.04); }
+  .tf-item__icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(26,79,68,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #1a4f44;
+    transition: background 0.3s;
+  }
+  .tf-item:hover .tf-item__icon { background: #1a4f44; color: #fff; }
+  .tf-item__icon svg, .tf-item__icon img {
+    width: 22px;
+    height: 22px;
+  }
+  .tf-item__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .tf-item__text strong {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #111;
+  }
+  .tf-item__text span {
+    font-size: 0.8rem;
+    color: #777;
+  }
+  .tf-divider {
+    width: 1px;
+    height: 40px;
+    background: #e0e0e0;
+    flex-shrink: 0;
+  }
+  @media screen and (max-width: 768px) {
+    .tf-divider { display: none; }
+    .tf-bar__inner { justify-content: flex-start; gap: 0.5rem; }
+    .tf-item { min-width: 140px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trust Features",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f4f9f7"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "100% Ayurvedic"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Pure, natural ingredients"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Features",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "100% Ayurvedic", "subtitle": "Pure, natural ingredients" } },
+        { "type": "feature", "settings": { "title": "Doctor Approved", "subtitle": "Recommended by experts" } },
+        { "type": "feature", "settings": { "title": "GMP Certified Labs", "subtitle": "Manufactured to the highest standard" } },
+        { "type": "feature", "settings": { "title": "1 Million+ Customers", "subtitle": "Trusted across India" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

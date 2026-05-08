@@ -1,0 +1,247 @@
+{% comment %}
+  EKLYFE Premium Product Page Template
+  Features: Inner Pan Zoom, Tailwind UI, Custom Variant Selector
+{% endcomment %}
+
+{% assign current_variant = product.selected_or_first_available_variant %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 product-section" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}">
+  
+  <div class="flex flex-col lg:flex-row gap-12">
+    
+    <div class="w-full lg:w-1/2 flex gap-4 fade-in relative">
+      
+      <div class="w-24 flex flex-col gap-3 overflow-y-auto h-[500px] scrollbar-hide py-1">
+        {% for image in product.images %}
+          <button type="button" class="thumb-btn border-2 {% if forloop.first %}border-brand-green{% else %}border-transparent{% endif %} rounded-md overflow-hidden transition-all duration-200" onclick="changeImage('{{ image | img_url: 'master' }}', this)">
+            <img src="{{ image | img_url: 'compact' }}" alt="{{ image.alt | escape }}" class="w-full h-auto object-cover {% if forloop.first %}opacity-100{% else %}opacity-70{% endif %} hover:opacity-100">
+          </button>
+        {% endfor %}
+      </div>
+
+      <div class="flex-1 relative">
+        {% if product.tags contains 'Best Seller' %}
+          <span class="absolute top-4 left-0 z-10 bg-[#5c4033] text-white text-xs font-bold px-3 py-1 uppercase tracking-wide rounded-r-md shadow-sm">Best Seller</span>
+        {% endif %}
+        
+        <div 
+          id="zoom-container" 
+          class="w-full h-[500px] bg-gray-50 relative shadow-sm border border-gray-100 rounded-md overflow-hidden cursor-crosshair transition-all"
+          onmousemove="handleZoom(event)" 
+          onmouseenter="enterZoom()" 
+          onmouseleave="leaveZoom()"
+        >
+          <img 
+            id="main-product-image" 
+            src="{{ product.featured_image | img_url: 'master' }}" 
+            alt="{{ product.title | escape }}" 
+            class="w-full h-full object-contain transition-opacity duration-300 pointer-events-none"
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="w-full lg:w-1/2 flex flex-col fade-in" style="animation-delay: 0.1s;">
+      
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-tight">{{ product.title }}</h1>
+      
+      <div class="flex items-center gap-4 mb-6">
+        <div class="flex items-center text-yellow-400">
+          {% for i in (1..5) %}
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="text-gray-600 mb-6 leading-relaxed text-sm">
+        {{ product.description }}
+      </div>
+
+      <div class="product-form mt-auto">
+        {% form 'product', product, id: "add-to-cart-form" %}
+          
+          {% unless product.has_only_default_variant %}
+            <div class="mb-8">
+              <h3 class="text-lg font-semibold text-gray-900 mb-4">Choose Your Pack</h3>
+              <div class="space-y-3">
+                {% for variant in product.variants %}
+                  <label class="variant-label relative flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors shadow-sm {% if variant == current_variant %}border-brand-green bg-brand-light{% else %}border-gray-200 hover:border-gray-300 hover:bg-gray-50{% endif %}" onclick="updateVariantSelection(this)">
+                    
+                    <div class="flex items-center">
+                      <input type="radio" name="id" value="{{ variant.id }}" class="h-4 w-4 text-brand-green border-gray-300 focus:ring-brand-green" {% if variant == current_variant %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
+                      <div class="ml-4">
+                        <span class="block text-sm font-bold text-gray-900">
+                          {{ variant.title }}
+                          {% if variant.compare_at_price > variant.price %}
+                            <span class="bg-brand-green text-white text-xs px-2 py-0.5 rounded ml-2">SALE</span>
+                          {% endif %}
+                        </span>
+                        {% unless variant.available %}
+                          <span class="block text-xs text-red-500 mt-1">Out of Stock</span>
+                        {% endunless %}
+                      </div>
+                    </div>
+                    
+                    <div class="text-right">
+                      <span class="block text-lg font-bold text-gray-900">{{ variant.price | money }}</span>
+                      {% if variant.compare_at_price > variant.price %}
+                        <span class="block text-xs text-gray-500 line-through">{{ variant.compare_at_price | money }}</span>
+                      {% endif %}
+                    </div>
+
+                  </label>
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+            <div class="mb-8 flex items-center gap-4">
+               <span class="text-2xl font-bold text-gray-900">{{ current_variant.price | money }}</span>
+               {% if current_variant.compare_at_price > current_variant.price %}
+                  <span class="text-lg text-gray-500 line-through">{{ current_variant.compare_at_price | money }}</span>
+               {% endif %}
+            </div>
+          {% endunless %}
+
+          <div class="flex gap-4">
+            <div class="flex items-center border border-gray-300 rounded-md bg-white w-32">
+              <button type="button" class="w-10 h-10 leading-10 text-gray-600 hover:text-gray-900 transition-colors focus:outline-none" onclick="updateQuantity(-1)">-</button>
+              <input type="number" id="qty" name="quantity" value="1" min="1" class="w-12 h-10 text-center border-none focus:ring-0 text-gray-900 font-medium" readonly>
+              <button type="button" class="w-10 h-10 leading-10 text-gray-600 hover:text-gray-900 transition-colors focus:outline-none" onclick="updateQuantity(1)">+</button>
+            </div>
+            
+            <button type="submit" name="add" class="flex-1 bg-brand-green hover:bg-[#133023] text-white font-bold py-3 px-8 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 flex justify-center items-center gap-2" {% unless current_variant.available %}disabled{% endunless %}>
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+              <span id="add-to-cart-text">{% if current_variant.available %}ADD TO CART{% else %}SOLD OUT{% endif %}</span>
+            </button>
+          </div>
+          
+          <div class="mt-4">
+            {{ form | payment_button }}
+          </div>
+
+        {% endform %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Base brand colors for tailwind extension within liquid */
+  .bg-brand-green { background-color: #1b4332; }
+  .text-brand-green { color: #1b4332; }
+  .border-brand-green { border-color: #1b4332; }
+  .bg-brand-light { background-color: #e8f5e9; }
+  
+  /* Animations & Utilities */
+  .fade-in { animation: fadeIn 0.5s ease-in; }
+  @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Hide native input styling for number field */
+  input[type="number"]::-webkit-inner-spin-button, 
+  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+</style>
+
+<script>
+  // --- 1. Modern Inner Pan Zoom Functionality ---
+  function handleZoom(e) {
+    const container = e.currentTarget;
+    // Calculate mouse position as a percentage
+    const x = (e.offsetX / container.offsetWidth) * 100;
+    const y = (e.offsetY / container.offsetHeight) * 100;
+    
+    // Move the background image
+    container.style.backgroundPosition = `${x}% ${y}%`;
+  }
+
+  function enterZoom() {
+    const container = document.getElementById('zoom-container');
+    const img = document.getElementById('main-product-image');
+    
+    // Set the background image to the current source and zoom in (e.g., 200%)
+    container.style.backgroundImage = `url('${img.src}')`;
+    container.style.backgroundSize = '200%';
+    container.style.backgroundRepeat = 'no-repeat';
+    
+    // Hide the original HTML image tag smoothly
+    img.style.opacity = '0';
+  }
+
+  function leaveZoom() {
+    const container = document.getElementById('zoom-container');
+    const img = document.getElementById('main-product-image');
+    
+    // Remove background and bring back the original image
+    container.style.backgroundImage = 'none';
+    img.style.opacity = '1';
+  }
+
+  // --- 2. Image Gallery Functionality ---
+  function changeImage(newSrc, btnElement) {
+    const mainImg = document.getElementById('main-product-image');
+    const container = document.getElementById('zoom-container');
+    
+    mainImg.style.opacity = '0.5'; // Quick fade effect
+    
+    setTimeout(() => {
+        mainImg.src = newSrc;
+        mainImg.style.opacity = '1';
+        // Update background immediately if hovering while clicking
+        if (container.style.backgroundImage !== 'none' && container.style.backgroundImage !== '') {
+            container.style.backgroundImage = `url('${newSrc}')`;
+        }
+    }, 150);
+
+    // Update active state on thumbnails
+    const btns = document.querySelectorAll('.thumb-btn');
+    btns.forEach(btn => {
+        btn.classList.remove('border-brand-green');
+        btn.classList.add('border-transparent');
+        btn.querySelector('img').classList.replace('opacity-100', 'opacity-70');
+    });
+    
+    btnElement.classList.remove('border-transparent');
+    btnElement.classList.add('border-brand-green');
+    btnElement.querySelector('img').classList.replace('opacity-70', 'opacity-100');
+  }
+
+  // --- 3. Dynamic Variant UI Updater ---
+  function updateVariantSelection(element) {
+    // Reset all labels
+    document.querySelectorAll('.variant-label').forEach(label => {
+      label.classList.remove('border-brand-green', 'bg-brand-light');
+      label.classList.add('border-gray-200');
+    });
+    // Highlight selected
+    element.classList.remove('border-gray-200');
+    element.classList.add('border-brand-green', 'bg-brand-light');
+  }
+
+  // --- 4. Quantity Selector ---
+  function updateQuantity(change) {
+    const input = document.getElementById('qty');
+    let current = parseInt(input.value);
+    let newVal = current + change;
+    if (newVal >= 1) {
+        input.value = newVal;
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Custom Product Section",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Custom Product Section"
+    }
+  ]
+}
+{% endschema %}

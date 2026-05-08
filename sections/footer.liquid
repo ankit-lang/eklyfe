@@ -1,0 +1,159 @@
+<footer class="site-footer">
+  <div class="site-footer__content">
+    <div class="site-footer__logo-info">
+      {% if section.settings.logo != blank %}
+        {{ section.settings.logo | image_url: width: 150 | image_tag: alt: shop.name, class: 'site-footer__logo' }}
+      {% else %}
+        <h2 class="site-footer__title">{{ shop.name }}</h2>
+      {% endif %}
+      <p class="site-footer__desc">
+        Bringing the best of nature to you.<br>
+        100% natural, safe, and effective.
+      </p>
+    </div>
+
+    <div class="site-footer__links-block">
+      <h4 class="site-footer__heading">Quick Links</h4>
+      <div class="site-footer__links">
+        {% for link in section.settings.menu.links %}
+          {{ link.title | link_to: link.url }}
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="site-footer__business-info">
+      <h4 class="site-footer__heading">Business Information</h4>
+      <ul>
+        <li><strong>Full Registered Business Name:</strong> Agada Pharmacy Private Limited</li>
+        <li><strong>Brand Name:</strong> Eklyfe</li>
+        <li><strong>Brand Address:</strong> J 1203, PIONEER PARK, SECTOR-61, GURGAON-122005</li>
+        <li><strong>GST Number:</strong> 06ABECA7579A1ZQ</li>
+        <li><strong>Email:</strong> <a href="mailto:info.agadapharmacy@gmail.com">info.agadapharmacy@gmail.com</a></li>
+        <li><strong>Refund/Return Policy:</strong> NA</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <div class="site-footer__copyright">
+      &copy; {{ 'now' | date: '%Y' }} Eklyfe (Agada Pharmacy Pvt Ltd). All rights reserved.
+    </div>
+
+    <div class="site-footer__payment">
+      {% if section.settings.show_payment_icons %}
+        {% for type in shop.enabled_payment_types %}
+          {{ type | payment_type_svg_tag }}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% stylesheet %}
+  .site-footer {
+    background-color: #f9f9f9;
+    padding: 4rem 5% 2rem;
+    border-top: 1px solid #e0e0e0;
+    color: #333;
+    font-size: 0.9rem;
+  }
+  .site-footer__content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+  .site-footer__logo-info,
+  .site-footer__links-block,
+  .site-footer__business-info {
+    flex: 1;
+    min-width: 250px;
+  }
+  .site-footer__logo {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 1rem;
+  }
+  .site-footer__title {
+    color: #1a4f44;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .site-footer__heading {
+    color: #1a4f44;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  .site-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .site-footer__links a {
+    text-decoration: none;
+    color: #555;
+    transition: color 0.3s;
+  }
+  .site-footer__links a:hover {
+    color: #f47f20;
+  }
+  .site-footer__business-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .site-footer__business-info a {
+    color: #f47f20;
+    text-decoration: none;
+  }
+  .site-footer__business-info a:hover {
+    text-decoration: underline;
+  }
+  .site-footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-top: 2rem;
+    border-top: 1px solid #ddd;
+    gap: 1rem;
+  }
+  .site-footer__payment {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .site-footer__payment svg {
+    width: 38px;
+    height: 24px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.footer",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "t:labels.menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "t:labels.show_payment_icons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

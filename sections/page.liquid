@@ -1,0 +1,270 @@
+{% comment %}
+  Premium page layout. For the "About Us" page, Shopify uses page.about-us.json.
+  This template handles Privacy Policy, Contact, and other standard pages.
+{% endcomment %}
+
+<div class="premium-page">
+
+  <!-- HERO -->
+  <div class="premium-page__hero">
+    <div class="premium-page__hero-inner">
+      <span class="premium-page__eyebrow reveal-word">{{ template.suffix | default: 'page' | capitalize }}</span>
+      <h1 class="premium-page__title reveal-word">{{ page.title }}</h1>
+      <div class="premium-page__divider"></div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="premium-page__body">
+    <div class="premium-page__content rte reveal-word">
+      {{ page.content }}
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const els = document.querySelectorAll('.reveal-word');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('is-revealed'), i * 100);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    els.forEach(el => io.observe(el));
+  });
+</script>
+
+{% stylesheet %}
+  /* ─── Reveal ── */
+  .reveal-word {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal-word.is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── Page Layout ── */
+  .premium-page {
+    min-height: 70vh;
+  }
+
+  .premium-page__hero {
+    background: linear-gradient(160deg, #1a4f44 0%, #0d2b25 100%);
+    padding: 8rem 5% 6rem;
+    text-align: center;
+    clip-path: ellipse(100% 100% at 50% 0%);
+    margin-bottom: 5rem;
+  }
+  .premium-page__hero-inner {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .premium-page__eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: rgba(244, 127, 32, 0.9);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .premium-page__title {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -2px;
+    margin: 0 0 3rem;
+    line-height: 1.05;
+  }
+  .premium-page__divider {
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(90deg, #f47f20, #fbb46a);
+    border-radius: 2px;
+    margin: 0 auto;
+  }
+
+  /* ─── Content ── */
+  .premium-page__body {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 5% 8rem;
+  }
+  .premium-page__content {
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: #444;
+  }
+
+  /* ─── RTE Typography ── */
+  .rte h1, .rte h2, .rte h3, .rte h4 {
+    color: #1a4f44;
+    font-weight: 800;
+    margin-top: 3.5rem;
+    margin-bottom: 1.2rem;
+    letter-spacing: -0.5px;
+  }
+  .rte h2 { font-size: 2rem; }
+  .rte h3 { font-size: 1.5rem; }
+  .rte h4 { font-size: 1.2rem; }
+  .rte p { margin-bottom: 1.5rem; }
+  .rte ul, .rte ol {
+    padding-left: 2rem;
+    margin-bottom: 2rem;
+  }
+  .rte li {
+    margin-bottom: 0.8rem;
+    padding-left: 0.5rem;
+  }
+  .rte a {
+    color: #f47f20;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(244, 127, 32, 0.3);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    transition: all 0.3s;
+  }
+  .rte a:hover {
+    color: #d16b18;
+    text-decoration-color: #d16b18;
+  }
+  .rte strong {
+    color: #222;
+    font-weight: 800;
+  }
+  .rte blockquote {
+    border-left: 4px solid #f47f20;
+    margin: 2rem 0;
+    padding: 1.5rem 2rem;
+    background: #f9f5f0;
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: #555;
+    font-size: 1.15rem;
+  }
+  .rte img {
+    max-width: 100%;
+    border-radius: 16px;
+    margin: 2.5rem 0;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  }
+  .rte hr {
+    border: none;
+    height: 1px;
+    background: #eee;
+    margin: 3rem 0;
+  }
+
+  @media screen and (max-width: 768px) {
+    .premium-page__hero {
+      padding: 5rem 5% 4rem;
+      clip-path: none;
+    }
+    .premium-page__title { font-size: 2.5rem; }
+  }
+
+  .page-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 5% 6rem;
+  }
+  
+  .page-header {
+    text-align: center;
+    padding: 6rem 0 4rem;
+    border-bottom: 1px solid #eaeaea;
+    margin-bottom: 4rem;
+  }
+  
+  .page-title {
+    font-size: 3.5rem;
+    color: #1a4f44;
+    font-weight: 900;
+    margin: 0;
+    letter-spacing: -1px;
+  }
+  
+  .page-content {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: #444;
+  }
+  
+  /* Rich Text Editor Styling for Shopify Pages */
+  .rte h1, .rte h2, .rte h3, .rte h4 {
+    color: #1a4f44;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+  }
+  
+  .rte h2 {
+    font-size: 2rem;
+  }
+  
+  .rte h3 {
+    font-size: 1.5rem;
+  }
+  
+  .rte p {
+    margin-bottom: 1.5rem;
+  }
+  
+  .rte ul, .rte ol {
+    margin-bottom: 2rem;
+    padding-left: 2rem;
+  }
+  
+  .rte li {
+    margin-bottom: 0.8rem;
+  }
+  
+  .rte a {
+    color: #f47f20;
+    text-decoration: underline;
+    text-decoration-color: rgba(244, 127, 32, 0.3);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    transition: all 0.3s ease;
+  }
+  
+  .rte a:hover {
+    color: #d16b18;
+    text-decoration-color: #d16b18;
+  }
+  
+  .rte img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 2rem 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  
+  @media screen and (max-width: 768px) {
+    .page-header {
+      padding: 4rem 0 3rem;
+    }
+    .page-title {
+      font-size: 2.5rem;
+    }
+    .page-content {
+      font-size: 1.05rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:general.page",
+  "settings": []
+}
+{% endschema %}

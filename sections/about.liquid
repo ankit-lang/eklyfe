@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story — eklyfe</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Playfair Display + DM Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <!-- Splitting.js for char-level text animation -->
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css" />
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+
+  <!-- AOS — Animate On Scroll -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body:    ['"DM Sans"', 'sans-serif'],
+          },
+          colors: {
+            cream:  '#F9F5EE',
+            green:  { DEFAULT: '#2D5016', light: '#3a6b1e', sage: '#6B8F4E' },
+            gold:   { DEFAULT: '#C8A96E', light: '#dfc08a' },
+            dark:   '#1A1A1A',
+            muted:  '#5C5C5C',
+            border: '#DDD8CC',
+          },
+          backgroundImage: {
+            'noise': "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")",
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-family: 'DM Sans', sans-serif; }
+    body { background: #fff; color: #1A1A1A; overflow-x: hidden; cursor: none; }
+
+    /* Custom cursor */
+    #cursor {
+      width: 12px; height: 12px;
+      background: #C8A96E;
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.3s, height 0.3s, background 0.3s;
+      mix-blend-mode: multiply;
+    }
+    #cursor-ring {
+      width: 40px; height: 40px;
+      border: 1.5px solid rgba(200,169,110,0.5);
+      border-radius: 50%;
+      position: fixed; top: 0; left: 0;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.18s ease, width 0.3s, height 0.3s;
+    }
+    body:hover #cursor { opacity: 1; }
+    a:hover ~ #cursor, button:hover ~ #cursor { width: 24px; height: 24px; }
+
+    /* Lenis */
+    html.lenis { height: auto; }
+    .lenis.lenis-smooth { scroll-behavior: auto; }
+    .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+    /* Splitting char animation */
+    .split-text .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(60px) rotate(4deg);
+    }
+
+    /* Horizontal marquee */
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: marquee 18s linear infinite; }
+
+    /* Parallax layers */
+    .parallax-slow { will-change: transform; }
+
+    /* Image hover zoom */
+    .img-zoom { overflow: hidden; }
+    .img-zoom img { transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94); }
+    .img-zoom:hover img { transform: scale(1.06); }
+
+    /* Card hover lift */
+    .card-lift {
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .card-lift:hover {
+      box-shadow: 0 20px 50px rgba(45,80,22,0.15);
+      transform: translateY(-6px);
+    }
+
+    /* Green highlight underline */
+    .highlight-underline {
+      position: relative;
+      display: inline-block;
+    }
+    .highlight-underline::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -3px;
+      width: 0; height: 3px;
+      background: #C8A96E;
+      transition: width 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .highlight-underline.is-visible::after { width: 100%; }
+
+    /* Noise overlay */
+    .noise-overlay {
+      pointer-events: none;
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    /* Pill tag */
+    .pill { border-radius: 999px; }
+
+    /* Section divider wave */
+    .wave-divider svg { display: block; }
+
+    /* Scroll progress bar */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, #2D5016, #C8A96E);
+      z-index: 1000; width: 0%; transition: width 0.1s;
+    }
+
+    /* Floating leaf particles */
+    .leaf-particle {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: rgba(107,143,78,0.3);
+      animation: floatUp 6s ease-in infinite;
+    }
+    @keyframes floatUp {
+      0%   { opacity: 0; transform: translateY(0) scale(0.5); }
+      20%  { opacity: 1; }
+      100% { opacity: 0; transform: translateY(-200px) translateX(40px) scale(1.2); }
+    }
+
+    /* Smooth section transitions */
+    section { position: relative; }
+  </style>
+</head>
+
+<body class="font-body">
+
+  <!-- Progress bar -->
+  <div id="progress-bar"></div>
+
+  <!-- Custom cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+
+  <!-- ══════════════════════════════════════════
+       1. HERO
+  ══════════════════════════════════════════ -->
+  <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-green">
+
+    <!-- Animated gradient bg -->
+    <div class="absolute inset-0 bg-gradient-to-br from-green via-green-light to-[#1a2e0d] opacity-95"></div>
+    <div class="noise-overlay"></div>
+
+    <!-- Floating particles -->
+    <div id="hero-particles" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+
+    <!-- Decorative circle -->
+    <div class="absolute right-[-15vw] top-[-15vw] w-[60vw] h-[60vw] rounded-full border border-white/5"></div>
+    <div class="absolute right-[-10vw] top-[-10vw] w-[50vw] h-[50vw] rounded-full border border-white/5"></div>
+
+    <!-- Hero image (optional bg) -->
+    <div class="absolute inset-0">
+      <img src="{{ 'aboutbanner.png' | asset_url }}" alt="" class="w-full h-full object-cover opacity-20 mix-blend-luminosity">
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <p class="text-gold font-body text-xs tracking-[0.3em] uppercase mb-6 opacity-0" id="hero-eyebrow">— Our Story</p>
+
+      <h1 class="font-display text-white leading-tight mb-8 opacity-0" id="hero-title"
+          style="font-size: clamp(42px, 7vw, 88px);">
+        Towards a <em class="text-gold">better you,</em><br>everyday
+      </h1>
+
+      <div class="max-w-2xl mx-auto opacity-0" id="hero-quote">
+        <blockquote class="font-display italic text-white/75 leading-relaxed border-l-2 border-gold pl-5 text-left"
+                    style="font-size: clamp(15px,1.8vw,19px);">
+          "eklyfe was born from a deeply personal experience — a reminder that your wellness should never be a compromise."
+        </blockquote>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0" id="scroll-hint">
+        <span class="text-white/40 text-[10px] tracking-[0.2em] uppercase font-body">Scroll</span>
+        <div class="w-px h-12 bg-gradient-to-b from-gold to-transparent"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       MARQUEE STRIP
+  ══════════════════════════════════════════ -->
+  <div class="bg-gold py-3 overflow-hidden">
+    <div class="marquee-track flex gap-12 whitespace-nowrap" style="width: max-content;">
+      <!-- duplicate for seamless loop -->
+      <template id="marquee-item">
+        <span class="font-display italic text-green text-sm">Clean Formulations</span>
+        <span class="text-green/40 mx-4">✦</span>
+        <span class="font-display italic text-green text-sm">Transparent Labels</span>
+        <span class="text-green/40 mx-4">✦</span>
+        <span class="font-display italic text-green text-sm">Real Results</span>
+        <span class="text-green/40 mx-4">✦</span>
+        <span class="font-display italic text-green text-sm">Ayurveda + Science</span>
+        <span class="text-green/40 mx-4">✦</span>
+        <span class="font-display italic text-green text-sm">100% Vegan</span>
+        <span class="text-green/40 mx-4">✦</span>
+      </template>
+    </div>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       2. THE PROBLEM
+  ══════════════════════════════════════════ -->
+  <section class="py-24 bg-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Text -->
+        <div data-aos="fade-right" data-aos-duration="900">
+          <span class="text-green-sage text-[10px] font-semibold tracking-[0.3em] uppercase block mb-4">— The Problem</span>
+          <h2 class="font-display font-bold leading-tight mb-6 text-dark"
+              style="font-size: clamp(30px,4vw,52px);">
+            It's hard to trust<br>supplement brands<br><span class="text-green">today.</span>
+          </h2>
+          <p class="text-muted text-[15px] leading-relaxed mb-4">
+            We noticed that the supplement world was crowded — with products relying on harsh chemicals, making unrealistic promises, or simply ignoring the whole-person nature of true health.
+          </p>
+          <p class="text-muted text-[15px] leading-relaxed mb-4">
+            You take it for a few days or weeks. Then you stop. And the next time, you have trust issues. So you don't start again.
+          </p>
+          <p class="text-dark text-[15px] leading-relaxed font-medium">
+            Because the truth is — <strong class="text-green">a lot of supplements don't work the way you expect them to.</strong>
+          </p>
+        </div>
+
+        <!-- Image -->
+        <div class="img-zoom rounded-2xl shadow-2xl overflow-hidden aspect-[4/3] bg-border" data-aos="fade-left" data-aos-duration="900" data-aos-delay="150">
+          <img src="{{ 'capsule.png' | asset_url }}"  alt="Colourful supplement pills" class="w-full h-full object-cover">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       3. THE PROMISE
+  ══════════════════════════════════════════ -->
+  <section class="py-24 bg-cream overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Pillars -->
+        <div data-aos="fade-right" data-aos-duration="800">
+          <span class="text-green-sage text-[10px] font-semibold tracking-[0.3em] uppercase block mb-4">— The eklyfe Promise</span>
+          <div class="space-y-1 mb-6">
+            <p class="font-display font-bold text-dark leading-snug" style="font-size: clamp(26px,3.5vw,42px);">Clean formulations</p>
+            <p class="font-display font-bold text-dark leading-snug" style="font-size: clamp(26px,3.5vw,42px);">Transparent labels</p>
+            <p class="font-display font-bold text-dark leading-snug" style="font-size: clamp(26px,3.5vw,42px);">Real results</p>
+          </div>
+          <div class="w-12 h-1 bg-gold mb-8 rounded-full"></div>
+          <!-- Stat box -->
+          <div class="inline-flex items-baseline gap-3 border border-border rounded-xl px-6 py-4 bg-white shadow-sm card-lift">
+            <span id="stat-counter" class="font-display font-bold text-green" style="font-size:38px;">0K+</span>
+            <span class="text-muted text-[13px] leading-snug max-w-[180px]">people have already experienced what cleaner supplements feel like</span>
+          </div>
+        </div>
+
+        <!-- Promise body -->
+        <div data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
+          <p class="text-muted text-[15px] leading-relaxed mb-4">
+            We make things <strong class="text-dark">simpler, clearer, and easier to trust.</strong> Clean, safe formulations with no unnecessary additives. Labels that tell you <strong class="text-dark">exactly what's inside and how much</strong> — so it actually works the way you expect.
+          </p>
+          <p class="text-muted text-[15px] leading-relaxed mb-4">
+            So instead of stopping midway, you have something you can stick to and <strong class="text-dark">actually see results</strong> over time.
+          </p>
+          <p class="text-muted text-[15px] leading-relaxed">
+            Because when you understand your supplement, and it does what it's supposed to, it just <strong class="text-green font-semibold">feels right.</strong>
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       4. THE NAME
+  ══════════════════════════════════════════ -->
+  <section class="py-24 bg-white text-center overflow-hidden">
+    <div class="max-w-3xl mx-auto px-6">
+      <span class="text-green-sage text-[10px] font-semibold tracking-[0.3em] uppercase block mb-4" data-aos="fade-up">— The Name</span>
+
+      <h2 class="font-display font-bold text-dark mb-4" style="font-size: clamp(26px,4.5vw,52px);"
+          data-aos="fade-up" data-aos-delay="80">
+        So… what does <em class="text-green italic">eklyfe</em> really mean?
+      </h2>
+      <p class="text-muted text-sm mb-6" data-aos="fade-up" data-aos-delay="140">You might pronounce it "ek-lyfe" — we've heard them all 😄</p>
+
+      <!-- Phonetic pill -->
+      <div class="inline-block bg-green text-white font-display italic px-8 py-3 rounded-md text-xl tracking-wide mb-8 shadow-lg" data-aos="zoom-in" data-aos-delay="200">
+        It's ek · lyfe
+      </div>
+
+      <p class="text-muted text-[15px] leading-relaxed mx-auto max-w-lg" data-aos="fade-up" data-aos-delay="260">
+        In simple terms it means — <strong class="text-dark">helping your body restore, rebuild, and function better</strong> from within.<br>
+        <em class="text-green-sage">( something we truly believe in )</em>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       5. FOUNDER — SPLIT LAYOUT
+  ══════════════════════════════════════════ -->
+  <section class="py-24 bg-cream overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-3xl overflow-hidden shadow-2xl" data-aos="fade-up" data-aos-duration="1000">
+
+        <!-- Founder image -->
+        <div class="img-zoom min-h-[460px] bg-border relative">
+          <img src="{{ 'founder.jpg' | asset_url }}"  alt="Neha Jain — Founder, eklyfe" class="w-full h-full object-cover absolute inset-0">
+          <!-- Optional overlay badge -->
+          <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg">
+            <p class="font-display italic text-green text-sm font-semibold">Neha Jain</p>
+            <p class="text-muted text-[11px] tracking-wide">Founder & CEO, eklyfe</p>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="bg-dark p-12 lg:p-16 flex flex-col justify-center">
+          <span class="text-gold text-[10px] font-semibold tracking-[0.3em] uppercase mb-3 block">— From the Founder</span>
+          <h3 class="font-display font-semibold text-white leading-snug mb-6" style="font-size: clamp(24px,3vw,38px);">
+            It all <em class="text-gold italic">started</em> with<br>a simple doubt.
+          </h3>
+          <p class="text-white/65 text-[14px] leading-loose mb-4">
+            After experiencing firsthand how modern life — with all its ambition, pressure, and pace — can quietly erode our inner health, Neha spent two and a half years in deep research and product development.
+          </p>
+          <p class="text-white/65 text-[14px] leading-loose mb-4">
+            Too many claims, not enough clarity. So she started looking deeper — what actually makes a supplement work? The right ingredients, the right dosages, and results you can <em>feel</em>.
+          </p>
+          <p class="text-white/65 text-[14px] leading-loose">
+            That's how eklyfe began. Built with one focus: something you can take daily, without overthinking it, and actually feel the difference.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       6. WHY EKLYFE IS DIFFERENT
+  ══════════════════════════════════════════ -->
+  
+
+
+  <!-- ══════════════════════════════════════════
+       7. TEAM IMAGE
+  ══════════════════════════════════════════ -->
+  <section class="py-16 bg-cream overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="relative rounded-3xl overflow-hidden min-h-[420px] shadow-2xl img-zoom" data-aos="fade-up" data-aos-duration="1000">
+        <img src="{{ 'team.png' | asset_url }}"  alt="The eklyfe Team" class="w-full h-full object-cover opacity-75">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-10 lg:p-14">
+          <h3 class="font-display text-white font-semibold leading-snug" style="font-size: clamp(22px,3.5vw,38px);">
+            Built by people who <em class="text-gold italic">care</em><br>about your health as much as you do
+          </h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       8. MISSION & VISION
+  ══════════════════════════════════════════ -->
+  <section class="py-24 bg-white overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+        <!-- Mission -->
+        <div class="bg-green rounded-3xl p-10 lg:p-14 relative overflow-hidden" data-aos="fade-right" data-aos-duration="800">
+          <div class="noise-overlay"></div>
+          <span class="text-gold text-[10px] font-semibold tracking-[0.3em] uppercase block mb-4">Our Mission</span>
+          <blockquote class="font-display italic text-white leading-relaxed" style="font-size: clamp(17px,2vw,22px);">
+            "To make nature's most powerful healing tools accessible to every person who wants to live well — mind, body, and soul."
+          </blockquote>
+        </div>
+
+        <!-- Vision -->
+        <div class="bg-cream border border-border rounded-3xl p-10 lg:p-14" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
+          <span class="text-green-sage text-[10px] font-semibold tracking-[0.3em] uppercase block mb-4">Our Vision</span>
+          <p class="font-display italic text-dark leading-relaxed" style="font-size: clamp(17px,2vw,22px);">
+            A world where wellness is natural, holistic, and deeply personal. Where every person has access to the best that Ayurveda and science together can offer.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       9. QUALITY COMMITMENT (DARK)
+  ══════════════════════════════════════════ -->
+  <section class="py-24 bg-dark overflow-hidden">
+    <div class="noise-overlay absolute inset-0"></div>
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+      <span class="text-gold text-[10px] font-semibold tracking-[0.3em] uppercase block mb-4" data-aos="fade-up">— Quality Commitment</span>
+      <h2 class="font-display font-bold text-white mb-8 leading-snug" style="font-size: clamp(26px,4vw,46px);" data-aos="fade-up" data-aos-delay="80">
+        Every bottle holds something<br>we <em class="text-gold italic">deeply believe in.</em>
+      </h2>
+      <p class="text-white/60 text-[15px] leading-relaxed mb-4" data-aos="fade-up" data-aos-delay="140">
+        Each eklyfe product goes through a rigorous development process — from ingredient sourcing to finished capsule. We partner only with trusted suppliers who share our standards for purity and sustainability.
+      </p>
+      <p class="text-white/60 text-[15px] leading-relaxed mb-8" data-aos="fade-up" data-aos-delay="180">
+        Every formulation is reviewed for safety, efficacy, and bioavailability before it reaches your hands. When you open an eklyfe bottle, you're holding something our founder takes herself.
+      </p>
+      <p class="font-display italic text-gold text-lg" data-aos="fade-up" data-aos-delay="220">— Neha Jain, Founder & CEO, eklyfe</p>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       10. CTA
+  ══════════════════════════════════════════ -->
+  <section class="py-24 bg-green overflow-hidden relative">
+    <div class="noise-overlay absolute inset-0"></div>
+    <!-- Decorative rings -->
+    <div class="absolute -right-24 -bottom-24 w-96 h-96 rounded-full border border-white/10 pointer-events-none"></div>
+    <div class="absolute -right-16 -bottom-16 w-72 h-72 rounded-full border border-white/10 pointer-events-none"></div>
+
+    <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+      <h2 class="font-display font-bold text-white leading-snug mb-4" style="font-size: clamp(26px,4.5vw,50px);" data-aos="fade-up">
+        No matter where you are on your<br><em class="text-gold italic">Wellness Journey,</em><br>we're here to support you.
+      </h2>
+      <p class="text-white/60 text-[15px] mb-10" data-aos="fade-up" data-aos-delay="80">
+        So you can feel stronger, healthier, and confident every day.
+      </p>
+      <div class="flex gap-4 justify-center flex-wrap" data-aos="fade-up" data-aos-delay="160">
+        <a href="/collections/all" class="bg-gold text-dark font-body font-semibold text-[13px] tracking-widest uppercase px-8 py-4 rounded-lg hover:bg-gold-light transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 duration-200">
+          Explore Our Products
+        </a>
+        <a href="/pages/consult" class="border border-white/30 text-white font-body font-semibold text-[13px] tracking-widest uppercase px-8 py-4 rounded-lg hover:border-gold hover:text-gold transition-all duration-200">
+          Consult a Nutritionist
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       FOOTER STAMP
+  ══════════════════════════════════════════ -->
+  <div class="bg-cream border-t border-border py-16 text-center overflow-hidden">
+    <p class="font-display font-bold text-green tracking-[0.12em] uppercase" style="font-size: clamp(24px,5vw,60px);" data-aos="fade-up">
+      Towards a Better You
+    </p>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       SCRIPTS
+  ══════════════════════════════════════════ -->
+  <script>
+
+    /* ── Lenis smooth scroll ── */
+    const lenis = new Lenis({ lerp: 0.07, smoothWheel: true });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    /* ── Scroll progress bar ── */
+    window.addEventListener('scroll', () => {
+      const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+      document.getElementById('progress-bar').style.width = pct + '%';
+    });
+
+    /* ── Custom cursor ── */
+    const cursor = document.getElementById('cursor');
+    const ring   = document.getElementById('cursor-ring');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function animCursor() {
+      cursor.style.left = mx + 'px';
+      cursor.style.top  = my + 'px';
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(animCursor);
+    })();
+    document.querySelectorAll('a,button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.width = '20px'; cursor.style.height = '20px';
+        ring.style.width = '60px';  ring.style.height = '60px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.width = '12px'; cursor.style.height = '12px';
+        ring.style.width = '40px';  ring.style.height = '40px';
+      });
+    });
+
+    /* ── Hero entrance (GSAP) ── */
+    const heroTl = gsap.timeline({ delay: 0.3 });
+    heroTl
+      .to('#hero-eyebrow', { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 0)
+      .to('#hero-title',   { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }, 0.2)
+      .to('#hero-quote',   { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 0.5)
+      .to('#scroll-hint',  { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 0.9);
+
+    /* ── Hero title parallax ── */
+    gsap.to('#hero-title', {
+      y: -60,
+      ease: 'none',
+      scrollTrigger: { trigger: 'body', start: 'top top', end: '30% top', scrub: true }
+    });
+
+    /* ── GSAP: section headings slide-in from left ── */
+    gsap.utils.toArray('.font-display.font-bold').forEach(el => {
+      if (el.closest('.os-hero')) return;
+      gsap.from(el, {
+        x: -40, opacity: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+      });
+    });
+
+    /* ── GSAP: diff cards stagger ── */
+    gsap.from('.card-lift', {
+      y: 40, opacity: 0, stagger: 0.08, duration: 0.7, ease: 'power2.out',
+      scrollTrigger: { trigger: '.card-lift', start: 'top 85%', toggleActions: 'play none none none' }
+    });
+
+    /* ── AOS init ── */
+    AOS.init({ once: true, offset: 80, easing: 'ease-out-cubic' });
+
+    /* ── Marquee: duplicate content for seamless loop ── */
+    const marqueeTrack = document.querySelector('.marquee-track');
+    const tmpl = document.getElementById('marquee-item');
+    if (tmpl && marqueeTrack) {
+      const clone1 = tmpl.content.cloneNode(true);
+      const clone2 = tmpl.content.cloneNode(true);
+      marqueeTrack.appendChild(clone1);
+      marqueeTrack.appendChild(clone2);
+      // double it for seamless
+      marqueeTrack.innerHTML += marqueeTrack.innerHTML;
+    }
+
+    /* ── Floating leaf particles in hero ── */
+    const heroParticles = document.getElementById('hero-particles');
+    for (let i = 0; i < 18; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'leaf-particle';
+      dot.style.cssText = `
+        left: ${Math.random()*100}%;
+        top: ${Math.random()*100}%;
+        width: ${4 + Math.random()*8}px;
+        height: ${4 + Math.random()*8}px;
+        animation-delay: ${Math.random()*6}s;
+        animation-duration: ${5 + Math.random()*5}s;
+        opacity: ${0.1 + Math.random()*0.25};
+        background: rgba(107,143,78,${0.2 + Math.random()*0.3});
+      `;
+      heroParticles.appendChild(dot);
+    }
+
+    /* ── Underline reveal on scroll ── */
+    const underlines = document.querySelectorAll('.highlight-underline');
+    const uObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); });
+    }, { threshold: 0.5 });
+    underlines.forEach(el => uObs.observe(el));
+
+    /* ── Number counter for stat ── */
+    const statNum = document.querySelector('#stat-counter');
+    if (statNum) {
+      const obj = { val: 0 };
+      ScrollTrigger.create({
+        trigger: statNum,
+        start: 'top 90%',
+        once: true,
+        onEnter: () => {
+          gsap.to(obj, {
+            val: 100,
+            duration: 1.4,
+            ease: 'power2.out',
+            onUpdate: () => {
+              const v = Math.floor(obj.val);
+              statNum.textContent = v < 100 ? v + 'K+' : '1 Lakh+';
+            },
+            onComplete: () => { statNum.textContent = '1 Lakh+'; }
+          });
+        }
+      });
+    }
+
+  </script>
+</body>
+</html>

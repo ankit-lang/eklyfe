@@ -1,0 +1,75 @@
+{% if section.settings.show_announcement %}
+  <div class="announcement-bar" style="background-color: {{ section.settings.bg_color }}; color: {{ section.settings.text_color }};">
+    <p class="announcement-bar__message">{{ section.settings.text }}</p>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .announcement-bar {
+    text-align: center;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    z-index: 1001; /* Above sticky header */
+  }
+  .announcement-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0));
+    transform: skewX(-25deg);
+    animation: shine 4s infinite;
+  }
+  .announcement-bar__message {
+    margin: 0;
+  }
+  @keyframes shine {
+    0% { left: -100%; }
+    20% { left: 200%; }
+    100% { left: 200%; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_announcement",
+      "label": "Show announcement",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text",
+      "default": "Welcome to our store"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#f47f20"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar"
+    }
+  ]
+}
+{% endschema %}

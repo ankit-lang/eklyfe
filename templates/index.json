@@ -1,0 +1,204 @@
+{
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "settings": {
+        "text": "🚚 FREE SHIPPING ON ORDERS OVER ₹500 · 🌿 100% AYURVEDIC · ✓ DOCTOR APPROVED",
+        "bg_color": "#1a4f44",
+        "text_color": "#ffffff"
+      }
+    },
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "heading": "Boost Energy. Endurance. Recovery.",
+        "subheading": "TRUSTED BY 1 MILLION+ CUSTOMERS",
+        "button_label": "Shop Now",
+        "bg_color": "#1a4f44",
+        "text_color": "#ffffff"
+      }
+    },
+    "shop_by_solution": {
+      "type": "shop-by-solution",
+      "settings": {
+        "heading": "SHOP BY SOLUTION",
+        "bg_color": "#f9f9f5"
+      },
+      "blocks": {
+        "sol1": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "general-awareness",
+            "bg_color": "#2781d4"
+          }
+        },
+        "sol2": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "sexual-wellness",
+            "bg_color": "#fcb900"
+          }
+        },
+        "sol3": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "skin-wellness",
+            "bg_color": "#79dbec"
+          }
+        },
+        "sol4": {
+          "type": "collection_block",
+          "settings": {
+            "collection": "weight-management",
+            "bg_color": "#fca4b7"
+          }
+        }
+      },
+      "block_order": [
+        "sol1",
+        "sol2",
+        "sol3",
+        "sol4"
+      ]
+    },
+    "trust": {
+      "type": "trust-features",
+      "settings": {
+        "bg_color": "#f4f9f7"
+      },
+      "blocks": {
+        "trust1": {
+          "type": "feature",
+          "settings": {
+            "title": "100% Ayurvedic",
+            "subtitle": "Pure, natural ingredients"
+          }
+        },
+        "trust2": {
+          "type": "feature",
+          "settings": {
+            "title": "Doctor Approved",
+            "subtitle": "Recommended by experts"
+          }
+        },
+        "trust3": {
+          "type": "feature",
+          "settings": {
+            "title": "GMP Certified Labs",
+            "subtitle": "Manufactured to the highest standard"
+          }
+        },
+        "trust4": {
+          "type": "feature",
+          "settings": {
+            "title": "1 Million+ Customers",
+            "subtitle": "Trusted across India"
+          }
+        }
+      },
+      "block_order": [
+        "trust1",
+        "trust2",
+        "trust3",
+        "trust4"
+      ]
+    },
+    "top_seller": {
+      "type": "featured-collection-grid",
+      "settings": {
+        "title": "Our Products",
+        "products_to_show": 8,
+        "collection": "top-seller"
+      }
+    },
+    "promo_1": {
+      "type": "promo-banners",
+      "settings": {
+        "bg_color": "#5c777a"
+      },
+      "blocks": {
+        "icon1": {
+          "type": "icon",
+          "settings": {
+            "text": "Comprehensive Nutrient Blend"
+          }
+        },
+        "icon2": {
+          "type": "icon",
+          "settings": {
+            "text": "Vegan And Cruelty-Free"
+          }
+        },
+        "icon3": {
+          "type": "icon",
+          "settings": {
+            "text": "Hydration Enhancement"
+          }
+        },
+        "icon4": {
+          "type": "icon",
+          "settings": {
+            "text": "Antioxidant Protection"
+          }
+        },
+        "icon5": {
+          "type": "icon",
+          "settings": {
+            "text": "Artificial Additives Free"
+          }
+        }
+      },
+      "block_order": [
+        "icon1",
+        "icon2",
+        "icon3",
+        "icon4",
+        "icon5"
+      ]
+    },
+    "best_selling": {
+      "type": "featured-collection-grid",
+      "settings": {
+        "title": "Best Selling",
+        "products_to_show": 8,
+        "collection": "top-seller"
+      }
+    },
+    "apple_carousel": {
+      "type": "apple-carousel",
+      "settings": {},
+      "blocks": {
+        "slide1": {
+          "type": "slide",
+          "settings": {
+            "heading": "Premium Wellness",
+            "subheading": "Discover India's finest Ayurvedic supplements",
+            "text_color": "#ffffff"
+          }
+        },
+        "slide2": {
+          "type": "slide",
+          "settings": {
+            "heading": "Natural Ingredients",
+            "subheading": "Purity guaranteed. Doctor approved.",
+            "text_color": "#ffffff"
+          }
+        }
+      },
+      "block_order": [
+        "slide1",
+        "slide2"
+      ]
+    }
+  },
+  "order": [
+    "announcement",
+    "hero",
+    "shop_by_solution",
+    "promo_1",
+    "trust",
+    "top_seller",
+    "best_selling",
+    "apple_carousel"
+  ]
+}

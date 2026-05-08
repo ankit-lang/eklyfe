@@ -1,0 +1,287 @@
+<div class="eklyfe-section" style="background-color: {{ section.settings.bg_color }};">
+  <div class="eklyfe-container">
+    <div class="eklyfe-header reveal-up">
+      {% if section.settings.title != blank %}
+        <h2 class="eklyfe-title">{{ section.settings.title }}</h2>
+      {% endif %}
+    </div>
+
+    <div class="eklyfe-grid">
+      {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
+        <div class="eklyfe-card reveal-up" style="--anim-delay: {{ forloop.index0 | times: 100 }}ms;" data-product-id="{{ product.id }}">
+          
+          <a href="{{ product.url }}" class="eklyfe-card__image-link">
+            <div class="eklyfe-card__media">
+              
+              {% if product.tags contains 'Best Seller' %}
+                <span class="eklyfe-badge top-left">BEST SELLER</span>
+              {% elsif product.tags contains 'New' %}
+                <span class="eklyfe-badge top-left new">NEW & BETTER</span>
+              {% endif %}
+              
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'eklyfe-img' }}
+              {% else %}
+                {{ 'product-1' | placeholder_svg_tag: 'eklyfe-img placeholder' }}
+              {% endif %}
+              
+              <div class="eklyfe-category-tag">
+                {{ product.metafields.custom.benefit_tag | default: "STAMINA & VITALITY" }}
+              </div>
+            </div>
+          </a>
+          
+          <div class="eklyfe-card__info">
+            <h3 class="eklyfe-card__title">
+              <a href="{{ product.url }}">{{ product.title }}</a>
+            </h3>
+            
+            <p class="eklyfe-card__subtitle">
+              {{ product.metafields.custom.short_description | default: "Supports strength, stamina & performance" }}
+            </p>
+            
+            <div class="eklyfe-stars">
+              {% assign rating = product.metafields.reviews.rating.value | default: 4.7 %}
+              {% assign rating_count = product.metafields.reviews.rating_count | default: 294 %}
+              <span class="rating-number">{{ rating }}</span>
+              <span class="star-icons">★★★★★</span>
+              <span class="rating-count">{{ rating }} {{ rating_count }} ratings</span>
+            </div>
+            
+            <div class="eklyfe-card__price-row" id="price-{{ product.id }}">
+              <span class="eklyfe-price-now">{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
+              {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
+                <span class="eklyfe-price-was">{{ product.selected_or_first_available_variant.compare_at_price | money_without_trailing_zeros }}</span>
+                {% assign saved = product.selected_or_first_available_variant.compare_at_price | minus: product.selected_or_first_available_variant.price %}
+                <span class="eklyfe-discount-badge">{{ saved | money_without_trailing_zeros }} OFF</span>
+              {% endif %}
+            </div>
+
+            <div class="eklyfe-shipping">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 17h4V5H2v12h3m14-5v5h-3m-4 0h4m-4-6h6l-2-5h-4zM6 17a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
+              <span>Estimated Delivery in 2-3 Days</span>
+            </div>
+            
+            <div class="eklyfe-card__action">
+              {% form 'product', product %}
+                <div class="eklyfe-action-row">
+                  {% if product.variants.size > 1 %}
+                    <select name="id" class="eklyfe-variant-select" onchange="updatePrice(this, '{{ product.id }}')">
+                      {% for variant in product.variants %}
+                        <option value="{{ variant.id }}" 
+                                data-price="{{ variant.price | money_without_trailing_zeros }}" 
+                                data-compare="{{ variant.compare_at_price | money_without_trailing_zeros }}"
+                                {% if variant == product.selected_or_first_available_variant %}selected="selected"{% endif %}>
+                          {{ variant.title }}
+                        </option>
+                      {% endfor %}
+                    </select>
+                  {% else %}
+                    <input type="hidden" name="id" value="{{ product.variants.first.id }}" />
+                  {% endif %}
+                  
+                  <button type="submit" class="eklyfe-add-btn" {% unless product.available %}disabled{% endunless %}>
+                    {% if product.available %}
+                      + ADD
+                    {% else %}
+                      SOLD OUT
+                    {% endif %}
+                  </button>
+                </div>
+              {% endform %}
+            </div>
+
+            <div class="eklyfe-card__footer-promos">
+              <span class="promo-green">+₹60 OFF on Prepaid</span>
+              <span class="promo-gray">COD Available</span>
+            </div>
+
+          </div>
+        </div>
+      {% else %}
+        <div class="eklyfe-empty">Select a collection to display products.</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script>
+  // Script to update prices in real-time when variant dropdown changes
+  function updatePrice(selectElement, productId) {
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const newPrice = selectedOption.getAttribute('data-price');
+    const comparePrice = selectedOption.getAttribute('data-compare');
+    const priceContainer = document.getElementById(`price-${productId}`);
+    
+    if (!priceContainer) return;
+
+    let priceHtml = `<span class="eklyfe-price-now">${newPrice}</span>`;
+    
+    // Quick parsing to calculate discount (assuming currency symbol is first character)
+    if (comparePrice && comparePrice !== newPrice) {
+      priceHtml += `<span class="eklyfe-price-was">${comparePrice}</span>`;
+      
+      try {
+        const numPrice = parseFloat(newPrice.replace(/[^0-9.]/g, ''));
+        const numCompare = parseFloat(comparePrice.replace(/[^0-9.]/g, ''));
+        if(numCompare > numPrice) {
+           const saved = numCompare - numPrice;
+           // Format back with currency symbol from original string
+           const symbol = newPrice.replace(/[0-9.,]/g, '');
+           priceHtml += `<span class="eklyfe-discount-badge">${symbol}${saved} OFF</span>`;
+        }
+      } catch(e) {}
+    }
+    
+    priceContainer.innerHTML = priceHtml;
+  }
+</script>
+
+<style>
+  .eklyfe-section { padding: 4rem 5%; font-family: sans-serif; background: #f9f9f9; }
+  .eklyfe-container { max-width: 1300px; margin: 0 auto; }
+  .eklyfe-header { text-align: center; margin-bottom: 3rem; }
+  .eklyfe-title { font-size: 2.5rem; font-weight: 700; color: #111; }
+  
+  .eklyfe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  
+  .eklyfe-card {
+    background: #fff;
+    border: 1px solid #eaeaea;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: box-shadow 0.3s;
+  }
+  .eklyfe-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+  
+  /* Media / Image */
+  .eklyfe-card__media {
+    position: relative;
+    background: #4a3b32; /* Default background, adjust per product */
+    padding-top: 100%; /* Square ratio */
+  }
+  .eklyfe-img {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .eklyfe-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.4);
+    z-index: 2;
+  }
+  .eklyfe-category-tag {
+    position: absolute;
+    bottom: 12px; left: 12px;
+    background: #111;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  
+  /* Info Content */
+  .eklyfe-card__info { padding: 16px; display: flex; flex-direction: column; flex: 1; }
+  .eklyfe-card__title { margin: 0 0 4px; font-size: 1rem; font-weight: 700; }
+  .eklyfe-card__title a { text-decoration: none; color: #111; }
+  .eklyfe-card__subtitle { margin: 0 0 12px; font-size: 0.8rem; color: #666; line-height: 1.3; }
+  
+  .eklyfe-stars { font-size: 0.8rem; margin-bottom: 16px; display: flex; align-items: center; gap: 4px; }
+  .eklyfe-stars .rating-number { font-weight: 700; color: #333; }
+  .eklyfe-stars .star-icons { color: #84cc16; letter-spacing: -1px; }
+  .eklyfe-stars .rating-count { color: #888; font-size: 0.75rem; }
+  
+  .eklyfe-card__price-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+  .eklyfe-price-now { font-size: 1.25rem; font-weight: 800; color: #111; }
+  .eklyfe-price-was { font-size: 0.85rem; color: #999; text-decoration: line-through; }
+  .eklyfe-discount-badge { margin-left: auto; background: #f0fdf4; color: #16a34a; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
+  
+  .eklyfe-shipping { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #666; margin-bottom: 16px; }
+  .eklyfe-shipping svg { width: 14px; opacity: 0.7; }
+  
+  /* Action Area */
+  .eklyfe-action-row { display: flex; gap: 10px; margin-bottom: 12px; }
+  .eklyfe-variant-select {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    background: #fff;
+    cursor: pointer;
+    outline: none;
+  }
+  .eklyfe-add-btn {
+    background: #0f172a;
+    color: #fff;
+    border: none;
+    padding: 8px 24px;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .eklyfe-add-btn:hover:not(:disabled) { background: #1e293b; }
+  
+  .eklyfe-card__footer-promos { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 600; }
+  .eklyfe-promo-green { color: #16a34a; }
+  .eklyfe-promo-gray { color: #888; }
+</style>
+
+{% schema %}
+{
+  "name": "Detailed Product Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "What's stopping you?"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "default": 4,
+      "label": "Maximum products to show"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Detailed Product Grid"
+    }
+  ]
+}
+{% endschema %}

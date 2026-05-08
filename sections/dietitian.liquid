@@ -1,0 +1,573 @@
+<div class="dt-page">
+
+  <!-- HERO -->
+  <div class="dt-hero">
+    <div class="dt-hero__bg-orb dt-hero__bg-orb--1"></div>
+    <div class="dt-hero__bg-orb dt-hero__bg-orb--2"></div>
+    <div class="dt-hero__inner">
+      <div class="dt-hero__text">
+        <span class="dt-eyebrow">EXPERT NUTRITION GUIDANCE</span>
+        <h1 class="dt-hero__title">Talk to a <em>Certified</em><br>Dietitian Today</h1>
+        <p class="dt-hero__body">Get a personalised nutrition plan built around your goals, health conditions, and lifestyle — backed by science, rooted in nature.</p>
+        <div class="dt-hero__chips">
+          <span class="dt-chip">✓ 100% Personalised</span>
+          <span class="dt-chip">✓ Free First Consultation</span>
+          <span class="dt-chip">✓ Follow-Up Support</span>
+        </div>
+        <div class="dt-hero__cta">
+          <a href="{{ section.settings.book_link | default: '#book' }}" class="dt-btn-primary">
+            Book Free Consultation
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+          <a href="#how-it-works" class="dt-btn-ghost">How it works ↓</a>
+        </div>
+      </div>
+
+      <div class="dt-hero__card-wrap">
+        <div class="dt-hero__card">
+          {% if section.settings.dietitian_image != blank %}
+            {{ section.settings.dietitian_image | image_url: width: 600 | image_tag: class: 'dt-hero__photo', loading: 'eager' }}
+          {% else %}
+            <div class="dt-hero__photo-placeholder">
+              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="rgba(26,79,68,0.3)" stroke-width="1.5" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+          {% endif %}
+          <div class="dt-hero__card-info">
+            <strong>{{ section.settings.dietitian_name | default: 'Dt. Priya Sharma' }}</strong>
+            <span>{{ section.settings.dietitian_role | default: 'M.Sc. Clinical Nutrition · 8+ Years' }}</span>
+          </div>
+          <div class="dt-hero__rating">
+            <span class="dt-stars">★★★★★</span>
+            <span>4.9 · 500+ consultations</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TRUST BAR -->
+  <div class="dt-trust-bar">
+    <div class="dt-trust-bar__inner">
+      <div class="dt-trust-item">
+        <span class="dt-trust-num">500+</span>
+        <span class="dt-trust-label">Happy Clients</span>
+      </div>
+      <div class="dt-trust-divider"></div>
+      <div class="dt-trust-item">
+        <span class="dt-trust-num">8+</span>
+        <span class="dt-trust-label">Years Experience</span>
+      </div>
+      <div class="dt-trust-divider"></div>
+      <div class="dt-trust-item">
+        <span class="dt-trust-num">100%</span>
+        <span class="dt-trust-label">Personalised Plans</span>
+      </div>
+      <div class="dt-trust-divider"></div>
+      <div class="dt-trust-item">
+        <span class="dt-trust-num">Free</span>
+        <span class="dt-trust-label">First Session</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <div class="dt-how" id="how-it-works">
+    <div class="dt-how__inner">
+      <span class="dt-eyebrow" style="text-align:center;display:block;">THE PROCESS</span>
+      <h2 class="dt-section-title">Simple. Fast. Effective.</h2>
+      <div class="dt-steps">
+        <div class="dt-step">
+          <div class="dt-step__num">01</div>
+          <div class="dt-step__icon">📋</div>
+          <h3>Fill a Health Form</h3>
+          <p>Share your goals, medical history, allergies, and lifestyle in a quick 3-minute form.</p>
+        </div>
+        <div class="dt-step__connector"></div>
+        <div class="dt-step">
+          <div class="dt-step__num">02</div>
+          <div class="dt-step__icon">📞</div>
+          <h3>1-on-1 Consultation</h3>
+          <p>Your dietitian analyses your form and calls you for a personalised session.</p>
+        </div>
+        <div class="dt-step__connector"></div>
+        <div class="dt-step">
+          <div class="dt-step__num">03</div>
+          <div class="dt-step__icon">🥗</div>
+          <h3>Get Your Plan</h3>
+          <p>Receive a custom meal plan + Eklyfe supplement stack curated for your needs.</p>
+        </div>
+        <div class="dt-step__connector"></div>
+        <div class="dt-step">
+          <div class="dt-step__num">04</div>
+          <div class="dt-step__icon">📈</div>
+          <h3>Track & Improve</h3>
+          <p>Monthly check-ins to tweak your plan as your body transforms.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES GRID -->
+  <div class="dt-services">
+    <div class="dt-services__inner">
+      <span class="dt-eyebrow" style="text-align:center;display:block;">WHAT WE HELP WITH</span>
+      <h2 class="dt-section-title">Conditions We Specialise In</h2>
+      <div class="dt-services__grid">
+        {% assign services = "Weight Loss,Weight Gain,Thyroid Management,PCOS & Hormonal Health,Diabetes & Blood Sugar,Gut Health & IBS,Sports Nutrition,Pre & Post Natal Nutrition,Heart Health,Liver Detox,Immunity Boosting,Anti-Ageing Nutrition" | split: ',' %}
+        {% for service in services %}
+          <div class="dt-service-card">
+            <div class="dt-service-card__dot"></div>
+            <span>{{ service }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <!-- BOOKING CTA -->
+  <div class="dt-book" id="book">
+    <div class="dt-book__bg-shape"></div>
+    <div class="dt-book__inner">
+      <span class="dt-eyebrow dt-eyebrow--light">GET STARTED TODAY</span>
+      <h2 class="dt-book__title">Your Best Health is<br>One Call Away</h2>
+      <p class="dt-book__sub">Zero cost. Zero commitment. Just clarity and a plan that works for you.</p>
+      <a href="{{ section.settings.book_link | default: 'https://wa.me/91' | append: section.settings.whatsapp_number }}" class="dt-btn-book" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+        Book on WhatsApp
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  (function() {
+    var items = document.querySelectorAll('.dt-step, .dt-service-card, .dt-trust-item, .dt-hero__text, .dt-hero__card-wrap');
+    if (!items.length) return;
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('dt-in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    items.forEach(function(el) { io.observe(el); });
+    setTimeout(function() { items.forEach(function(el) { el.classList.add('dt-in'); }); }, 1200);
+  })();
+</script>
+
+{% stylesheet %}
+  /* ── Base ── */
+  .dt-page { font-family: inherit; overflow: hidden; }
+  .dt-eyebrow {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 4px;
+    color: #f47f20;
+    text-transform: uppercase;
+    padding: 6px 18px;
+    background: rgba(244,127,32,0.1);
+    border-radius: 100px;
+    margin-bottom: 1.25rem;
+  }
+  .dt-eyebrow--light { color: rgba(255,255,255,0.7); background: rgba(255,255,255,0.1); }
+  .dt-section-title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900;
+    color: #111;
+    letter-spacing: -1.5px;
+    text-align: center;
+    margin: 0 0 3.5rem;
+  }
+
+  /* Reveal animation */
+  .dt-step, .dt-service-card, .dt-trust-item, .dt-hero__text, .dt-hero__card-wrap {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+  }
+  .dt-in { opacity: 1; transform: none; }
+
+  /* ── HERO ── */
+  .dt-hero {
+    position: relative;
+    background: linear-gradient(135deg, #0d3028 0%, #1a4f44 60%, #1e5c50 100%);
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    padding: 8rem 8%;
+  }
+  .dt-hero__bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .dt-hero__bg-orb--1 {
+    width: 600px; height: 600px;
+    top: -200px; right: -100px;
+    background: radial-gradient(circle, rgba(244,127,32,0.15) 0%, transparent 70%);
+  }
+  .dt-hero__bg-orb--2 {
+    width: 400px; height: 400px;
+    bottom: -150px; left: -100px;
+    background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
+  }
+  .dt-hero__inner {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 5rem;
+    align-items: center;
+    max-width: 1300px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .dt-hero__title {
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.05;
+    letter-spacing: -3px;
+    margin: 0 0 1.5rem;
+  }
+  .dt-hero__title em {
+    font-style: normal;
+    color: #f47f20;
+  }
+  .dt-hero__body {
+    font-size: 1.15rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+    max-width: 500px;
+    margin-bottom: 2rem;
+  }
+  .dt-hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 2.5rem;
+  }
+  .dt-chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.85);
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 7px 16px;
+    border-radius: 100px;
+  }
+  .dt-hero__cta {
+    display: flex;
+    gap: 1.25rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .dt-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #f47f20;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 16px 36px;
+    border-radius: 100px;
+    text-decoration: none;
+    box-shadow: 0 12px 30px rgba(244,127,32,0.4);
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  .dt-btn-primary:hover { transform: translateY(-3px); box-shadow: 0 20px 40px rgba(244,127,32,0.55); }
+  .dt-btn-ghost {
+    color: rgba(255,255,255,0.65);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-bottom: 2px solid rgba(255,255,255,0.25);
+    padding-bottom: 2px;
+    transition: all 0.3s;
+  }
+  .dt-btn-ghost:hover { color: #fff; border-color: #fff; }
+
+  /* Hero card */
+  .dt-hero__card {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 28px;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    transition: transform 0.3s;
+  }
+  .dt-hero__card:hover { transform: translateY(-6px); }
+  .dt-hero__photo {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+  .dt-hero__photo-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed rgba(255,255,255,0.15);
+  }
+  .dt-hero__card-info { display: flex; flex-direction: column; gap: 0.25rem; }
+  .dt-hero__card-info strong { font-size: 1.1rem; font-weight: 800; color: #fff; }
+  .dt-hero__card-info span { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+  .dt-hero__rating {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(255,255,255,0.08);
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    color: rgba(255,255,255,0.7);
+  }
+  .dt-stars { color: #f47f20; font-size: 1rem; letter-spacing: 2px; }
+
+  /* ── TRUST BAR ── */
+  .dt-trust-bar {
+    background: #111;
+    padding: 2.5rem 8%;
+  }
+  .dt-trust-bar__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .dt-trust-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+  }
+  .dt-trust-num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    color: #f47f20;
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+  .dt-trust-label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .dt-trust-divider {
+    width: 1px;
+    height: 50px;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* ── HOW IT WORKS ── */
+  .dt-how {
+    padding: 7rem 8%;
+    background: #fff;
+  }
+  .dt-how__inner { max-width: 1100px; margin: 0 auto; }
+  .dt-steps {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+  }
+  .dt-step {
+    flex: 1;
+    text-align: center;
+    padding: 2.5rem 1.5rem;
+    border-radius: 20px;
+    transition: background 0.3s, transform 0.3s;
+  }
+  .dt-step:hover {
+    background: #f9faf8;
+    transform: translateY(-6px);
+  }
+  .dt-step__num {
+    font-size: 0.72rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #f47f20;
+    margin-bottom: 1rem;
+  }
+  .dt-step__icon {
+    font-size: 2.8rem;
+    margin-bottom: 1.25rem;
+    display: block;
+  }
+  .dt-step h3 {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1a4f44;
+    margin-bottom: 0.75rem;
+  }
+  .dt-step p { font-size: 0.9rem; color: #666; line-height: 1.7; }
+  .dt-step__connector {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #1a4f44, #f47f20);
+    margin-top: 5rem;
+    flex-shrink: 0;
+    border-radius: 2px;
+    opacity: 0.3;
+  }
+
+  /* ── SERVICES ── */
+  .dt-services {
+    padding: 7rem 8%;
+    background: #f4f9f7;
+  }
+  .dt-services__inner { max-width: 1100px; margin: 0 auto; }
+  .dt-services__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .dt-service-card {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    background: #fff;
+    border: 1.5px solid #e8f0ee;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1a4f44;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .dt-service-card:hover {
+    border-color: #1a4f44;
+    background: #1a4f44;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(26,79,68,0.15);
+  }
+  .dt-service-card__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f47f20;
+    flex-shrink: 0;
+  }
+  .dt-service-card:hover .dt-service-card__dot { background: #fff; }
+
+  /* ── BOOKING CTA ── */
+  .dt-book {
+    position: relative;
+    background: linear-gradient(135deg, #0d3028, #1a4f44);
+    padding: 8rem 8%;
+    text-align: center;
+    overflow: hidden;
+  }
+  .dt-book__bg-shape {
+    position: absolute;
+    width: 700px; height: 700px;
+    top: -250px; left: 50%;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(244,127,32,0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .dt-book__inner { position: relative; z-index: 2; max-width: 700px; margin: 0 auto; }
+  .dt-book__title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -2px;
+    line-height: 1.1;
+    margin: 1rem 0 1.5rem;
+  }
+  .dt-book__sub {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+    margin-bottom: 3rem;
+  }
+  .dt-btn-book {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #25d366;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    padding: 18px 44px;
+    border-radius: 100px;
+    text-decoration: none;
+    box-shadow: 0 16px 40px rgba(37,211,102,0.35);
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    letter-spacing: 0.3px;
+  }
+  .dt-btn-book:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 24px 50px rgba(37,211,102,0.5);
+  }
+
+  /* ── Responsive ── */
+  @media screen and (max-width: 1000px) {
+    .dt-hero__inner { grid-template-columns: 1fr; gap: 3rem; }
+    .dt-hero__card-wrap { max-width: 420px; margin: 0 auto; width: 100%; }
+    .dt-steps { flex-direction: column; }
+    .dt-step__connector { width: 2px; height: 40px; margin: 0 auto; }
+  }
+  @media screen and (max-width: 600px) {
+    .dt-hero { padding: 5rem 5%; min-height: auto; }
+    .dt-how, .dt-services, .dt-book { padding: 5rem 5%; }
+    .dt-trust-divider { display: none; }
+    .dt-trust-bar__inner { gap: 1.5rem; }
+    .dt-services__grid { grid-template-columns: 1fr 1fr; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Dietitian Page",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "dietitian_image",
+      "label": "Dietitian Photo"
+    },
+    {
+      "type": "text",
+      "id": "dietitian_name",
+      "label": "Dietitian Name",
+      "default": "Dt. Priya Sharma"
+    },
+    {
+      "type": "text",
+      "id": "dietitian_role",
+      "label": "Dietitian Role / Credentials",
+      "default": "M.Sc. Clinical Nutrition · 8+ Years Experience"
+    },
+    {
+      "type": "url",
+      "id": "book_link",
+      "label": "Booking Link (WhatsApp or form)"
+    },
+    {
+      "type": "text",
+      "id": "whatsapp_number",
+      "label": "WhatsApp number (digits only, e.g. 9999988888)",
+      "default": "9999988888"
+    }
+  ],
+  "presets": [
+    { "name": "Dietitian Page" }
+  ]
+}
+{% endschema %}

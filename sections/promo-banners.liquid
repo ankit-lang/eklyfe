@@ -1,0 +1,150 @@
+{% comment %} Animated Icon Banner {% endcomment %}
+<div class="promo-icon-banner" style="--bg-color: {{ section.settings.bg_color }}">
+  <div class="promo-marquee">
+    <div class="promo-track">
+      <!-- We duplicate the blocks for an infinite continuous scrolling effect -->
+      {% for i in (1..3) %}
+        {% for block in section.blocks %}
+          <div class="promo-item" {{ block.shopify_attributes }}>
+            <div class="promo-icon">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 160 | image_tag: loading: 'lazy', class: 'promo-img' }}
+              {% else %}
+                {% assign fallback_image = forloop.index | append: '.jpeg' %}
+                <img src="{{ fallback_image | asset_url }}" alt="{{ block.settings.text }}" class="promo-img" loading="lazy">
+              {% endif %}
+            </div>
+            <span class="promo-text">{{ block.settings.text }}</span>
+          </div>
+        {% endfor %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .promo-icon-banner {
+    background: var(--bg-color, #5c777a);
+    padding: 2.5rem 0;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+  .promo-marquee {
+    width: 100%;
+    overflow: hidden;
+    /* Optional: add a subtle gradient mask for smooth fade on edges */
+    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  }
+  .promo-track {
+    display: flex;
+    width: max-content;
+    animation: promo-scroll 35s linear infinite;
+    gap: 5rem;
+    padding-left: 5rem;
+  }
+  .promo-track:hover {
+    animation-play-state: paused;
+  }
+  .promo-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    min-width: 180px;
+    cursor: pointer;
+  }
+  .promo-icon {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    background: rgba(255, 255, 255, 0.05); /* Very subtle background for placeholder */
+  }
+  .promo-item:hover .promo-icon {
+    transform: scale(1.15) translateY(-5px);
+  }
+  .promo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  }
+  .promo-placeholder {
+    color: #fff;
+    opacity: 0.8;
+  }
+  .promo-text {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-align: center;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+  }
+
+  @keyframes promo-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-33.333% - 1.666rem)); } /* Translates exactly 1/3 of the track since we duplicated 3 times */
+  }
+
+  @media screen and (max-width: 768px) {
+    .promo-icon-banner { padding: 2rem 0; }
+    .promo-icon { width: 70px; height: 70px; }
+    .promo-text { font-size: 0.85rem; }
+    .promo-track { gap: 3rem; padding-left: 3rem; }
+    .promo-item { min-width: 140px; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Promo Icon Banner",
+  "settings": [
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#5c777a"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "icon",
+      "name": "Icon Feature",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Icon Image (Square or Circle)"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Label Text",
+          "default": "Feature Name"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promo Icon Banner",
+      "blocks": [
+        { "type": "icon", "settings": { "text": "Comprehensive Nutrient Blend" } },
+        { "type": "icon", "settings": { "text": "Vegan And Cruelty-Free" } },
+        { "type": "icon", "settings": { "text": "Hydration Enhancement" } },
+        { "type": "icon", "settings": { "text": "Antioxidant Protection" } },
+        { "type": "icon", "settings": { "text": "Artificial Additives Free" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
