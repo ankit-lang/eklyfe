@@ -1,0 +1,393 @@
+{% comment %}
+  Amit Kumar Verma Testimonial Section with Image Collage
+{% endcomment %}
+{% comment %}
+  Compact Key Associates Section
+{% endcomment %}
+
+<section class="ek-mini-associates">
+  <div class="ek-mini-container">
+
+    <!-- Header -->
+    <div class="ek-mini-header">
+      <p class="ek-mini-label">Key Associates</p>
+
+      <h2 class="ek-mini-title">
+        Wellness Experts at <span>eklyfe™</span>
+      </h2>
+
+      <p class="ek-mini-subtitle">
+        Trusted wellness experts guiding the eklyfe™ community through holistic wellness,
+        nutrition support, and personalized consultations.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="ek-mini-grid">
+
+      <!-- Expert 1 -->
+      <article class="ek-mini-card">
+
+        <div class="ek-mini-image-wrap">
+          <!-- Replace Later -->
+          <img
+            src="{{ 'esha.jpeg' | asset_url }}"
+            alt="Dt. Esha Sharma"
+            class="ek-mini-image"
+          >
+        </div>
+
+        <div class="ek-mini-content">
+
+          <span class="ek-mini-badge">
+            Nutrition & Holistic Wellness
+          </span>
+
+          <h3 class="ek-mini-name">
+            Dt. Esha Sharma
+          </h3>
+
+          <p class="ek-mini-text">
+            Wellness-focused nutrition expert helping individuals improve
+            lifestyle balance, gut health, hormonal wellness, and sustainable wellbeing naturally.
+          </p>
+
+          <div class="ek-mini-quote">
+            “I resonate deeply with eklyfe™’s clean, natural, and holistic wellness philosophy.”
+          </div>
+
+          <div class="ek-mini-footer">
+            ✔ First Consultation Free
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Expert 2 -->
+      <article class="ek-mini-card">
+
+        <div class="ek-mini-image-wrap">
+          <!-- Replace Later -->
+          <img
+        src="{{ 'ankita.jpeg' | asset_url }}"
+           
+          
+            alt="Dr. Ankita Jain"
+            class="ek-mini-image"
+          >
+        </div>
+
+        <div class="ek-mini-content">
+
+          <span class="ek-mini-badge">
+            Wellness & Aesthetics
+          </span>
+
+          <h3 class="ek-mini-name">
+            Dr. Ankita Jain
+          </h3>
+
+          <p class="ek-mini-text">
+            Focused on inner wellness, lifestyle balance, confidence,
+            self-care, and holistic wellbeing through mindful wellness support.
+          </p>
+
+          <div class="ek-mini-quote">
+            “True wellness is about balance, confidence, vitality, and inner strength.”
+          </div>
+
+          <div class="ek-mini-footer">
+            ✔ First Consultation Free
+          </div>
+
+        </div>
+      </article>
+
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .ek-mini-associates {
+    padding: 6rem 1.5rem;
+    background: linear-gradient(180deg, #ffffff 0%, #f8f4ec 100%);
+  }
+
+  .ek-mini-container {
+    max-width: 1250px;
+    margin: 0 auto;
+  }
+
+  .ek-mini-header {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 4rem;
+  }
+
+  .ek-mini-label {
+    color: #c9a84c;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .ek-mini-title {
+    font-size: clamp(2.2rem, 5vw, 4.2rem);
+    color: #111827;
+    line-height: 1.05;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.04em;
+  }
+
+  .ek-mini-title span {
+    color: #c9a84c;
+  }
+
+  .ek-mini-subtitle {
+    color: #4b5563;
+    line-height: 1.9;
+    font-size: 1.05rem;
+  }
+
+  .ek-mini-grid {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0,1fr));
+    gap: 2rem;
+  }
+
+  .ek-mini-card {
+    background: rgba(255,255,255,0.82);
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 1px solid rgba(17,24,39,0.06);
+    box-shadow:
+      0 10px 30px rgba(17,24,39,0.05),
+      0 25px 60px rgba(17,24,39,0.08);
+    transition: all 0.4s ease;
+  }
+
+  .ek-mini-card:hover {
+    transform: translateY(-8px);
+    box-shadow:
+      0 20px 50px rgba(17,24,39,0.08),
+      0 35px 90px rgba(17,24,39,0.12);
+  }
+
+  .ek-mini-image-wrap {
+    height: 420px;
+    overflow: hidden;
+  }
+
+  .ek-mini-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+
+  .ek-mini-card:hover .ek-mini-image {
+    transform: scale(1.05);
+  }
+
+  .ek-mini-content {
+    padding: 2rem;
+  }
+
+  .ek-mini-badge {
+    display: inline-block;
+    padding: 0.55rem 1rem;
+    border-radius: 999px;
+    background: rgba(201,168,76,0.12);
+    color: #b38b2d;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.2rem;
+  }
+
+  .ek-mini-name {
+    font-size: 1.8rem;
+    color: #111827;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .ek-mini-text {
+    color: #4b5563;
+    line-height: 1.9;
+    margin-bottom: 1.5rem;
+  }
+
+  .ek-mini-quote {
+    padding: 1.3rem;
+    border-radius: 1.2rem;
+    background: rgba(201,168,76,0.08);
+    color: #111827;
+    line-height: 1.8;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .ek-mini-footer {
+    color: #c9a84c;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+  }
+
+  @media (min-width: 900px) {
+    .ek-mini-grid {
+      grid-template-columns: repeat(2, minmax(0,1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ek-mini-associates {
+      padding: 4.5rem 1.2rem;
+    }
+
+    .ek-mini-image-wrap {
+      height: 340px;
+    }
+
+    .ek-mini-content {
+      padding: 1.6rem;
+    }
+
+    .ek-mini-name {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+<section class="amit-testimonial-section py-24 bg-gradient-to-br from-cream via-white to-cream">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <!-- Image Collage -->
+      <div class="image-collage">
+        <div class="collage-grid">
+          <img src="{{ 'amit2.jfif' | asset_url }}" alt="Amit Kumar Verma 1" class="collage-image collage-image-1">
+          <img src="{{ 'amit4.jfif' | asset_url }}" alt="Amit Kumar Verma 2" class="collage-image collage-image-2">
+          <img src="{{ 'amit3.jfif' | asset_url }}" alt="Amit Kumar Verma 3" class="collage-image collage-image-3">
+          <img src="{{ 'amit2.jfif' | asset_url }}" alt="Amit Kumar Verma 4" class="collage-image collage-image-4">
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="testimonial-content">
+        <div class="mb-6">
+          <p class="text-gold text-sm font-semibold tracking-[0.32em] uppercase mb-3">Featured Testimonial</p>
+          <h2 class="text-3xl md:text-4xl font-semibold text-dark tracking-tight mb-6">Meet Amit Kumar Verma</h2>
+        </div>
+
+        <blockquote class="testimonial-quote text-sm md:text-lg leading-relaxed text-gray-700 mb-6">
+          "I am Amit Kumar Verma, a certified Yoga Teacher from Bihar School of Yoga with 9 years of experience in Yoga, Pranayama, Meditation, and holistic wellness. I personally used the Ashwagandha KSM and Shilajit and had a very satisfying experience. I found them helpful for maintaining energy, balance, and overall wellbeing in my daily routine. The quality and authenticity of the products truly impressed me.
+
+          As someone deeply connected with natural health and mindful living, I genuinely appreciate products that support physical and mental wellness naturally. I also recommend these products to my students who are looking to improve their lifestyle, energy levels, and overall health in a natural way."
+        </blockquote>
+
+        <div class="testimonial-author">
+          <p class="font-semibold text-dark">Amit Kumar Verma</p>
+          <p class="text-gold text-sm">Certified Yoga Teacher, Bihar School of Yoga</p>
+          <p class="text-gray-600 text-sm">9 Years Experience in Yoga, Pranayama & Meditation</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .bg-cream { background: #f9f5ee; }
+  .text-gold { color: #c9a84c; }
+  .text-dark { color: #111827; }
+
+  .image-collage {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .collage-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .collage-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .collage-image {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(17,24,39,0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .collage-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(17,24,39,0.2);
+  }
+
+  .collage-image-1 {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .collage-image-2 {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  @media (min-width: 768px) {
+    .collage-image-2 {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  .collage-image-3 {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .collage-image-4 {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  @media (min-width: 768px) {
+    .collage-image-4 {
+      grid-column: 2;
+      grid-row: 2;
+    }
+  }
+
+  .testimonial-content {
+    text-align: center;
+  }
+
+  @media (min-width: 1024px) {
+    .testimonial-content {
+      text-align: left;
+      padding-left: 2rem;
+    }
+  }
+
+  .testimonial-quote {
+    font-style: italic;
+    position: relative;
+  }
+</style>
+
+  

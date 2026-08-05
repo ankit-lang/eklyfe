@@ -1,0 +1,119 @@
+{% doc %}
+  Email signup section for newsletter subscription.
+
+  @example
+  {% section 'email-signup' %}
+{% enddoc %}
+
+<section class="email-signup py-16 bg-gradient-to-br from-green-50 to-green-100">
+  <div class="container mx-auto px-4 text-center">
+    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4 reveal-up">
+      Your Wellness Journey Starts Here
+    </h2>
+    <p class="text-lg text-gray-600 mb-8 max-w-2xl mx-auto reveal-up">
+      Subscribe for Ayurvedic wellness tips, exclusive offers, and eklyfe updates — delivered with care.
+    </p>
+
+    <div class="max-w-md mx-auto reveal-up">
+      {% form 'contact' %}
+        <div class="flex flex-col sm:flex-row gap-4">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="Enter your email address"
+            class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            required
+          >
+          <button
+            type="submit"
+            class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+          >
+            Join the Community
+          </button>
+        </div>
+        {% if form.errors %}
+          <p class="text-red-500 mt-2">{{ form.errors | default_errors }}</p>
+        {% endif %}
+        {% if form.posted_successfully? %}
+          <p class="text-green-600 mt-2">Thank you for subscribing!</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .email-signup {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reveal-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal-up.revealed {
+    opacity: 1;
+    transform: translateY(0);
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal-up').forEach(el => {
+      observer.observe(el);
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Email Signup",
+  "settings": [
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Headline",
+      "default": "Your Wellness Journey Starts Here"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Subscribe for Ayurvedic wellness tips, exclusive offers, and eklyfe updates — delivered with care."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "Join the Community"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Email Placeholder",
+      "default": "Enter your email address"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Email Signup"
+    }
+  ]
+}
+{% endschema %}

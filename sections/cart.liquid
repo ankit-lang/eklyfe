@@ -1,7 +1,19 @@
 <div class="cart-page">
   <div class="cart-header">
-    <h1 class="cart-title">Your Cart</h1>
-    <a href="{{ routes.all_products_collection_url }}" class="continue-shopping">Continue Shopping</a>
+    <div class="cart-header__details">
+      <div>
+        <h1 class="cart-title">{{ 'cart.title' | t }}</h1>
+        <p class="cart-subtitle">
+          {{ cart.item_count }}
+          {% if cart.item_count == 1 %}
+            {{ 'cart.item' | t }}
+          {% else %}
+            {{ 'cart.items' | t }}
+          {% endif %}
+        </p>
+      </div>
+      <a href="{{ routes.all_products_collection_url }}" class="continue-shopping">{{ 'cart.continue_shopping' | t }}</a>
+    </div>
   </div>
 
   {% if cart.item_count > 0 %}
@@ -19,51 +31,76 @@
                   {% endif %}
                 </a>
               </div>
-              
+
               <div class="cart-item__details">
-                <div class="cart-item__info">
+                <div class="cart-item__content">
                   <h3 class="cart-item__title">
                     <a href="{{ item.url }}">{{ item.product.title }}</a>
                   </h3>
                   {% unless item.product.has_only_default_variant %}
                     <p class="cart-item__variant">{{ item.variant.title }}</p>
                   {% endunless %}
-                  <div class="cart-item__price">{{ item.final_price | money }}</div>
+                  <div class="cart-item__pricing">
+                    <span class="cart-item__unit">{{ item.final_price | money }} / {{ 'cart.unit' | t }}</span>
+                    <span class="cart-item__line-total">{{ 'cart.line_total' | t }} {{ item.final_line_price | money }}</span>
+                  </div>
                 </div>
 
                 <div class="cart-item__actions">
                   <div class="quantity-selector">
+                    <button type="button" class="quantity-button quantity-button--decrement" aria-label="{{ 'cart.decrease_quantity' | t }}">−</button>
                     <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" class="quantity-input">
+                    <button type="button" class="quantity-button quantity-button--increment" aria-label="{{ 'cart.increase_quantity' | t }}">+</button>
                   </div>
-                  
-                  <a href="{{ item.url_to_remove }}" class="cart-item__remove">
+                  <a href="{{ item.url_to_remove }}" class="cart-item__remove" aria-label="{{ 'cart.remove' | t }}">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                   </a>
                 </div>
               </div>
             </div>
           {% endfor %}
-          <div class="cart-update-wrapper">
-            <button type="submit" name="update" class="cart-update-btn">Update Cart</button>
-          </div>
+
+          <noscript>
+            <div class="cart-update-wrapper">
+              <button type="submit" name="update" class="cart-update-btn">{{ 'cart.update' | t }}</button>
+            </div>
+          </noscript>
         </div>
 
-        <div class="cart-summary">
+        <aside class="cart-summary">
           <div class="cart-summary__box">
-            <h2 class="cart-summary__title">Order Summary</h2>
-            
+            <h2 class="cart-summary__title">{{ 'cart.order_summary' | t }}</h2>
+            <p class="cart-summary__meta">{{ 'cart.summary_text' | t }}</p>
+
             <div class="cart-summary__row">
-              <span>Subtotal</span>
+              <span>{{ 'cart.subtotal' | t }}</span>
               <span class="cart-summary__subtotal">{{ cart.total_price | money }}</span>
             </div>
-            
-            <p class="cart-summary__note">Taxes and shipping calculated at checkout</p>
-            
-            <button type="submit" name="checkout" class="cart-checkout-btn">
-              Proceed to Checkout
-            </button>
+
+            <!-- Reward Points Incentive Card (Earn for Next Purchase - 10% Rate) -->
+            {% assign points_earned = cart.total_price | divided_by: 1000 | round %}
+            {% assign voucher_amount = points_earned | times: 100 %}
+            <div class="reward-points-card">
+              <div class="reward-points-card__header">
+                <span class="reward-points-card__icon">🎁</span>
+                <div class="reward-points-card__info">
+                  <span class="reward-points-card__title">Earn <strong>{{ points_earned }} Reward Points</strong></span>
+                  <span class="reward-points-card__sub">Sent to your email after checkout for your <strong>NEXT purchase!</strong></span>
+                </div>
+              </div>
+              <div class="reward-points-card__footer">
+                <span class="reward-points-card__perk">✨ Next Order Savings: <strong>{{ voucher_amount | money }} OFF Voucher</strong></span>
+              </div>
+            </div>
+
+            <!-- Pass Earned Points attribute to checkout for next order -->
+            <input type="hidden" name="attributes[Earned_Reward_Points_Next_Order]" value="{{ points_earned }} Points ({{ voucher_amount | money }} Voucher)">
+
+            <p class="cart-summary__note">{{ 'cart.taxes_shipping' | t }}</p>
+
+            <button type="submit" name="checkout" class="cart-checkout-btn">{{ 'cart.proceed_to_checkout' | t }}</button>
           </div>
-        </div>
+        </aside>
       </div>
     </form>
   {% else %}
@@ -71,8 +108,9 @@
       <div class="cart-empty__icon">
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
       </div>
-      <h2>Your cart is currently empty.</h2>
-      <a href="{{ routes.all_products_collection_url }}" class="cart-empty__btn">Start Shopping</a>
+      <h2>{{ 'cart.empty_title' | t }}</h2>
+      <p class="cart-empty__text">{{ 'cart.empty_text' | t }}</p>
+      <a href="{{ routes.all_products_collection_url }}" class="cart-empty__btn">{{ 'cart.start_shopping' | t }}</a>
     </div>
   {% endif %}
 </div>
@@ -84,314 +122,474 @@
     padding: 0 5%;
     animation: fadeIn 0.8s ease-out;
   }
-  
-  .cart-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3rem;
-    border-bottom: 2px solid #e0e0e0;
-    padding-bottom: 1rem;
-  }
-  
-  .cart-title {
-    font-size: 2.5rem;
-    color: #1a4f44;
-    font-weight: 900;
-    margin: 0;
-  }
-  
-  .continue-shopping {
-    color: #f47f20;
-    text-decoration: none;
-    font-weight: bold;
-    text-transform: uppercase;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-    transition: color 0.3s;
-  }
-  
-  .continue-shopping:hover {
-    color: #d16b18;
-  }
-  
-  .cart-layout {
-    display: flex;
-    gap: 3rem;
-    align-items: flex-start;
-  }
-  
-  .cart-items {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-  
-  .cart-item {
-    display: flex;
-    gap: 2rem;
-    background: #fff;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-    transition: transform 0.3s, box-shadow 0.3s;
-    animation: slideUp 0.5s ease-out forwards;
-    opacity: 0;
-  }
-  
-  .cart-item:nth-child(1) { animation-delay: 0.1s; }
-  .cart-item:nth-child(2) { animation-delay: 0.2s; }
-  .cart-item:nth-child(3) { animation-delay: 0.3s; }
-  
-  .cart-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
-  }
-  
-  .cart-item__image-container {
-    width: 120px;
-    height: 120px;
-    border-radius: 8px;
-    overflow: hidden;
-    background: #f9f9f9;
-    flex-shrink: 0;
-  }
-  
-  .cart-item__image {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    mix-blend-mode: multiply;
-  }
-  
-  .cart-item__details {
-    flex: 1;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .cart-item__info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .cart-item__title a {
-    text-decoration: none;
-    color: #333;
-    font-size: 1.2rem;
-    font-weight: bold;
-    transition: color 0.3s;
-  }
-  
-  .cart-item__title a:hover {
-    color: #1a4f44;
-  }
-  
-  .cart-item__variant {
-    color: #888;
-    font-size: 0.9rem;
-    margin: 0;
-  }
-  
-  .cart-item__price {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #1a4f44;
-  }
-  
-  .cart-item__actions {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-  }
-  
-  .quantity-input {
-    width: 60px;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    text-align: center;
-    font-weight: bold;
-    color: #333;
-    transition: border-color 0.3s;
-  }
-  
-  .quantity-input:focus {
-    border-color: #f47f20;
-    outline: none;
-  }
-  
-  .cart-item__remove {
-    color: #ff4d4f;
-    transition: transform 0.2s, color 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px;
-    background: #fff1f0;
-    border-radius: 50%;
-  }
-  
-  .cart-item__remove:hover {
-    transform: scale(1.1) rotate(5deg);
-    color: #d9363e;
-    background: #ffccc7;
-  }
-  
-  .cart-update-wrapper {
-    text-align: right;
-    margin-top: 1rem;
-  }
-  
-  .cart-update-btn {
-    background: transparent;
-    border: 2px solid #1a4f44;
-    color: #1a4f44;
-    padding: 10px 24px;
-    border-radius: 50px;
-    font-weight: bold;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: all 0.3s;
-  }
-  
-  .cart-update-btn:hover {
-    background: #1a4f44;
-    color: #fff;
-  }
-  
-  .cart-summary {
-    flex: 1;
-    position: sticky;
-    top: 100px;
-  }
-  
-  .cart-summary__box {
-    background: #f5f7f6;
-    padding: 2.5rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  }
-  
-  .cart-summary__title {
-    font-size: 1.5rem;
-    color: #1a4f44;
-    font-weight: 800;
-    margin-bottom: 2rem;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 1rem;
-  }
-  
+
   .cart-summary__row {
     display: flex;
     justify-content: space-between;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 1rem;
+    align-items: center;
+    padding: 1rem 0;
+    border-top: 1px solid rgba(16, 58, 47, 0.08);
+    border-bottom: 1px solid rgba(16, 58, 47, 0.08);
+    color: #103a2f;
+    font-weight: 800;
+    font-size: 1.15rem;
   }
-  
-  .cart-summary__subtotal {
-    color: #1a4f44;
-    font-size: 1.4rem;
+
+  /* Reward Points Incentive (Earn for Next Order) */
+  .reward-points-card {
+    background: linear-gradient(135deg, #fffdf2 0%, #fff7d6 100%);
+    border: 1.5px solid #f3e5ab;
+    border-radius: 16px;
+    padding: 14px 16px;
+    margin: 1.25rem 0 1rem;
+    box-shadow: 0 4px 16px rgba(212, 160, 23, 0.08);
   }
-  
-  .cart-summary__note {
+  .reward-points-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .reward-points-card__icon {
+    font-size: 1.6rem;
+    line-height: 1;
+  }
+  .reward-points-card__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .reward-points-card__title {
+    font-size: 0.95rem;
+    color: #4a3a05;
+  }
+  .reward-points-card__title strong {
+    color: #1b4332;
+    font-weight: 800;
+  }
+  .reward-points-card__sub {
+    font-size: 0.8rem;
+    color: #7c6827;
+    line-height: 1.3;
+  }
+  .reward-points-card__sub strong {
+    color: #103a2f;
+  }
+  .reward-points-card__footer {
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px dashed #e8d798;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .reward-points-card__perk {
+    font-size: 0.82rem;
+    color: #1b4332;
+    font-weight: 600;
+  }
+  .reward-points-card__perk strong {
+    color: #f47f20;
+    font-weight: 800;
+  }
+
+  .cart-header__details {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    border-bottom: 1px solid rgba(16, 79, 68, 0.12);
+    padding-bottom: 1.5rem;
+  }
+
+  .cart-title {
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    color: #103a2f;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    margin: 0;
+  }
+
+  .cart-subtitle {
+    margin-top: 0.5rem;
+    color: #5e6b64;
+    font-size: 0.98rem;
+  }
+
+  .continue-shopping {
+    color: #f47f20;
+    text-decoration: none;
+    font-weight: 700;
+    text-transform: uppercase;
     font-size: 0.85rem;
-    color: #666;
-    margin-bottom: 2rem;
-    text-align: center;
+    letter-spacing: 0.15em;
+    transition: color 0.3s ease;
   }
-  
+
+  .continue-shopping:hover {
+    color: #d16b18;
+  }
+
+  .cart-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) 420px;
+    gap: 2.5rem;
+    margin-top: 2rem;
+  }
+
+  .cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .cart-item {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 1.5rem;
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1.5rem;
+    box-shadow: 0 16px 50px rgba(15, 37, 33, 0.06);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    animation: slideUp 0.55s ease-out forwards;
+    opacity: 0;
+  }
+
+  .cart-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 60px rgba(15, 37, 33, 0.09);
+  }
+
+  .cart-item__image-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: #f6f8f5;
+    display: grid;
+    place-items: center;
+  }
+
+  .cart-item__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .cart-item__details {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .cart-item__content {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .cart-item__title a {
+    text-decoration: none;
+    color: #0e2f26;
+    font-size: 1.15rem;
+    font-weight: 800;
+    transition: color 0.25s ease;
+  }
+
+  .cart-item__title a:hover {
+    color: #163f37;
+  }
+
+  .cart-item__variant {
+    color: #5e6b64;
+    font-size: 0.95rem;
+  }
+
+  .cart-item__pricing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: baseline;
+    color: #1a4f44;
+    font-size: 0.97rem;
+    font-weight: 700;
+  }
+
+  .cart-item__unit,
+  .cart-item__line-total {
+    display: inline-flex;
+    gap: 0.35rem;
+  }
+
+  .cart-item__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .quantity-selector {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #dfe6e0;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #f7faf7;
+  }
+
+  .quantity-button {
+    width: 38px;
+    height: 38px;
+    border: none;
+    background: transparent;
+    color: #103a2f;
+    font-size: 1.45rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .quantity-button:hover {
+    background: rgba(244, 127, 32, 0.08);
+  }
+
+  .quantity-input {
+    width: 64px;
+    border: none;
+    padding: 0.8rem 0;
+    text-align: center;
+    font-weight: 700;
+    color: #103a2f;
+    background: transparent;
+    appearance: none;
+  }
+
+  .quantity-input:focus {
+    outline: none;
+  }
+
+  .cart-item__remove {
+    color: #bf1a1a;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #fff1f0;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .cart-item__remove:hover {
+    transform: scale(1.05);
+    background: #ffd7d3;
+  }
+
+  .cart-summary {
+    position: sticky;
+    top: 2rem;
+    align-self: start;
+  }
+
+  .cart-summary__box {
+    position: sticky;
+    top: 2rem;
+    align-self: start;
+  }
+
+  .cart-summary__box {
+    background: linear-gradient(180deg, rgba(255,255,255,0.96) 0%, #f5f9f4 100%);
+    border: 1px solid rgba(16, 58, 47, 0.08);
+    border-radius: 24px;
+    padding: 2rem;
+    box-shadow: 0 22px 40px rgba(15, 37, 33, 0.06);
+  }
+
+  .cart-summary__title {
+    margin: 0 0 0.65rem;
+    color: #103a2f;
+    font-size: 1.5rem;
+    font-weight: 900;
+  }
+
+  .cart-summary__meta {
+    margin: 0 0 1.5rem;
+    color: #55665d;
+    line-height: 1.6;
+  }
+
+  .cart-summary__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 1rem;
+    color: #333;
+  }
+
+  .cart-summary__subtotal {
+    font-size: 1.55rem;
+    font-weight: 900;
+    color: #103a2f;
+  }
+
+  .cart-summary__note {
+    margin: 0 0 1.75rem;
+    color: #6b7b71;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
   .cart-checkout-btn {
     width: 100%;
-    background-color: #f47f20;
-    color: white;
-    border: none;
-    padding: 16px;
-    font-size: 1.1rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: 0 8px 20px rgba(244, 127, 32, 0.3);
-  }
-  
-  .cart-checkout-btn:hover {
-    background-color: #d16b18;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 25px rgba(244, 127, 32, 0.4);
-  }
-  
-  .cart-empty {
-    text-align: center;
-    padding: 5rem 0;
-  }
-  
-  .cart-empty__icon {
-    color: #ccc;
-    margin-bottom: 2rem;
-    animation: float 3s ease-in-out infinite;
-  }
-  
-  .cart-empty h2 {
-    color: #1a4f44;
-    margin-bottom: 2rem;
-  }
-  
-  .cart-empty__btn {
-    display: inline-block;
-    background-color: #1a4f44;
+    background: #f47f20;
+    border: 1px solid transparent;
     color: #fff;
-    padding: 14px 36px;
+    padding: 1rem 1.15rem;
+    cursor: pointer;
+  }
+
+  .cart-checkout-btn:hover {
+    background: #de6e1c;
+  }
+
+  .cart-empty {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 1.25rem;
+    background: #f7faf7;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    box-shadow: 0 18px 40px rgba(15, 37, 33, 0.05);
+  }
+
+  .cart-empty__icon {
+    color: #103a2f;
+  }
+
+  .cart-empty h2 {
+    margin: 0;
+    color: #103a2f;
+    font-size: 1.7rem;
+  }
+
+  .cart-empty__text {
+    margin: 0;
+    color: #5e6b64;
+    max-width: 36rem;
+  }
+
+  .cart-empty__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    font-weight: bold;
-    border-radius: 50px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s;
+    color: #fff;
+    background: #103a2f;
+    padding: 0.95rem 2rem;
+    border-radius: 999px;
+    font-weight: 700;
+    transition: background-color 0.2s ease;
   }
-  
+
   .cart-empty__btn:hover {
-    background-color: #123830;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px rgba(26, 79, 68, 0.2);
+    background: #0b2a23;
   }
-  
+
+  @media (max-width: 980px) {
+    .cart-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .cart-summary {
+      position: relative;
+      top: 0;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .cart-item {
+      grid-template-columns: 1fr;
+    }
+
+    .cart-item__image-container {
+      width: 100%;
+      height: 220px;
+    }
+
+    .cart-item__actions {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
+
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  
+
   @keyframes float {
     0% { transform: translateY(0); }
     50% { transform: translateY(-15px); }
     100% { transform: translateY(0); }
   }
-  
-  @media (max-width: 768px) {
-    .cart-layout {
-      flex-direction: column;
-    }
-    
-    .cart-item__details {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1.5rem;
-    }
-    
-    .cart-item__actions {
-      width: 100%;
-      justify-content: space-between;
-    }
-  }
 {% endstylesheet %}
+
+{% javascript %}
+  document.addEventListener('DOMContentLoaded', function () {
+    var cartForm = document.querySelector('.cart-form');
+    var timer;
+
+    if (!cartForm) return;
+
+    function submitCartForm() {
+      cartForm.submit();
+    }
+
+    function onQuantityChange() {
+      clearTimeout(timer);
+      timer = setTimeout(submitCartForm, 450);
+    }
+
+    document.querySelectorAll('.quantity-button').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var input = this.parentElement.querySelector('.quantity-input');
+        if (!input) return;
+
+        var value = parseInt(input.value, 10) || 0;
+        if (this.classList.contains('quantity-button--increment')) {
+          input.value = value + 1;
+        } else {
+          input.value = Math.max(0, value - 1);
+        }
+
+        onQuantityChange();
+      });
+    });
+
+    document.querySelectorAll('.quantity-input').forEach(function (input) {
+      input.addEventListener('change', onQuantityChange);
+    });
+  });
+{% endjavascript %}
+
+<script>
+(function() {
+  var cartForm = document.querySelector('.cart-form');
+  if (cartForm) {
+    cartForm.addEventListener('submit', function() {
+      try {
+        var pointsEarned = {{ points_earned | default: 0 }};
+        var current = parseInt(localStorage.getItem('eklyfe_reward_points') || '0', 10);
+        localStorage.setItem('eklyfe_reward_points', current + pointsEarned);
+      } catch(e) {}
+    });
+  }
+})();
+</script>
 
 {% schema %}
 {

@@ -1,0 +1,342 @@
+{% doc %}
+  Renders an ultra-premium centered modal popup for first-order discounts with backdrop blur.
+
+  @param {string} [discount_code] - Coupon code to offer (default: 'FIRST50')
+  @param {string} [amount] - Discount amount text (default: '₹50')
+
+  @example
+  {% render 'first-order-popup', discount_code: 'FIRST50', amount: '₹50' %}
+{% enddoc %}
+
+{% assign code = discount_code | default: 'FIRST50' %}
+{% assign reward_val = amount | default: '₹50' %}
+
+<!-- Backdrop Blur Overlay -->
+<div class="ek-modal-backdrop" id="ekModalBackdrop" style="display: none;" onclick="ekCloseFirstOrderToast()"></div>
+
+<!-- Centered Modal Card -->
+<div class="ek-modal-card" id="ekFirstOrderToast" style="display: none;" role="dialog" aria-modal="true">
+  <button type="button" class="ek-modal-close" onclick="ekCloseFirstOrderToast()" aria-label="Close">×</button>
+  
+  <div class="ek-modal-header">
+    <div class="ek-modal-icon-badge">🎁</div>
+    <div class="ek-modal-tag">1st Order Special Offer</div>
+  </div>
+
+  <div class="ek-modal-body">
+    {% if customer %}
+      <h3 class="ek-modal-title">🎉 Welcome! Here is your <strong>{{ reward_val }} OFF</strong> Code</h3>
+      <p class="ek-modal-desc">
+        Code <strong>{{ code }}</strong> is unlocked! Copy it or click Auto-Apply below to activate it for checkout.
+      </p>
+
+      <div class="ek-modal-unlocked-box">
+        <div class="ek-modal-code-row">
+          <span>Coupon Code:</span>
+          <strong class="ek-modal-code-pill">{{ code }}</strong>
+        </div>
+        
+        <div class="ek-modal-btn-group">
+          <button type="button" onclick="ekCopyToastCode('{{ code }}', this)" class="ek-modal-btn-secondary">
+            📋 Copy Code
+          </button>
+          <button type="button" onclick="ekAutoApplyToastCode('{{ code }}', this)" class="ek-modal-btn-primary">
+            ✨ Auto-Apply to Checkout
+          </button>
+        </div>
+      </div>
+    {% else %}
+      <h3 class="ek-modal-title">Get <strong>{{ reward_val }} OFF</strong> on Your 1st Purchase!</h3>
+      <p class="ek-modal-desc">
+        Log in or create an account to unlock your <strong>{{ reward_val }}</strong> first order discount code.
+      </p>
+      
+      <div class="ek-modal-actions">
+        <a href="{{ routes.account_login_url }}" class="ek-modal-btn-primary">
+          Login to Get {{ reward_val }} Code →
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  /* Backdrop overlay */
+  .ek-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 999998;
+    background: rgba(10, 25, 20, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: fadeIn 0.3s ease forwards;
+  }
+
+  /* Centered Modal Card */
+  .ek-modal-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.92);
+    z-index: 999999;
+    max-width: 440px;
+    width: calc(100vw - 32px);
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 2.25rem 2rem 2rem;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(16, 58, 47, 0.08);
+    text-align: center;
+    animation: modalPopIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes modalPopIn {
+    to {
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+
+  .ek-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 18px;
+    background: #f4f6f4;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    color: #666;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .ek-modal-close:hover {
+    background: #e1e6e2;
+    color: #103a2f;
+  }
+
+  .ek-modal-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .ek-modal-icon-badge {
+    font-size: 2.8rem;
+    line-height: 1;
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #fff9e6, #fff0b3);
+    border: 2px solid #ffe08a;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 8px 24px rgba(244, 127, 32, 0.15);
+  }
+
+  .ek-modal-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #f47f20;
+    background: rgba(244, 127, 32, 0.08);
+    padding: 4px 14px;
+    border-radius: 50px;
+  }
+
+  .ek-modal-title {
+    margin: 0 0 0.5rem;
+    font-size: 1.35rem;
+    color: #103a2f;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+  }
+
+  .ek-modal-title strong {
+    color: #f47f20;
+  }
+
+  .ek-modal-desc {
+    margin: 0 0 1.5rem;
+    font-size: 0.92rem;
+    color: #55665d;
+    line-height: 1.55;
+  }
+
+  .ek-modal-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background: #103a2f;
+    color: #ffffff !important;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 14px 20px;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 8px 24px rgba(16, 58, 47, 0.2);
+  }
+  .ek-modal-btn-primary:hover {
+    background: #1b5344;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(16, 58, 47, 0.3);
+  }
+  
+  .ek-modal-unlocked-box {
+    background: #f4faf6;
+    border: 1.5px dashed #27ae60;
+    padding: 14px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .ek-modal-code-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #103a2f;
+    font-weight: 600;
+  }
+  .ek-modal-code-pill {
+    background: #ffffff;
+    border: 1px solid #a3e4d7;
+    padding: 5px 14px;
+    border-radius: 8px;
+    color: #1e8449;
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+  }
+  .ek-modal-btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.6rem;
+  }
+  .ek-modal-btn-secondary {
+    background: #103a2f;
+    color: #ffffff;
+    border: none;
+    padding: 11px 12px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .ek-modal-btn-secondary:hover {
+    background: #1b5344;
+  }
+
+  @media (max-width: 600px) {
+    .ek-modal-card {
+      padding: 2rem 1.5rem 1.5rem;
+    }
+    .ek-modal-btn-group {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+(function() {
+  function applyDiscountToPageForms(code) {
+    document.querySelectorAll('form[action*="/cart"]').forEach(function(form) {
+      var existing = form.querySelector('input[name="discount"]');
+      if (!existing) {
+        existing = document.createElement('input');
+        existing.type = 'hidden';
+        existing.name = 'discount';
+        form.appendChild(existing);
+      }
+      existing.value = code;
+    });
+  }
+
+  function initToast() {
+    try {
+      if (localStorage.getItem('ek_first_order_toast_dismissed')) return;
+      var autoCode = localStorage.getItem('ek_auto_applied_discount');
+      if (autoCode) {
+        applyDiscountToPageForms(autoCode);
+      }
+    } catch(e) {}
+
+    setTimeout(function() {
+      var backdrop = document.getElementById('ekModalBackdrop');
+      var toast = document.getElementById('ekFirstOrderToast');
+      if (backdrop) backdrop.style.display = 'block';
+      if (toast) toast.style.display = 'block';
+    }, 2000);
+  }
+
+  window.ekCopyToastCode = function(code, btnEl) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(code);
+    } else {
+      var temp = document.createElement('textarea');
+      temp.value = code;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+    }
+
+    if (btnEl) {
+      var origText = btnEl.textContent;
+      btnEl.textContent = '✓ Copied!';
+      btnEl.style.background = '#1e8449';
+      setTimeout(function() {
+        btnEl.textContent = origText;
+        btnEl.style.background = '#103a2f';
+      }, 3000);
+    }
+  };
+
+  window.ekAutoApplyToastCode = function(code, btnEl) {
+    try {
+      localStorage.setItem('ek_auto_applied_discount', code);
+    } catch(e) {}
+
+    applyDiscountToPageForms(code);
+
+    if (btnEl) {
+      btnEl.textContent = '✓ Auto-Applied!';
+      btnEl.style.background = '#1e8449';
+    }
+
+    var toastMsg = document.createElement('div');
+    toastMsg.style.cssText = 'position:fixed;top:20px;right:20px;background:#27ae60;color:#fff;padding:12px 20px;border-radius:10px;z-index:999999;font-weight:700;font-size:0.9rem;box-shadow:0 8px 24px rgba(0,0,0,0.2);';
+    toastMsg.textContent = '🎉 Code "' + code + '" Auto-Applied for Checkout!';
+    document.body.appendChild(toastMsg);
+    setTimeout(function() { document.body.removeChild(toastMsg); }, 3500);
+  };
+
+  window.ekCloseFirstOrderToast = function() {
+    var backdrop = document.getElementById('ekModalBackdrop');
+    var toast = document.getElementById('ekFirstOrderToast');
+    if (backdrop) backdrop.style.display = 'none';
+    if (toast) toast.style.display = 'none';
+    try {
+      localStorage.setItem('ek_first_order_toast_dismissed', '1');
+    } catch(e) {}
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initToast);
+  } else {
+    initToast();
+  }
+})();
+</script>

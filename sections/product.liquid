@@ -1,247 +1,1182 @@
 {% comment %}
-  EKLYFE Premium Product Page Template
-  Features: Inner Pan Zoom, Tailwind UI, Custom Variant Selector
+  EKLYFE Premium Product Section
+  Beautiful UI + Full Shopify Liquid Integration
+  Features: Inner Pan Zoom · Variant Selector · Tabs · Quantity · ATC Form
 {% endcomment %}
 
 {% assign current_variant = product.selected_or_first_available_variant %}
 
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 product-section" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}">
-  
-  <div class="flex flex-col lg:flex-row gap-12">
-    
-    <div class="w-full lg:w-1/2 flex gap-4 fade-in relative">
-      
-      <div class="w-24 flex flex-col gap-3 overflow-y-auto h-[500px] scrollbar-hide py-1">
-        {% for image in product.images %}
-          <button type="button" class="thumb-btn border-2 {% if forloop.first %}border-brand-green{% else %}border-transparent{% endif %} rounded-md overflow-hidden transition-all duration-200" onclick="changeImage('{{ image | img_url: 'master' }}', this)">
-            <img src="{{ image | img_url: 'compact' }}" alt="{{ image.alt | escape }}" class="w-full h-auto object-cover {% if forloop.first %}opacity-100{% else %}opacity-70{% endif %} hover:opacity-100">
-          </button>
-        {% endfor %}
-      </div>
+{% assign product_tagline             = '' %}
+{% assign product_short_description  = '' %}
+{% assign product_benefits           = '' %}
+{% assign product_who_is_for         = '' %}
+{% assign product_how_to_use         = '' %}
+{% assign product_details            = '' %}
+{% assign product_important_note     = '' %}
+{% assign product_quality_note       = '' %}
+{% assign product_full_description   = '' %}
 
-      <div class="flex-1 relative">
-        {% if product.tags contains 'Best Seller' %}
-          <span class="absolute top-4 left-0 z-10 bg-[#5c4033] text-white text-xs font-bold px-3 py-1 uppercase tracking-wide rounded-r-md shadow-sm">Best Seller</span>
-        {% endif %}
-        
-        <div 
-          id="zoom-container" 
-          class="w-full h-[500px] bg-gray-50 relative shadow-sm border border-gray-100 rounded-md overflow-hidden cursor-crosshair transition-all"
-          onmousemove="handleZoom(event)" 
-          onmouseenter="enterZoom()" 
-          onmouseleave="leaveZoom()"
-        >
-          <img 
-            id="main-product-image" 
-            src="{{ product.featured_image | img_url: 'master' }}" 
-            alt="{{ product.title | escape }}" 
-            class="w-full h-full object-contain transition-opacity duration-300 pointer-events-none"
-          >
-        </div>
-      </div>
-    </div>
+{% case product.handle %}
 
-    <div class="w-full lg:w-1/2 flex flex-col fade-in" style="animation-delay: 0.1s;">
-      
-      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2 leading-tight">{{ product.title }}</h1>
-      
-      <div class="flex items-center gap-4 mb-6">
-        <div class="flex items-center text-yellow-400">
-          {% for i in (1..5) %}
-            <svg class="w-5 h-5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+  {% when 'shilajit-resin-20g' %}
+    {% assign product_tagline = 'The Conqueror of Mountains · The Destroyer of Weakness' %}
+    {% capture product_short_description %}Shilajit — the legendary mineral resin sourced from the high Himalayas — has been treasured in Ayurveda for over 3,000 years as one of nature's most potent rejuvenators. eklyfe Shilajit Resin brings you 20g of pure, authentic resin with 70%+ fulvic acid content — the highest bioactive marker of quality and potency.{% endcapture %}
+    {% capture product_full_description %}In Ayurveda, Shilajit is classified as a Rasayana — a rejuvenating substance that promotes longevity, restores vitality, and strengthens every system in the body. Modern science validates this wisdom: fulvic acid, the primary active compound, acts as a powerful carrier molecule, enhancing mitochondrial energy production at the cellular level.
+
+eklyfe Shilajit Resin is carefully purified using traditional water-extraction methods to remove impurities while preserving all naturally occurring minerals, trace elements, and bioactive compounds. No fillers. No capsule shell. Just pure resin — exactly as nature created it.{% endcapture %}
+    {% assign product_benefits = 'Restores and sustains deep physical energy and stamina|Supports testosterone levels and male reproductive health|Enhances mitochondrial function — cellular energy production|Accelerates muscle recovery after exercise|Improves cognitive function, focus, and mental clarity|Supports healthy iron levels and blood oxygenation|Acts as a powerful antioxidant — slows cellular aging|Strengthens immunity and overall vitality' | split: '|' %}
+    {% capture product_who_is_for %}Men and women seeking natural energy, strength, and vitality restoration. Particularly beneficial for men over 30 experiencing fatigue, low stamina, or reduced physical performance. Also excellent for athletes, active professionals, and anyone wanting deep cellular nourishment.{% endcapture %}
+    {% capture product_how_to_use %}Take a pea-sized amount (approximately 300–500mg) of resin and dissolve it in warm water, warm milk, or herbal tea. Stir well and consume once daily, preferably in the morning on an empty stomach or as directed by your healthcare provider. Do not consume with cold water.{% endcapture %}
+    {% capture product_quality_note %}Fulvic acid content is the gold standard for Shilajit quality. At 70%+, our resin offers superior bioavailability and potency compared to most commercially available products that contain 20–40%. More fulvic acid means better cellular delivery, faster results, and genuine therapeutic value.{% endcapture %}
+    {% assign product_details = 'Net Weight: 20g pure resin|Fulvic Acid Content: 70%+|Form: Resin (not powder, not capsule)|No artificial additives, fillers, or preservatives|Naturally sourced · Traditionally purified' | split: '|' %}
+    {% capture product_important_note %}Consult your healthcare provider before use if you have a health condition or are on medication. Not recommended during pregnancy. Store in a cool, dry place. Keep out of reach of children.{% endcapture %}
+
+  {% when 'shilajit-gold-resin-20g' %}
+    {% assign product_tagline = 'Ancient Gold · Supreme Vitality' %}
+    {% capture product_short_description %}eklyfe Shilajit Gold Resin elevates the legendary power of pure Himalayan Shilajit with the time-honored Ayurvedic wisdom of gold enrichment (Swarna Bhasma infusion). 20g of premium resin with 70%+ fulvic acid — for those who seek the highest level of natural rejuvenation.{% endcapture %}
+    {% capture product_full_description %}In classical Ayurveda, Swarna (gold) is considered the most sattvic and potent of all metals — known for its unparalleled ability to promote Ojas (vital essence), sharpen intellect, strengthen immunity, and deeply nourish reproductive vitality. When combined with Shilajit's own extraordinary bioactivity, the result is a formulation of exceptional potency.
+
+Shilajit Gold is traditionally recommended for those who want not just restoration but elevation — a deeper level of rejuvenation that addresses body, mind, and spirit. eklyfe Shilajit Gold Resin delivers this ancient premium formula with the same purity standards: no fillers, no synthetic additives, no shortcuts.{% endcapture %}
+    {% assign product_benefits = 'All the benefits of pure Shilajit Resin, elevated|Supports superior hormonal balance, especially testosterone and reproductive health|Deeply nourishes Ojas — the Ayurvedic essence of immunity and vitality|Promotes cognitive sharpness, memory, and mental resilience|Supports healthy aging and cellular longevity|Enhances physical endurance and recovery at a deeper level|Supports heart health and cardiovascular strength|Traditionally used for stress recovery and nervous system support' | split: '|' %}
+    {% capture product_who_is_for %}Men and women wanting a premium, elevated supplement experience. Particularly suited for those experiencing deeper fatigue, hormonal imbalance, stress-related decline, or anyone who wants the highest potency Ayurvedic rejuvenation formula available.{% endcapture %}
+    {% capture product_how_to_use %}Take a pea-sized amount (approximately 300–500mg) and dissolve in warm water, warm milk, or herbal tea once daily. Best taken in the morning. Do not mix with cold liquids.{% endcapture %}
+    {% assign product_details = 'Net Weight: 20g premium resin|Fulvic Acid Content: 70%+|Contains: Shilajit + Swarna (gold) enrichment|Form: Resin|No artificial additives or preservatives' | split: '|' %}
+    {% capture product_important_note %}Consult your healthcare provider before use, especially if pregnant, nursing, or managing a health condition. Keep in a cool, dry place.{% endcapture %}
+
+  {% when 'veg-omega' %}
+    {% assign product_tagline = 'Nourish What Matters Most · Without Compromise' %}
+    {% capture product_short_description %}Pure, plant-sourced Omega fatty acids for daily heart, brain, and whole-body nourishment — 100% vegan, no fish oil, no aftertaste. Just clean essential nutrition your cells crave every single day.{% endcapture %}
+    {% capture product_full_description %}In Ayurveda, the concept of Sneha — meaning both oil and love — reflects the deep understanding that the body requires the right fats to function, heal, and thrive. Omega fatty acids are essential to this balance, yet most modern diets leave us chronically deficient.
+
+eklyfe Veg Omega bridges that gap with a clean, potent, plant-derived formula that delivers the essential fatty acids your body needs without any of the concerns associated with fish-based supplements: no contamination risk, no environmental burden, and absolutely no fishy aftertaste.{% endcapture %}
+    {% assign product_benefits = 'Supports heart health and healthy cholesterol balance|Promotes cognitive function, mental clarity, and focus|Helps reduce systemic inflammation throughout the body|Supports joint flexibility, mobility, and comfort|Nourishes skin, hair, and nails from within|Supports healthy vision and eye function|Essential for cellular membrane health and regeneration' | split: '|' %}
+    {% capture product_who_is_for %}Men and women of all ages who want to support long-term cardiovascular, cognitive, and cellular health through a clean, plant-based daily supplement. Especially important for vegetarians and vegans.{% endcapture %}
+    {% capture product_how_to_use %}Take 2 capsules daily with water, ideally with a meal containing healthy fats for optimal absorption.{% endcapture %}
+    {% assign product_details = '60 Vegan Capsules per bottle (30-day supply)|100% plant-derived Omega fatty acids|No fish oil · No fishy aftertaste|Free from soy, gluten, and artificial additives' | split: '|' %}
+    {% capture product_important_note %}If you are on blood-thinning medication or have a cardiovascular condition, consult your doctor before use.{% endcapture %}
+
+  {% when 'ashwagandha-ksm-66' %}
+    {% assign product_tagline = 'Ancient Calm · Modern Life' %}
+    {% capture product_short_description %}The world's most clinically studied Ashwagandha extract — KSM-66 — in a premium vegan formula. Restore resilience, reduce cortisol, and reclaim the energy that chronic stress has quietly been taking from you.{% endcapture %}
+    {% capture product_full_description %}For thousands of years, Ashwagandha has been revered in Ayurveda as a Rasayana — a supreme rejuvenator and adaptogen that helps the body find balance in the face of stress. The Sanskrit name itself means "strength of a horse" — and this remarkable herb lives up to its name.
+
+eklyfe Ashwagandha KSM-66 uses the gold standard extract: the highest-concentration, full-spectrum Ashwagandha root extract available, backed by over 22 published clinical trials. Each capsule contains a full therapeutic dose — not a trace amount added merely to appear on an ingredient label.{% endcapture %}
+    {% assign product_benefits = 'Significantly reduces cortisol levels and the physiological impact of stress|Supports a calm, balanced anxiety response|Restores sustained energy and combats chronic fatigue|Enhances physical performance, endurance, and post-exercise recovery|Supports healthy thyroid and adrenal function|Improves sleep quality and duration|Enhances cognitive function, focus, and working memory|Supports hormonal balance in both men and women' | split: '|' %}
+    {% capture product_who_is_for %}Men and women experiencing chronic stress, burnout, anxiety, fatigue, brain fog, poor sleep, or hormonal imbalance. Also ideal for professionals under pressure, athletes seeking faster recovery, and anyone wanting to build deeper resilience.{% endcapture %}
+    {% capture product_how_to_use %}Take 1–2 capsules daily with water, preferably in the morning or early evening. Use consistently for 4–8 weeks for maximum benefit.{% endcapture %}
+    {% assign product_details = '60 Vegan Capsules per bottle|KSM-66 — Full Spectrum Root Extract|Premium Formulation · Certified high-withanolide content|Non-GMO · Gluten-free · No artificial additives' | split: '|' %}
+    {% capture product_important_note %}Not recommended during pregnancy. Consult your doctor if you have thyroid conditions or are on immunosuppressant medications.{% endcapture %}
+
+  {% when 'shatavari-lodhra-ashwagandha', 'womens-wellness-shatavari-lodhra-ashwagandha' %}
+    {% assign product_tagline = 'A Sacred Trio for the Modern Woman' %}
+    {% capture product_short_description %}Three of Ayurveda's most celebrated herbs for feminine wellness — Shatavari, Lodhra, and Ashwagandha — combined in one powerful formula. For hormonal balance, reproductive health, and the deep vitality every woman deserves.{% endcapture %}
+    {% capture product_full_description %}In Ayurveda, women's health is a sacred science. For centuries, herbs like Shatavari, Lodhra, and Ashwagandha have been prescribed by Ayurvedic physicians as the foundational trio for feminine vitality — supporting the body through every phase of a woman's life, from reproductive years through perimenopause and beyond.
+
+eklyfe brings these three time-honored herbs together in precise, therapeutic proportions — honoring the traditional formulation while ensuring each ingredient meets our highest standards for potency and purity.{% endcapture %}
+    {% assign product_benefits = 'Supports natural hormonal balance throughout the menstrual cycle|Helps regulate irregular periods and manage menstrual discomfort|Beneficial for PCOS — supports hormone regulation and ovarian health|Supports reproductive wellness and fertility|Reduces the impact of stress on female hormonal health|Promotes energy, strength, and resilience in women|Nourishes and supports the female reproductive system|Supports perimenopause and menopausal transition|Builds long-term Ojas — deep immunity and vitality' | split: '|' %}
+    {% capture product_who_is_for %}Women aged 18 and above dealing with hormonal imbalance, irregular cycles, PCOS, stress-related hormonal disruption, perimenopausal symptoms, low energy, or those simply wanting to deeply nourish their feminine vitality through Ayurveda.{% endcapture %}
+    {% capture product_how_to_use %}Take 2 capsules daily with warm water or milk, preferably with a meal. Use consistently for at least 8–12 weeks for full hormonal and reproductive benefits.{% endcapture %}
+    {% assign product_details = '60 Vegan Capsules per bottle|Contains: Shatavari + Lodhra + Ashwagandha in therapeutic doses|100% plant-based · No artificial additives|Ayurvedic classical formulation' | split: '|' %}
+    {% capture product_important_note %}Consult your doctor before use if pregnant, nursing, or managing PCOS, endometriosis, or any reproductive health condition. Not intended to replace medical treatment.{% endcapture %}
+
+  {% when 't-boost' %}
+    {% assign product_tagline = 'Reclaim Your Vitality · Naturally' %}
+    {% capture product_short_description %}A premium, plant-powered testosterone support formula for men who want to feel strong, sharp, and fully energized — without synthetic hormones, without harsh stimulants, and without compromising on what they put in their bodies.{% endcapture %}
+    {% capture product_full_description %}Testosterone declines naturally with age — and the effects are often subtle but deeply felt: fatigue that sleep does not fix, motivation that has quietly faded, physical recovery that takes longer than it used to, and a sense that something has shifted. T Boost by eklyfe is formulated to naturally support your body's own testosterone production — working with your endocrine system, not overriding it.
+
+In Ayurveda, male vitality is connected to the concept of Shukra Dhatu — the tissue of reproductive essence, strength, and life force. T Boost is designed around this understanding, combining Ayurvedic herbs and nutritional compounds in therapeutic doses that genuinely support hormonal health.{% endcapture %}
+    {% assign product_benefits = 'Supports natural testosterone production in men|Improves physical energy, drive, and sustained stamina|Enhances muscle strength and exercise recovery|Supports healthy libido and sexual wellness|Improves mental focus, motivation, and cognitive drive|Helps maintain healthy estrogen balance in men|Supports long-term hormonal health and vitality|Free from the side effects associated with synthetic testosterone' | split: '|' %}
+    {% capture product_who_is_for %}Men aged 25 and above experiencing fatigue, low libido, reduced strength, brain fog, mood shifts, or decreased physical performance. Also suitable for active men and athletes wanting to naturally optimize hormonal performance.{% endcapture %}
+    {% capture product_how_to_use %}Take 2 capsules daily with water, preferably with a meal. Use consistently for 8–12 weeks to experience full benefits.{% endcapture %}
+    {% assign product_details = '60 Vegan Capsules per bottle (30-day supply)|Premium Formulation · 100% plant-based|No synthetic hormones · No harsh stimulants|Non-GMO · No artificial additives or preservatives' | split: '|' %}
+    {% capture product_important_note %}For adult men only. Not suitable for anyone under 18. Consult your doctor if you have a hormonal condition or are on medication.{% endcapture %}
+
+{% endcase %}
+
+{{- '//fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap' | stylesheet_tag -}}
+
+<div class="ek-product-page" id="ProductSection-{{ section.id }}" data-section-id="{{ section.id }}">
+
+  <!-- ─── BREADCRUMB ─── -->
+  <nav class="ek-breadcrumb" aria-label="breadcrumb">
+    <a href="/">Home</a>
+    <span aria-hidden="true">›</span>
+    <a href="/collections/all">Products</a>
+    <span aria-hidden="true">›</span>
+    <span>{{ product.title | escape }}</span>
+  </nav>
+
+  <!-- ─── TWO-COLUMN LAYOUT ─── -->
+  <div class="ek-layout">
+
+    <!-- ══ LEFT: GALLERY ══ -->
+    <div class="ek-gallery-col ek-fade-up">
+      <div class="ek-gallery-wrap">
+
+        <!-- Thumbnails -->
+        <div class="ek-thumb-strip" id="ekThumbStrip">
+          {% for image in product.images %}
+            <button
+              type="button"
+              class="ek-thumb {% if forloop.first %}ek-thumb--active{% endif %}"
+              onclick="ekSwitchImage(this, '{{ image | img_url: 'master' }}')"
+              aria-label="View image {{ forloop.index }}"
+            >
+              <img
+                src="{{ image | img_url: 'compact' }}"
+                alt="{{ image.alt | escape | default: product.title }}"
+                loading="lazy"
+              >
+            </button>
           {% endfor %}
         </div>
+
+        <!-- Main image with zoom -->
+        <div
+          class="ek-main-image-wrap"
+          id="ekZoomContainer"
+          onmousemove="ekDoZoom(event)"
+          onmouseenter="ekEnterZoom()"
+          onmouseleave="ekLeaveZoom()"
+        >
+          {% if product.tags contains 'Best Seller' %}
+            <span class="ek-badge-bestseller">Best Seller</span>
+          {% endif %}
+
+          <img
+            id="ekMainImg"
+            src="{{ product.featured_image | img_url: 'master' }}"
+            alt="{{ product.featured_image.alt | escape | default: product.title }}"
+            class="ek-main-img"
+          >
+          <div class="ek-zoom-hint" aria-hidden="true">Hover to zoom</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ RIGHT: PRODUCT DETAILS ══ -->
+    <div class="ek-detail-col">
+
+      <!-- Title + Stars -->
+      <div class="ek-fade-up ek-delay-1">
+        {% if product_tagline != '' %}
+          <p class="ek-tagline">{{ product_tagline }}</p>
+        {% endif %}
+
+        <h1 class="ek-product-title">{{ product.title | escape }}</h1>
+
+        <div class="ek-stars" aria-label="5 out of 5 stars">
+          <span>★★★★★</span>
+          <span class="ek-review-count">4.9 · 312 reviews</span>
+        </div>
       </div>
 
-      <div class="text-gray-600 mb-6 leading-relaxed text-sm">
-        {{ product.description }}
-      </div>
+      <!-- Short description card -->
+      {% if product_short_description != '' %}
+        <div class="ek-desc-card ek-fade-up ek-delay-2">
+          <p class="ek-desc-text">{{ product_short_description }}</p>
+        </div>
+      {% elsif product.description != blank %}
+        <div class="ek-desc-card ek-fade-up ek-delay-2">
+          <div class="ek-rte ek-desc-text">{{ product.description }}</div>
+        </div>
+      {% endif %}
 
-      <div class="product-form mt-auto">
-        {% form 'product', product, id: "add-to-cart-form" %}
-          
-          {% unless product.has_only_default_variant %}
-            <div class="mb-8">
-              <h3 class="text-lg font-semibold text-gray-900 mb-4">Choose Your Pack</h3>
-              <div class="space-y-3">
-                {% for variant in product.variants %}
-                  <label class="variant-label relative flex items-center justify-between p-4 border-2 rounded-lg cursor-pointer transition-colors shadow-sm {% if variant == current_variant %}border-brand-green bg-brand-light{% else %}border-gray-200 hover:border-gray-300 hover:bg-gray-50{% endif %}" onclick="updateVariantSelection(this)">
-                    
-                    <div class="flex items-center">
-                      <input type="radio" name="id" value="{{ variant.id }}" class="h-4 w-4 text-brand-green border-gray-300 focus:ring-brand-green" {% if variant == current_variant %}checked{% endif %} {% unless variant.available %}disabled{% endunless %}>
-                      <div class="ml-4">
-                        <span class="block text-sm font-bold text-gray-900">
-                          {{ variant.title }}
-                          {% if variant.compare_at_price > variant.price %}
-                            <span class="bg-brand-green text-white text-xs px-2 py-0.5 rounded ml-2">SALE</span>
-                          {% endif %}
-                        </span>
-                        {% unless variant.available %}
-                          <span class="block text-xs text-red-500 mt-1">Out of Stock</span>
-                        {% endunless %}
-                      </div>
-                    </div>
-                    
-                    <div class="text-right">
-                      <span class="block text-lg font-bold text-gray-900">{{ variant.price | money }}</span>
-                      {% if variant.compare_at_price > variant.price %}
-                        <span class="block text-xs text-gray-500 line-through">{{ variant.compare_at_price | money }}</span>
-                      {% endif %}
-                    </div>
+      <!-- Benefits -->
+      {% if product_benefits != '' %}
+        <div class="ek-benefits-section ek-fade-up ek-delay-2">
+          <p class="ek-section-label">Key benefits</p>
+          <ul class="ek-benefits-grid">
+            {% for benefit in product_benefits %}
+              <li class="ek-benefit-pill">
+                <span class="ek-chk" aria-hidden="true">✦</span>
+                {{ benefit }}
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
 
-                  </label>
-                {% endfor %}
+      <!-- ── PRODUCT FORM ── -->
+      {% form 'product', product, id: 'ek-atc-form', data-product-form: '' %}
+
+        <!-- Variant selector -->
+        {% unless product.has_only_default_variant %}
+          <div class="ek-variants-section ek-fade-up ek-delay-3">
+            <p class="ek-section-label">Choose your pack</p>
+
+            {% for variant in product.variants %}
+              <label
+                class="ek-variant-card {% if variant == current_variant %}ek-variant-card--selected{% endif %}"
+                for="variant-{{ variant.id }}"
+                onclick="ekSelectVariant(this)"
+              >
+                <div class="ek-variant-radio">
+                  <div class="ek-variant-radio-dot"></div>
+                </div>
+
+                <input
+                  type="radio"
+                  id="variant-{{ variant.id }}"
+                  name="id"
+                  value="{{ variant.id }}"
+                  class="ek-sr-only"
+                  {% if variant == current_variant %}checked{% endif %}
+                  {% unless variant.available %}disabled{% endunless %}
+                  onchange="ekUpdatePrice(this)"
+                >
+
+                <div class="ek-variant-info">
+                  <span class="ek-variant-name">
+                    {{ variant.title }}
+                    {% if variant.compare_at_price > variant.price %}
+                      <span class="ek-variant-sale">Save {{ variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price | round }}%</span>
+                    {% endif %}
+                  </span>
+                  {% unless variant.available %}
+                    <span class="ek-variant-oos">Out of stock</span>
+                  {% endunless %}
+                </div>
+
+                <div class="ek-variant-price-wrap">
+                  <span class="ek-variant-price">{{ variant.price | money }}</span>
+                  {% if variant.compare_at_price > variant.price %}
+                    <span class="ek-variant-compare">{{ variant.compare_at_price | money }}</span>
+                  {% endif %}
+                </div>
+              </label>
+            {% endfor %}
+          </div>
+
+        {% else %}
+          <!-- Single variant: hidden input + price display -->
+          <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+          <div class="ek-single-price ek-fade-up ek-delay-3">
+            <span class="ek-single-price-val">{{ current_variant.price | money }}</span>
+            {% if current_variant.compare_at_price > current_variant.price %}
+              <span class="ek-single-compare">{{ current_variant.compare_at_price | money }}</span>
+            {% endif %}
+          </div>
+        {% endunless %}
+
+        <!-- Auto-Pay & Subscribe Purchase Option Widget -->
+        <div class="ek-autopay-widget ek-fade-up ek-delay-3">
+          <div class="ek-autopay-title-bar">
+            <span>🔄 Select Purchase Option</span>
+          </div>
+
+          <div class="ek-autopay-options">
+            <label class="ek-autopay-card ek-autopay-card--selected" id="card-purchase-onetime">
+              <input type="radio" id="purchase-onetime" name="purchase_option" value="onetime" checked onchange="ekTogglePurchaseOption(this)">
+              <div class="ek-autopay-card-content">
+                <span class="ek-autopay-name">One-Time Purchase</span>
+                <span class="ek-autopay-price">{{ current_variant.price | money }}</span>
               </div>
-            </div>
-          {% else %}
-            <input type="hidden" name="id" value="{{ product.variants.first.id }}">
-            <div class="mb-8 flex items-center gap-4">
-               <span class="text-2xl font-bold text-gray-900">{{ current_variant.price | money }}</span>
-               {% if current_variant.compare_at_price > current_variant.price %}
-                  <span class="text-lg text-gray-500 line-through">{{ current_variant.compare_at_price | money }}</span>
-               {% endif %}
-            </div>
-          {% endunless %}
+            </label>
 
-          <div class="flex gap-4">
-            <div class="flex items-center border border-gray-300 rounded-md bg-white w-32">
-              <button type="button" class="w-10 h-10 leading-10 text-gray-600 hover:text-gray-900 transition-colors focus:outline-none" onclick="updateQuantity(-1)">-</button>
-              <input type="number" id="qty" name="quantity" value="1" min="1" class="w-12 h-10 text-center border-none focus:ring-0 text-gray-900 font-medium" readonly>
-              <button type="button" class="w-10 h-10 leading-10 text-gray-600 hover:text-gray-900 transition-colors focus:outline-none" onclick="updateQuantity(1)">+</button>
-            </div>
-            
-            <button type="submit" name="add" class="flex-1 bg-brand-green hover:bg-[#133023] text-white font-bold py-3 px-8 rounded-md shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5 flex justify-center items-center gap-2" {% unless current_variant.available %}disabled{% endunless %}>
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
-              <span id="add-to-cart-text">{% if current_variant.available %}ADD TO CART{% else %}SOLD OUT{% endif %}</span>
-            </button>
-          </div>
-          
-          <div class="mt-4">
-            {{ form | payment_button }}
+            <label class="ek-autopay-card" id="card-purchase-autopay">
+              <input type="radio" id="purchase-autopay" name="purchase_option" value="autopay" onchange="ekTogglePurchaseOption(this)">
+              <div class="ek-autopay-card-content">
+                <div class="ek-autopay-name-wrap">
+                  <span class="ek-autopay-name">Subscribe & Auto-Pay</span>
+                  <span class="ek-autopay-discount-tag">Save 10% Extra</span>
+                </div>
+                <span class="ek-autopay-price">{{ current_variant.price | times: 0.9 | round | money }}</span>
+              </div>
+            </label>
           </div>
 
-        {% endform %}
+          <div class="ek-autopay-details" id="ekAutoPayDetails" style="display: none;">
+            <div class="ek-autopay-field-row">
+              <label for="ekAutoPayInterval">Auto-Deduct Interval:</label>
+              <select id="ekAutoPayInterval" name="properties[AutoPay_Interval]" class="ek-autopay-select">
+                <option value="Every 30 Days (Monthly)">Every 30 Days (Monthly)</option>
+                <option value="Every 60 Days (Bi-Monthly)">Every 60 Days (Bi-Monthly)</option>
+                <option value="Every 90 Days (Quarterly)">Every 90 Days (Quarterly)</option>
+              </select>
+            </div>
+
+            <div class="ek-autopay-field-row">
+              <label for="ekAutoPayDate">Preferred Order Date:</label>
+              <input type="date" id="ekAutoPayDate" name="properties[AutoPay_Scheduled_Date]" class="ek-autopay-date-input">
+            </div>
+
+            <div class="ek-autopay-mandate-info">
+              ⚡ <strong>Auto-Pay Mandate:</strong> Order will place automatically on your scheduled date & payment will auto-deduct. Cancel or pause anytime.
+            </div>
+          </div>
+        </div>
+
+        <!-- Quantity + Add to Cart -->
+        <div class="ek-purchase-row ek-fade-up ek-delay-3">
+
+          <div class="ek-qty-wrap">
+            <button type="button" class="ek-qty-btn" onclick="ekAdjustQty(-1)" aria-label="Decrease quantity">−</button>
+            <span class="ek-qty-display" id="ekQtyDisplay" aria-live="polite">1</span>
+            <button type="button" class="ek-qty-btn" onclick="ekAdjustQty(1)" aria-label="Increase quantity">+</button>
+            <input type="hidden" name="quantity" id="ekQtyInput" value="1">
+          </div>
+
+          <button
+            type="submit"
+            name="add"
+            id="ekCtaBtn"
+            class="ek-cta-btn"
+            {% unless current_variant.available %}disabled{% endunless %}
+          >
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+            <span id="ekCtaText">
+              {% if current_variant.available %}Add to Cart{% else %}Sold Out{% endif %}
+            </span>
+          </button>
+
+        </div>
+
+        <!-- Payment button (Shop Pay / GPay etc.) -->
+        <div class="ek-payment-btn">
+          {{ form | payment_button }}
+        </div>
+
+      {% endform %}
+
+      <!-- Trust strip -->
+      <div class="ek-trust-strip ek-fade-up ek-delay-3">
+        <div class="ek-trust-pill">🛡️ 100% Authentic Guaranteed</div>
+        <div class="ek-trust-pill">🎁 Earn Reward Points for Next Purchase</div>
+        <div class="ek-trust-pill">🔒 Secure Checkout</div>
+        <div class="ek-trust-pill">🌿 100% Pure Formula</div>
+        <div class="ek-trust-pill">🚀 Ships in 24h</div>
+        <div class="ek-trust-pill">↩️ 30-day Returns</div>
       </div>
+
+      <!-- Info Tabs -->
+      {% if product_who_is_for != '' or product_how_to_use != '' or product_details != '' or product_quality_note != '' or product_important_note != '' or product_full_description != '' %}
+        <div class="ek-tabs-section ek-fade-up ek-delay-4">
+
+          <div class="ek-tab-headers" role="tablist">
+            {% if product_who_is_for != '' %}
+              <button class="ek-tab-btn ek-tab-btn--active" role="tab" aria-selected="true"  onclick="ekSwitchTab(this,'who')">Who it's for</button>
+            {% endif %}
+            {% if product_how_to_use != '' %}
+              <button class="ek-tab-btn" role="tab" aria-selected="false" onclick="ekSwitchTab(this,'how')">How to use</button>
+            {% endif %}
+            {% if product_details != '' %}
+              <button class="ek-tab-btn" role="tab" aria-selected="false" onclick="ekSwitchTab(this,'details')">Details</button>
+            {% endif %}
+            {% if product_full_description != '' %}
+              <button class="ek-tab-btn" role="tab" aria-selected="false" onclick="ekSwitchTab(this,'science')">The Science</button>
+            {% endif %}
+          </div>
+
+          {% if product_who_is_for != '' %}
+            <div id="ek-tab-who" class="ek-tab-content ek-tab-content--active" role="tabpanel">
+              <p>{{ product_who_is_for }}</p>
+            </div>
+          {% endif %}
+
+          {% if product_how_to_use != '' %}
+            <div id="ek-tab-how" class="ek-tab-content" role="tabpanel">
+              <p>{{ product_how_to_use }}</p>
+              {% if product_quality_note != '' %}
+                <div class="ek-tip-note">
+                  <strong>Why it matters:</strong> {{ product_quality_note }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if product_details != '' %}
+            <div id="ek-tab-details" class="ek-tab-content" role="tabpanel">
+              <ul>
+                {% for detail in product_details %}
+                  <li>{{ detail }}</li>
+                {% endfor %}
+              </ul>
+              {% if product_important_note != '' %}
+                <div class="ek-warning-note">
+                  <strong>Important:</strong> {{ product_important_note }}
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          {% if product_full_description != '' %}
+            <div id="ek-tab-science" class="ek-tab-content" role="tabpanel">
+              {% assign science_paragraphs = product_full_description | split: "\n\n" %}
+              {% for para in science_paragraphs %}
+                <p>{{ para }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+        </div>
+      {% endif %}
 
     </div>
+    <!-- /detail-col -->
   </div>
+  <!-- /layout -->
+
 </div>
+<!-- /ek-product-page -->
 
+
+{%- comment -%} ─────────────────────────── STYLES ─────────────────────────── {%- endcomment -%}
 <style>
-  /* Base brand colors for tailwind extension within liquid */
-  .bg-brand-green { background-color: #1b4332; }
-  .text-brand-green { color: #1b4332; }
-  .border-brand-green { border-color: #1b4332; }
-  .bg-brand-light { background-color: #e8f5e9; }
-  
-  /* Animations & Utilities */
-  .fade-in { animation: fadeIn 0.5s ease-in; }
-  @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-  }
-  .scrollbar-hide::-webkit-scrollbar { display: none; }
-  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+/* ── Reset scoped to component ── */
+.ek-product-page *,
+.ek-product-page *::before,
+.ek-product-page *::after { box-sizing: border-box; }
 
-  /* Hide native input styling for number field */
-  input[type="number"]::-webkit-inner-spin-button, 
-  input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+/* ── Design tokens ── */
+.ek-product-page {
+  --ek-forest:    #1b4332;
+  --ek-moss:      #2d6a4f;
+  --ek-sage:      #74a982;
+  --ek-cream:     #faf6ef;
+  --ek-parchment: #f0e8d8;
+  --ek-gold:      #c9a84c;
+  --ek-ink:       #1a1a18;
+  --ek-muted:     #5a5a52;
+  --ek-light:     #e8f2eb;
+  --ek-border:    #d6e8da;
+  --ek-white:     #ffffff;
+
+  font-family: 'DM Sans', sans-serif;
+  color: var(--ek-ink);
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 1rem 2rem 5rem;
+}
+
+/* ── Breadcrumb ── */
+.ek-breadcrumb {
+  display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+  font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ek-muted);
+  padding: 0.75rem 0 1.5rem;
+}
+.ek-breadcrumb a { color: var(--ek-muted); text-decoration: none; transition: color 0.2s; }
+.ek-breadcrumb a:hover { color: var(--ek-forest); }
+.ek-breadcrumb span:not([aria-hidden]) { color: var(--ek-ink); }
+
+/* ── Layout ── */
+.ek-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* ─────────────────── GALLERY ─────────────────── */
+.ek-gallery-col { position: sticky; top: 80px; }
+.ek-gallery-wrap { display: flex; gap: 1rem; }
+
+/* Thumbnails */
+.ek-thumb-strip {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  width: 68px; max-height: 520px; overflow-y: auto;
+  scrollbar-width: none;
+}
+.ek-thumb-strip::-webkit-scrollbar { display: none; }
+
+.ek-thumb {
+  width: 68px; height: 68px; border-radius: 10px; overflow: hidden;
+  border: 2px solid transparent; cursor: pointer; background: var(--ek-white);
+  opacity: 0.55; padding: 0;
+  transition: border-color 0.2s, transform 0.18s, opacity 0.2s;
+}
+.ek-thumb:hover { opacity: 0.85; transform: scale(1.04); }
+.ek-thumb--active { border-color: var(--ek-forest) !important; opacity: 1 !important; }
+.ek-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Main image */
+.ek-main-image-wrap {
+  flex: 1; aspect-ratio: 1;
+  border-radius: 28px; overflow: hidden;
+  background: var(--ek-white);
+  border: 1px solid var(--ek-border);
+  position: relative; cursor: crosshair;
+  box-shadow: 0 24px 60px rgba(27,67,50,0.10);
+}
+.ek-main-image-wrap::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.05), transparent 60%);
+  z-index: 1;
+}
+.ek-main-img {
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  transition: opacity 0.25s; pointer-events: none;
+}
+.ek-badge-bestseller {
+  position: absolute; top: 18px; left: 0; z-index: 5;
+  background: linear-gradient(135deg, #5c4033, #7a5040);
+  color: #faf0df; font-size: 0.67rem; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 6px 14px; border-radius: 0 20px 20px 0;
+  box-shadow: 0 4px 12px rgba(92,64,51,0.25);
+}
+.ek-zoom-hint {
+  position: absolute; bottom: 14px; right: 14px; z-index: 5;
+  background: rgba(26,26,24,0.5); backdrop-filter: blur(6px);
+  color: rgba(255,255,255,0.8); font-size: 0.65rem; letter-spacing: 0.1em;
+  text-transform: uppercase; padding: 5px 10px; border-radius: 20px;
+  pointer-events: none; transition: opacity 0.3s;
+}
+.ek-main-image-wrap:hover .ek-zoom-hint { opacity: 0; }
+
+/* ─────────────────── DETAIL COL ─────────────────── */
+.ek-detail-col { display: flex; flex-direction: column; gap: 1.4rem; }
+
+.ek-tagline {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--ek-sage); margin-bottom: 0.5rem;
+}
+.ek-product-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.7rem; font-weight: 600; line-height: 1.1; color: var(--ek-ink);
+  margin: 0 0 0.5rem;
+}
+.ek-stars { display: flex; align-items: center; gap: 0.4rem; color: var(--ek-gold); font-size: 1rem; }
+.ek-review-count { font-size: 0.78rem; color: var(--ek-muted); font-family: 'DM Sans', sans-serif; }
+
+/* Desc card */
+.ek-desc-card {
+  background: var(--ek-white); border: 1px solid var(--ek-border);
+  border-radius: 20px; padding: 1.5rem;
+  box-shadow: 0 6px 24px rgba(27,67,50,0.06);
+  position: relative; overflow: hidden;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+}
+.ek-desc-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--ek-forest), var(--ek-sage), var(--ek-gold));
+}
+.ek-desc-text {
+  font-size: 0.88rem; line-height: 1.85; color: var(--ek-muted); margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ek-desc-card p, .ek-rte {
+  font-size: 0.88rem; line-height: 1.85; color: var(--ek-muted); margin: 0;
+}
+
+/* Benefits */
+.ek-section-label {
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--ek-sage); margin-bottom: 0.7rem;
+}
+.ek-benefits-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem;
+  list-style: none; padding: 0; margin: 0;
+}
+.ek-benefit-pill {
+  display: flex; align-items: flex-start; gap: 0.5rem;
+  background: var(--ek-light); border: 1px solid var(--ek-border);
+  border-radius: 10px; padding: 0.55rem 0.75rem;
+  font-size: 0.78rem; color: #2d4a38; line-height: 1.4;
+  cursor: default;
+  transition: background 0.2s, color 0.15s, transform 0.15s, box-shadow 0.2s;
+}
+.ek-benefit-pill:hover {
+  background: var(--ek-forest); color: var(--ek-white);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(27,67,50,0.2);
+}
+.ek-chk { color: var(--ek-gold); font-size: 11px; margin-top: 2px; flex-shrink: 0; }
+
+/* Variants */
+.ek-variants-section { display: flex; flex-direction: column; gap: 0; }
+.ek-variant-card {
+  display: flex; align-items: center;
+  padding: 0.95rem 1.1rem; border-radius: 14px;
+  border: 2px solid var(--ek-border); background: var(--ek-white);
+  cursor: pointer; margin-bottom: 0.55rem;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.15s;
+  position: relative; overflow: hidden;
+}
+.ek-variant-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--ek-light), transparent);
+  opacity: 0; transition: opacity 0.2s; pointer-events: none;
+}
+.ek-variant-card:hover { border-color: var(--ek-sage); transform: translateX(3px); }
+.ek-variant-card:hover::before { opacity: 1; }
+.ek-variant-card--selected {
+  border-color: var(--ek-forest);
+  background: var(--ek-light);
+  box-shadow: 0 4px 20px rgba(27,67,50,0.12);
+}
+.ek-variant-card--selected::before { opacity: 1; }
+
+.ek-variant-radio {
+  width: 18px; height: 18px; border-radius: 50%;
+  border: 2px solid var(--ek-border); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin-right: 0.8rem; transition: border-color 0.2s;
+  position: relative; z-index: 1;
+}
+.ek-variant-card--selected .ek-variant-radio { border-color: var(--ek-forest); }
+.ek-variant-radio-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--ek-forest);
+  transform: scale(0);
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1);
+}
+.ek-variant-card--selected .ek-variant-radio-dot { transform: scale(1); }
+
+.ek-variant-info { flex: 1; position: relative; z-index: 1; }
+.ek-variant-name { font-size: 0.88rem; font-weight: 600; color: var(--ek-ink); }
+.ek-variant-sale {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--ek-forest); color: var(--ek-white);
+  padding: 2px 7px; border-radius: 20px; margin-left: 6px; vertical-align: middle;
+}
+.ek-variant-oos { display: block; font-size: 0.72rem; color: #c0392b; margin-top: 2px; }
+
+.ek-variant-price-wrap { text-align: right; position: relative; z-index: 1; }
+.ek-variant-price { display: block; font-size: 1.05rem; font-weight: 700; color: var(--ek-ink); }
+.ek-variant-compare { display: block; font-size: 0.75rem; color: var(--ek-muted); text-decoration: line-through; }
+
+/* Single variant price */
+.ek-single-price { display: flex; align-items: baseline; gap: 0.7rem; }
+.ek-single-price-val { font-size: 1.8rem; font-weight: 700; color: var(--ek-ink); }
+.ek-single-compare { font-size: 1.1rem; color: var(--ek-muted); text-decoration: line-through; }
+
+/* Auto-Pay Widget */
+.ek-autopay-widget {
+  margin-top: 1.5rem;
+  background: #f9fbf9;
+  border: 1px solid #e1e9e3;
+  border-radius: 12px;
+  padding: 1rem;
+}
+.ek-autopay-title-bar {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #103a2f;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+.ek-autopay-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.ek-autopay-card {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid #d4ded6;
+  border-radius: 10px;
+  padding: 10px 14px;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.ek-autopay-card input[type="radio"] {
+  accent-color: #103a2f;
+  width: 18px;
+  height: 18px;
+  margin-right: 12px;
+}
+.ek-autopay-card--selected {
+  border-color: #103a2f;
+  background: #f0f7f2;
+  box-shadow: 0 4px 12px rgba(16, 58, 47, 0.08);
+}
+.ek-autopay-card-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.ek-autopay-name {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #103a2f;
+}
+.ek-autopay-discount-tag {
+  background: #eafaf1;
+  color: #27ae60;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 50px;
+  margin-left: 6px;
+}
+.ek-autopay-price {
+  font-weight: 800;
+  font-size: 0.95rem;
+  color: #103a2f;
+}
+.ek-autopay-details {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px dashed #c0d1c4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ek-autopay-field-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: #33443a;
+  font-weight: 600;
+}
+.ek-autopay-select, .ek-autopay-date-input {
+  border: 1px solid #b8c9bc;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 0.82rem;
+  color: #103a2f;
+  background: #ffffff;
+  outline: none;
+}
+.ek-autopay-mandate-info {
+  background: #fff8eb;
+  border: 1px solid #ffe3b3;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  color: #8a5700;
+  line-height: 1.4;
+}
+
+/* Quantity + ATC (Permanent Fixed Bottom Bar - Mobile & Desktop Responsive) */
+.ek-purchase-row {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 99999;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid #e1e9e3;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.12);
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.ek-qty-wrap {
+  display: flex; align-items: center;
+  border: 1.5px solid #d4ded6; border-radius: 8px;
+  background: var(--ek-white); overflow: hidden;
+  height: 44px;
+  flex-shrink: 0;
+}
+.ek-qty-btn {
+  width: 36px; height: 44px; border: none; background: none;
+  font-size: 1.1rem; color: #103a2f; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.ek-qty-btn:hover { background: #f0f7f2; color: #103a2f; }
+.ek-qty-display {
+  width: 32px; text-align: center; font-weight: 700;
+  font-size: 0.95rem; color: #103a2f; user-select: none;
+}
+
+.ek-cta-btn {
+  height: 44px; min-height: 44px; border: none; cursor: pointer;
+  background: #103a2f; color: #ffffff;
+  font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+  font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  padding: 0 2rem; white-space: nowrap;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 14px rgba(16, 58, 47, 0.25);
+  position: relative; overflow: hidden;
+}
+.ek-cta-btn:hover {
+  background: #1b5344;
+  box-shadow: 0 6px 18px rgba(16, 58, 47, 0.35);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .ek-purchase-row {
+    padding: 10px 16px;
+    gap: 0.75rem;
+    justify-content: space-between;
+  }
+  .ek-qty-wrap {
+    height: 42px;
+  }
+  .ek-qty-btn {
+    width: 30px;
+    height: 42px;
+  }
+  .ek-cta-btn {
+    flex: 1;
+    height: 42px;
+    min-height: 42px;
+    padding: 0 1rem;
+    font-size: 0.82rem;
+  }
+}
+.ek-cta-btn::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent);
+  pointer-events: none;
+}
+.ek-cta-btn:hover:not(:disabled) {
+  background: #222222;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.ek-cta-btn:active:not(:disabled) { transform: translateY(0); }
+.ek-cta-btn:disabled { background: #aaa; cursor: not-allowed; }
+.ek-cta-btn--adding { background: var(--ek-sage) !important; }
+
+/* Payment button */
+.ek-payment-btn { margin-top: 0.5rem; }
+.ek-payment-btn .shopify-payment-button__button { border-radius: 12px !important; }
+
+/* Trust strip */
+.ek-trust-strip { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.ek-trust-pill {
+  display: flex; align-items: center; gap: 0.4rem;
+  background: var(--ek-parchment); border: 1px solid #ddd6c0;
+  border-radius: 20px; padding: 5px 12px;
+  font-size: 0.7rem; font-weight: 500; color: #6b5a3e;
+}
+
+/* ── Tabs ── */
+.ek-tab-headers {
+  display: flex; border-bottom: 1.5px solid var(--ek-border);
+  margin-bottom: 1rem; overflow-x: auto; scrollbar-width: none;
+}
+.ek-tab-headers::-webkit-scrollbar { display: none; }
+.ek-tab-btn {
+  border: none; background: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif; font-size: 0.74rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ek-muted);
+  padding: 0.65rem 0.95rem; white-space: nowrap;
+  border-bottom: 2.5px solid transparent; margin-bottom: -1.5px;
+  transition: color 0.2s, border-color 0.2s;
+}
+.ek-tab-btn:hover { color: var(--ek-forest); }
+.ek-tab-btn--active { color: var(--ek-forest); border-bottom-color: var(--ek-forest); }
+
+.ek-tab-content { display: none; }
+.ek-tab-content--active { display: block; animation: ekFadeSlide 0.25s ease; }
+@keyframes ekFadeSlide {
+  from { opacity: 0; transform: translateY(5px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.ek-tab-content p {
+  font-size: 0.85rem; line-height: 1.85; color: var(--ek-muted); margin: 0 0 0.7rem;
+}
+.ek-tab-content p:last-child { margin-bottom: 0; }
+.ek-tab-content ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.45rem; }
+.ek-tab-content ul li {
+  font-size: 0.84rem; color: var(--ek-muted); line-height: 1.7;
+  padding-left: 1.3rem; position: relative;
+}
+.ek-tab-content ul li::before {
+  content: '·'; position: absolute; left: 0; color: var(--ek-gold);
+  font-size: 1.3rem; line-height: 1.3;
+}
+
+.ek-tip-note, .ek-warning-note {
+  border-radius: 12px; padding: 0.9rem 1.1rem; margin-top: 0.9rem;
+  font-size: 0.8rem; line-height: 1.7;
+}
+.ek-tip-note {
+  background: #f6fffb; border: 1px solid #c3e6cb; color: #2d6a4f;
+}
+.ek-warning-note {
+  background: #fff8ee; border: 1px solid #e8d8a8; color: #7a5c2a;
+}
+
+/* ── Animations ── */
+.ek-fade-up { opacity: 0; transform: translateY(22px); animation: ekFadeUp 0.55s ease forwards; }
+.ek-delay-1 { animation-delay: 0.06s; }
+.ek-delay-2 { animation-delay: 0.13s; }
+.ek-delay-3 { animation-delay: 0.21s; }
+.ek-delay-4 { animation-delay: 0.3s; }
+@keyframes ekFadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Accessibility ── */
+.ek-sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .ek-layout {
+    gap: 2rem;
+  }
+  .ek-gallery-wrap {
+    gap: 0.75rem;
+  }
+  .ek-main-image-wrap {
+    min-height: 380px;
+  }
+}
+@media (max-width: 820px) {
+  .ek-layout {
+    grid-template-columns: 1fr;
+  }
+  .ek-gallery-col {
+    position: static;
+    width: 100%;
+  }
+  .ek-gallery-wrap {
+    flex-direction: column-reverse;
+  }
+  .ek-main-image-wrap {
+    aspect-ratio: auto;
+    min-height: 320px;
+  }
+  .ek-product-page {
+    padding: 0.75rem 1rem 3rem;
+  }
+  .ek-product-title {
+    font-size: 2rem;
+  }
+  .ek-desc-card {
+    min-height: 120px;
+  }
+  .ek-benefits-grid {
+    grid-template-columns: 1fr;
+  }
+  .ek-variant-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .ek-variant-card .ek-variant-price-wrap {
+    text-align: left;
+    margin-top: 0.6rem;
+  }
+  .ek-purchase-row {
+    position: fixed;
+    bottom: 16px;
+    right: 20px;
+    flex-direction: row;
+    gap: 0.5rem;
+    padding: 6px 10px;
+    border-radius: 4px;
+  }
+  .ek-qty-wrap {
+    width: auto;
+    justify-content: center;
+    height: 38px;
+  }
+  .ek-qty-btn {
+    width: 28px;
+    height: 38px;
+  }
+  .ek-qty-display {
+    width: 24px;
+    font-size: 0.85rem;
+  }
+  .ek-cta-btn {
+    width: auto;
+    height: 38px;
+    min-height: 38px;
+    padding: 0 1rem;
+    font-size: 0.75rem;
+    border-radius: 30px;
+  }
+  .ek-payment-btn .shopify-payment-button__button {
+    width: 100%;
+  }
+  .ek-tab-headers {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 480px) {
+  .ek-product-page {
+    padding: 0.75rem 0.75rem 2.5rem;
+  }
+  .ek-thumb-strip {
+    flex-direction: row;
+    width: 100%;
+    max-height: none;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+  .ek-thumb {
+    width: 56px;
+    height: 56px;
+    flex-shrink: 0;
+  }
+  .ek-gallery-wrap {
+    flex-direction: column-reverse;
+  }
+  .ek-main-image-wrap {
+    min-height: 280px;
+  }
+  .ek-product-title {
+    font-size: 1.8rem;
+  }
+  .ek-tagline {
+    font-size: 0.65rem;
+  }
+  .ek-desc-card {
+    padding: 1rem;
+    min-height: auto;
+  }
+  .ek-desc-text,
+  .ek-tab-content p,
+  .ek-tab-content ul li {
+    font-size: 0.86rem;
+  }
+  .ek-qty-btn {
+    width: 36px;
+    height: 44px;
+  }
+  .ek-qty-display {
+    width: 32px;
+  }
+}
 </style>
 
+
+{%- comment -%} ─────────────────────────── SCRIPTS ─────────────────────────── {%- endcomment -%}
 <script>
-  // --- 1. Modern Inner Pan Zoom Functionality ---
-  function handleZoom(e) {
-    const container = e.currentTarget;
-    // Calculate mouse position as a percentage
-    const x = (e.offsetX / container.offsetWidth) * 100;
-    const y = (e.offsetY / container.offsetHeight) * 100;
-    
-    // Move the background image
-    container.style.backgroundPosition = `${x}% ${y}%`;
-  }
+(function() {
 
-  function enterZoom() {
-    const container = document.getElementById('zoom-container');
-    const img = document.getElementById('main-product-image');
-    
-    // Set the background image to the current source and zoom in (e.g., 200%)
-    container.style.backgroundImage = `url('${img.src}')`;
-    container.style.backgroundSize = '200%';
-    container.style.backgroundRepeat = 'no-repeat';
-    
-    // Hide the original HTML image tag smoothly
+  // ── 1. Image Gallery with zoom ──────────────────────────────────────
+  window.ekSwitchImage = function(thumbEl, newSrc) {
+    document.querySelectorAll('.ek-thumb').forEach(t => t.classList.remove('ek-thumb--active'));
+    thumbEl.classList.add('ek-thumb--active');
+
+    var mainImg = document.getElementById('ekMainImg');
+    mainImg.style.opacity = '0.4';
+    setTimeout(function() {
+      mainImg.src = newSrc;
+      mainImg.style.opacity = '1';
+    }, 180);
+  };
+
+  // ── 2. Zoom ──────────────────────────────────────────────────────────
+  window.ekEnterZoom = function() {
+    var c   = document.getElementById('ekZoomContainer');
+    var img = document.getElementById('ekMainImg');
+    c.style.backgroundImage    = "url('" + img.src + "')";
+    c.style.backgroundSize     = '220%';
+    c.style.backgroundRepeat   = 'no-repeat';
+    c.style.backgroundPosition = '50% 50%';
     img.style.opacity = '0';
-  }
+  };
+  window.ekLeaveZoom = function() {
+    var c = document.getElementById('ekZoomContainer');
+    c.style.backgroundImage = 'none';
+    document.getElementById('ekMainImg').style.opacity = '1';
+  };
+  window.ekDoZoom = function(e) {
+    var c = e.currentTarget;
+    var x = (e.offsetX / c.offsetWidth)  * 100;
+    var y = (e.offsetY / c.offsetHeight) * 100;
+    c.style.backgroundPosition = x + '% ' + y + '%';
+  };
 
-  function leaveZoom() {
-    const container = document.getElementById('zoom-container');
-    const img = document.getElementById('main-product-image');
-    
-    // Remove background and bring back the original image
-    container.style.backgroundImage = 'none';
-    img.style.opacity = '1';
-  }
-
-  // --- 2. Image Gallery Functionality ---
-  function changeImage(newSrc, btnElement) {
-    const mainImg = document.getElementById('main-product-image');
-    const container = document.getElementById('zoom-container');
-    
-    mainImg.style.opacity = '0.5'; // Quick fade effect
-    
-    setTimeout(() => {
-        mainImg.src = newSrc;
-        mainImg.style.opacity = '1';
-        // Update background immediately if hovering while clicking
-        if (container.style.backgroundImage !== 'none' && container.style.backgroundImage !== '') {
-            container.style.backgroundImage = `url('${newSrc}')`;
-        }
-    }, 150);
-
-    // Update active state on thumbnails
-    const btns = document.querySelectorAll('.thumb-btn');
-    btns.forEach(btn => {
-        btn.classList.remove('border-brand-green');
-        btn.classList.add('border-transparent');
-        btn.querySelector('img').classList.replace('opacity-100', 'opacity-70');
+  // ── 3. Variant selection ─────────────────────────────────────────────
+  window.ekSelectVariant = function(labelEl) {
+    document.querySelectorAll('.ek-variant-card').forEach(function(c) {
+      c.classList.remove('ek-variant-card--selected');
     });
-    
-    btnElement.classList.remove('border-transparent');
-    btnElement.classList.add('border-brand-green');
-    btnElement.querySelector('img').classList.replace('opacity-70', 'opacity-100');
-  }
+    labelEl.classList.add('ek-variant-card--selected');
+  };
 
-  // --- 3. Dynamic Variant UI Updater ---
-  function updateVariantSelection(element) {
-    // Reset all labels
-    document.querySelectorAll('.variant-label').forEach(label => {
-      label.classList.remove('border-brand-green', 'bg-brand-light');
-      label.classList.add('border-gray-200');
+  // Update ATC button availability when variant radio changes
+  window.ekUpdatePrice = function(radioInput) {
+    var btn     = document.getElementById('ekCtaBtn');
+    var ctaTxt  = document.getElementById('ekCtaText');
+    var disabled = radioInput.disabled;
+    btn.disabled = disabled;
+    ctaTxt.textContent = disabled ? 'Sold Out' : 'Add to Cart';
+  };
+
+  // ── 4. Quantity ──────────────────────────────────────────────────────
+  var _qty = 1;
+  window.ekAdjustQty = function(delta) {
+    _qty = Math.max(1, _qty + delta);
+    document.getElementById('ekQtyDisplay').textContent = _qty;
+    document.getElementById('ekQtyInput').value = _qty;
+  };
+
+  // ── 5. ATC button feedback (visual only — Shopify handles the action) ─
+  var ekForm = document.getElementById('ek-atc-form');
+  if (ekForm) {
+    ekForm.addEventListener('submit', function() {
+      var btn = document.getElementById('ekCtaBtn');
+      if (!btn || btn.disabled) return;
+      btn.classList.add('ek-cta-btn--adding');
+      btn.disabled = true;
+      document.getElementById('ekCtaText').textContent = 'Adding…';
+      // Re-enable after Shopify redirect / AJAX completes
+      setTimeout(function() {
+        btn.classList.remove('ek-cta-btn--adding');
+        btn.disabled = false;
+        document.getElementById('ekCtaText').textContent = 'Add to Cart';
+      }, 3000);
     });
-    // Highlight selected
-    element.classList.remove('border-gray-200');
-    element.classList.add('border-brand-green', 'bg-brand-light');
   }
 
-  // --- 4. Quantity Selector ---
-  function updateQuantity(change) {
-    const input = document.getElementById('qty');
-    let current = parseInt(input.value);
-    let newVal = current + change;
-    if (newVal >= 1) {
-        input.value = newVal;
+  // Toggle Auto-Pay purchase options
+  window.ekTogglePurchaseOption = function(radioEl) {
+    document.querySelectorAll('.ek-autopay-card').forEach(function(c) {
+      c.classList.remove('ek-autopay-card--selected');
+    });
+    var labelCard = radioEl.closest('.ek-autopay-card');
+    if (labelCard) labelCard.classList.add('ek-autopay-card--selected');
+
+    var detailsBox = document.getElementById('ekAutoPayDetails');
+    if (detailsBox) {
+      detailsBox.style.display = (radioEl.value === 'autopay') ? 'flex' : 'none';
     }
-  }
+  };
+
+  // ── 6. Info tabs ─────────────────────────────────────────────────────
+  window.ekSwitchTab = function(btnEl, name) {
+    document.querySelectorAll('.ek-tab-btn').forEach(function(b) {
+      b.classList.remove('ek-tab-btn--active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    document.querySelectorAll('.ek-tab-content').forEach(function(c) {
+      c.classList.remove('ek-tab-content--active');
+    });
+    btnEl.classList.add('ek-tab-btn--active');
+    btnEl.setAttribute('aria-selected', 'true');
+    var panel = document.getElementById('ek-tab-' + name);
+    if (panel) panel.classList.add('ek-tab-content--active');
+  };
+
+})();
 </script>
 
 {% schema %}
 {
-  "name": "Custom Product Section",
+  "name": "eklyfe Product Section",
   "settings": [],
   "presets": [
-    {
-      "name": "Custom Product Section"
-    }
+    { "name": "eklyfe Product Section" }
   ]
 }
 {% endschema %}

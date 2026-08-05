@@ -7,15 +7,19 @@
   </button>
 
   <div class="header__logo">
-    {% if section.settings.logo != blank %}
-      <a href="{{ routes.root_url }}">
+    <a href="{{ routes.root_url }}">
+      {% if section.settings.logo != blank %}
         {{ section.settings.logo | image_url: width: section.settings.logo_width | image_tag: alt: shop.name }}
-      </a>
-    {% else %}
-      <h2 class="header__title">
-        {{ shop.name | link_to: routes.root_url }}
-      </h2>
-    {% endif %}
+      {% else %}
+        <img
+          src="{{ 'logo.png' | asset_url }}"
+          alt="{{ shop.name }}"
+          width="{{ section.settings.logo_width | default: 180 }}"
+          height="auto"
+          loading="eager"
+        >
+      {% endif %}
+    </a>
   </div>
 
   <!-- Desktop nav + search -->
@@ -55,7 +59,7 @@
             </svg>
           </a>
           <ul class="header__dropdown">
-            <li class="header__dropdown-item"><a href="/collections/general-awareness" class="header__dropdown-link">General Awareness</a></li>
+            <li class="header__dropdown-item"><a href="/collections/general-wellness" class="header__dropdown-link">General Wellness</a></li>
             <li class="header__dropdown-item"><a href="/collections/sexual-wellness" class="header__dropdown-link">Sexual Wellness</a></li>
             <li class="header__dropdown-item"><a href="/collections/skin-wellness" class="header__dropdown-link">Skin Wellness</a></li>
             <li class="header__dropdown-item"><a href="/collections/weight-management" class="header__dropdown-link">Weight Management</a></li>
@@ -73,9 +77,43 @@
             <li class="header__dropdown-item"><a href="/collections/all" class="header__dropdown-link">View All Products</a></li>
           </ul>
         </div>
-        <a href="/collections/top-seller" class="header__menu-link">Best Selling</a>
-        <a href="/pages/about-us" class="header__menu-link">About Us</a>
+        <div class="header__dropdown-wrapper">
+          <a href="/pages/about-us" class="header__menu-link header__menu-link--has-dropdown" aria-haspopup="true" aria-expanded="false">
+            About
+            <svg class="header__caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <ul class="header__dropdown">
+            <li class="header__dropdown-item">
+              <a href="/pages/about-us" class="header__dropdown-link">About Us</a>
+            </li>
+            <li class="header__dropdown-item">
+              <a href="/pages/founder-story" class="header__dropdown-link">Our Founder</a>
+            </li>
+            <li class="header__dropdown-item">
+              <a href="/pages/key-associates" class="header__dropdown-link">Key Associates</a>
+            </li>
+          </ul>
+        </div>
         <a href="/pages/faq" class="header__menu-link">FAQs</a>
+        <a href="/pages/contact-us" class="header__menu-link">Contact Us</a>
+        <div class="header__dropdown-wrapper">
+          <a href="#" class="header__menu-link header__menu-link--has-dropdown" aria-haspopup="true" aria-expanded="false">
+            Policies
+            <svg class="header__caret" width="10" height="6" viewBox="0 0 10 6" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <ul class="header__dropdown">
+            <li class="header__dropdown-item">
+              <a href="/pages/privacy-policy" class="header__dropdown-link">Privacy Policy</a>
+            </li>
+            <li class="header__dropdown-item">
+              <a href="/pages/terms-of-service" class="header__dropdown-link">Terms of Service</a>
+            </li>
+          </ul>
+        </div>
       {% endif %}
     </nav>
 
@@ -167,19 +205,21 @@
     justify-content: space-between;
     gap: 1.5rem;
     padding: 0 5%;
-    background: rgba(255, 255, 255, 0.97);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: #ffffff;
     box-shadow: 0 1px 0 rgba(0,0,0,0.08);
   }
 
   /* ── Logo ── */
   .header__logo img {
-    max-height: 56px;
+    max-height: 68px;
     width: auto;
+    object-fit: contain;
+    mix-blend-mode: multiply;
     transition: transform 0.3s ease;
   }
-  .header__logo:hover img { transform: scale(1.04); }
+  .header__logo:hover img {
+    transform: scale(1.05);
+  }
   .header__title a {
     text-decoration: none;
     color: #1a4f44;
@@ -224,7 +264,7 @@
     position: absolute;
     bottom: 22px; left: 0;
     width: 0; height: 2px;
-    background: #1a4f44;
+    background: #2FA084;
     border-radius: 1px;
     transition: width 0.3s ease;
   }
@@ -385,7 +425,7 @@
     display: block;
     width: 22px;
     height: 2px;
-    background: #1a4f44;
+    background: #2FA084;
     border-radius: 2px;
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform-origin: center;
@@ -413,6 +453,19 @@
 
   /* ── MOBILE STYLES ── */
   @media screen and (max-width: 990px) {
+    .header__logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .header__logo img {
+      max-height: 56px;
+    }
+
     .mobile-menu-toggle {
       display: flex;
     }
@@ -524,7 +577,7 @@
       "min": 50,
       "max": 250,
       "step": 10,
-      "default": 100,
+      "default": 180,
       "unit": "px",
       "label": "Custom logo width"
     },

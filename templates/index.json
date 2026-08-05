@@ -1,34 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "announcement": {
       "type": "announcement-bar",
       "settings": {
         "text": "🚚 FREE SHIPPING ON ORDERS OVER ₹500 · 🌿 100% AYURVEDIC · ✓ DOCTOR APPROVED",
-        "bg_color": "#1a4f44",
+        "bg_color": "#2FA084",
         "text_color": "#ffffff"
       }
     },
     "hero": {
       "type": "hero-banner",
-      "settings": {
-        "heading": "Boost Energy. Endurance. Recovery.",
-        "subheading": "TRUSTED BY 1 MILLION+ CUSTOMERS",
-        "button_label": "Shop Now",
-        "bg_color": "#1a4f44",
-        "text_color": "#ffffff"
-      }
+      "settings": {}
     },
     "shop_by_solution": {
       "type": "shop-by-solution",
-      "settings": {
-        "heading": "SHOP BY SOLUTION",
-        "bg_color": "#f9f9f5"
-      },
       "blocks": {
         "sol1": {
           "type": "collection_block",
           "settings": {
-            "collection": "general-awareness",
+            "collection": "general-wellness",
             "bg_color": "#2781d4"
           }
         },
@@ -59,13 +58,14 @@
         "sol2",
         "sol3",
         "sol4"
-      ]
+      ],
+      "settings": {
+        "heading": "SHOP BY SOLUTION",
+        "bg_color": "#f9f9f5"
+      }
     },
     "trust": {
       "type": "trust-features",
-      "settings": {
-        "bg_color": "#f4f9f7"
-      },
       "blocks": {
         "trust1": {
           "type": "feature",
@@ -101,50 +101,54 @@
         "trust2",
         "trust3",
         "trust4"
-      ]
+      ],
+      "settings": {
+        "bg_color": "#f4f9f7"
+      }
     },
     "top_seller": {
       "type": "featured-collection-grid",
       "settings": {
-        "title": "Our Products",
-        "products_to_show": 8,
-        "collection": "top-seller"
+        "title": "Meet Your Wellness Family",
+        "collection": "top-seller",
+        "products_to_show": 8
       }
+    },
+    "eklyfe_promise": {
+      "type": "eklyfe-promise",
+      "settings": {}
     },
     "promo_1": {
       "type": "promo-banners",
-      "settings": {
-        "bg_color": "#5c777a"
-      },
       "blocks": {
         "icon1": {
           "type": "icon",
           "settings": {
-            "text": "Comprehensive Nutrient Blend"
+            "text": "100% Vegan Capsules"
           }
         },
         "icon2": {
           "type": "icon",
           "settings": {
-            "text": "Vegan And Cruelty-Free"
+            "text": "Ayurvedic Formulas"
           }
         },
         "icon3": {
           "type": "icon",
           "settings": {
-            "text": "Hydration Enhancement"
+            "text": "No Artificial Additives"
           }
         },
         "icon4": {
           "type": "icon",
           "settings": {
-            "text": "Antioxidant Protection"
+            "text": "Clinically Backed Ingredients"
           }
         },
         "icon5": {
           "type": "icon",
           "settings": {
-            "text": "Artificial Additives Free"
+            "text": "Made in India with Love"
           }
         }
       },
@@ -154,51 +158,83 @@
         "icon3",
         "icon4",
         "icon5"
-      ]
-    },
-    "best_selling": {
-      "type": "featured-collection-grid",
+      ],
       "settings": {
-        "title": "Best Selling",
-        "products_to_show": 8,
-        "collection": "top-seller"
+        "bg_color": "#5c777a"
       }
+    },
+    "founder_story": {
+      "type": "founder-story",
+      "settings": {}
+    },
+    "amit_testimonial": {
+      "type": "amit-testimonial",
+      "settings": {}
     },
     "apple_carousel": {
       "type": "apple-carousel",
-      "settings": {},
       "blocks": {
         "slide1": {
           "type": "slide",
           "settings": {
-            "heading": "Premium Wellness",
-            "subheading": "Discover India's finest Ayurvedic supplements",
-            "text_color": "#ffffff"
+            "quote": "The Pre Menopause Support has been life-changing. Two months in and my mood swings have eased, my sleep is better, and I feel like myself again.",
+            "author": "Priya S., 47, Delhi"
           }
         },
         "slide2": {
           "type": "slide",
           "settings": {
-            "heading": "Natural Ingredients",
-            "subheading": "Purity guaranteed. Doctor approved.",
-            "text_color": "#ffffff"
+            "quote": "I started taking Ashwagandha KSM/66 for work stress and the difference has been remarkable. I sleep deeper, feel calmer, and my energy is back.",
+            "author": "Rahul M., 35, Mumbai"
+          }
+        },
+        "slide3": {
+          "type": "slide",
+          "settings": {
+            "quote": "Shilajit Resin from eklyfe is the real thing. My stamina and mental sharpness have noticeably improved in just 6 weeks.",
+            "author": "Vikram T., 42, Pune"
+          }
+        },
+        "slide4": {
+          "type": "slide",
+          "settings": {
+            "quote": "T Boost actually works — naturally. My gym recovery is faster, my focus is sharper. No gimmicks, just clean ingredients.",
+            "author": "Arjun K., 31, Bangalore"
           }
         }
       },
       "block_order": [
         "slide1",
-        "slide2"
-      ]
+        "slide2",
+        "slide3",
+        "slide4"
+      ],
+      "settings": {
+        "title": "Real People. Real Results.",
+        "bg_color": "#f9f5ee"
+      }
+    },
+    "email_signup": {
+      "type": "email-signup",
+      "settings": {}
+    },
+    "zone3": {
+      "type": "zone3",
+      "settings": {}
     }
   },
   "order": [
     "announcement",
     "hero",
-    "shop_by_solution",
     "promo_1",
+    "zone3",
+    "shop_by_solution",
     "trust",
     "top_seller",
-    "best_selling",
-    "apple_carousel"
+    "eklyfe_promise",
+    "founder_story",
+    "amit_testimonial",
+    "apple_carousel",
+    "email_signup"
   ]
 }

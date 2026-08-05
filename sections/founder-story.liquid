@@ -1,0 +1,251 @@
+{% comment %}
+  Founder Story Section
+{% endcomment %}
+
+<section class="founder-story-section">
+  <div class="founder-story-container">
+
+    <div class="founder-story-grid">
+
+      <!-- LEFT IMAGE -->
+      <div class="founder-image-wrapper">
+
+        <div class="founder-image-frame">
+          <img
+            src="{{ 'founder.jpg' | asset_url }}"
+            alt="Neha Jain — Founder, eklyfe"
+            class="founder-image"
+            loading="lazy"
+          >
+        </div>
+
+        <div class="founder-badge">
+          <p class="founder-name">Neha Jain</p>
+          <p class="founder-title">Founder & CEO, eklyfe</p>
+        </div>
+
+      </div>
+
+      <!-- RIGHT CONTENT -->
+      <div class="founder-copy">
+
+        <span class="founder-eyebrow">
+          — From the Founder
+        </span>
+
+        <h2 class="founder-headline">
+          It all <em>started</em> with
+          <br>
+          a simple doubt.
+        </h2>
+
+        <p class="founder-paragraph">
+          After experiencing firsthand how modern life — with all its ambition, pressure, and pace — can quietly erode our inner health, Neha spent two and a half years in deep research and product development.
+        </p>
+
+        <p class="founder-paragraph">
+          Too many claims, not enough clarity. So she started looking deeper — what actually makes a supplement work? The right ingredients, the right dosages, and results you can <em>feel</em>.
+        </p>
+
+        <p class="founder-paragraph founder-last">
+          That's how eklyfe began. Built with one focus: something you can take daily, without overthinking it, and actually feel the difference.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% stylesheet %}
+
+  .founder-story-section {
+    background: #f9f5ee;
+    padding: 100px 20px;
+    overflow: hidden;
+  }
+
+  .founder-story-container {
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  .founder-story-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.08);
+  }
+
+  /* IMAGE SIDE */
+
+  .founder-image-wrapper {
+    position: relative;
+    background: #ded4c5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+  }
+
+  .founder-image-frame {
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 1 / 1;
+    border-radius: 32px;
+    overflow: hidden;
+    background: #e8dfd2;
+    border: 6px solid #f9f5ee;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .founder-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center center;
+    display: block;
+    background: #e8dfd2;
+    padding: 10px;
+  }
+
+  /* BADGE */
+
+  .founder-badge {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 16px 20px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+  }
+
+  .founder-name {
+    margin: 0 0 4px;
+    color: #134e4a;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-style: italic;
+  }
+
+  .founder-title {
+    margin: 0;
+    color: #4b5563;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  /* CONTENT SIDE */
+
+  .founder-copy {
+    background: #111827;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .founder-eyebrow {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: #c9a84c;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  .founder-headline {
+    margin: 0 0 24px;
+    color: #ffffff;
+    font-size: clamp(34px, 5vw, 54px);
+    line-height: 1.05;
+    font-weight: 700;
+  }
+
+  .founder-headline em {
+    color: #c9a84c;
+    font-style: italic;
+  }
+
+  .founder-paragraph {
+    margin: 0 0 18px;
+    color: rgba(255,255,255,0.76);
+    line-height: 1.9;
+    font-size: 15px;
+  }
+
+  .founder-paragraph em {
+    color: #ffffff;
+    font-style: italic;
+  }
+
+  .founder-last {
+    margin-bottom: 0;
+  }
+
+  /* DESKTOP */
+
+  @media screen and (min-width: 990px) {
+
+    .founder-story-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .founder-copy {
+      padding: 80px;
+    }
+
+  }
+
+  /* MOBILE */
+
+  @media screen and (max-width: 768px) {
+
+    .founder-story-section {
+      padding: 70px 16px;
+    }
+
+    .founder-image-wrapper {
+      padding: 24px;
+    }
+
+    .founder-copy {
+      padding: 40px 24px;
+    }
+
+    .founder-headline {
+      font-size: 34px;
+    }
+
+    .founder-badge {
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+    }
+
+  }
+
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Founder Story",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Founder Story"
+    }
+  ]
+}
+{% endschema %}

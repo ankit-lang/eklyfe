@@ -1,0 +1,480 @@
+{% comment %}
+  eklyfe — "The eklyfe Promise" Multicolumn Values Section
+  Place this file in: sections/eklyfe-promise.liquid
+  Add to your theme.json or via the Shopify Theme Editor as a section block.
+{% endcomment %}
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          serif: ['Cormorant Garamond', 'serif'],
+          sans: ['Jost', 'sans-serif'],
+        },
+        colors: {
+          earth: {
+            50:  '#faf7f2',
+            100: '#f3ede0',
+            200: '#e6d9c0',
+            300: '#d4be96',
+            400: '#c09f6a',
+            500: '#a8834a',
+            600: '#8c6a38',
+            700: '#100e0c',
+            800: '#4f3820',
+            900: '#2e2012',
+          },
+          sage: {
+            100: '#eef2eb',
+            200: '#d5e0cd',
+            300: '#a9c29a',
+            400: '#7da36b',
+            500: '#527a40',
+          },
+          cream: '#f9f5ee',
+          gold:  '#c9a84c',
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  /* ── Base resets for section ── */
+  #eklyfe-promise * { box-sizing: border-box; }
+
+  #eklyfe-promise {
+    background: linear-gradient(160deg, #f9f5ee 0%, #f3ede0 60%, #eef2eb 100%);
+    font-family: 'Jost', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative mandala watermark */
+  #eklyfe-promise::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 480px; height: 480px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%23c9a84c' stroke-width='0.5' opacity='0.3'/%3E%3Ccircle cx='100' cy='100' r='70' fill='none' stroke='%23c9a84c' stroke-width='0.5' opacity='0.25'/%3E%3Ccircle cx='100' cy='100' r='50' fill='none' stroke='%23c9a84c' stroke-width='0.5' opacity='0.2'/%3E%3Ccircle cx='100' cy='100' r='30' fill='none' stroke='%23c9a84c' stroke-width='0.5' opacity='0.15'/%3E%3Cpath d='M100 10 L105 95 L190 100 L105 105 L100 190 L95 105 L10 100 L95 95 Z' fill='none' stroke='%23c9a84c' stroke-width='0.4' opacity='0.2'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+    z-index: 0;
+    animation: slowSpin 60s linear infinite;
+  }
+
+  #eklyfe-promise::after {
+    content: '';
+    position: absolute;
+    bottom: -60px; left: -60px;
+    width: 360px; height: 360px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='none' stroke='%23527a40' stroke-width='0.5' opacity='0.25'/%3E%3Ccircle cx='100' cy='100' r='60' fill='none' stroke='%23527a40' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M100 10 L105 95 L190 100 L105 105 L100 190 L95 105 L10 100 L95 95 Z' fill='none' stroke='%23527a40' stroke-width='0.4' opacity='0.18'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+    z-index: 0;
+    animation: slowSpin 80s linear infinite reverse;
+  }
+
+  @keyframes slowSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+
+  /* ── Headline gold bar ── */
+  .promise-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: #c9a84c;
+    font-family: 'Jost', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+  .promise-eyebrow::before,
+  .promise-eyebrow::after {
+    content: '';
+    display: block;
+    width: 36px;
+    height: 1px;
+    background: #c9a84c;
+    opacity: 0.7;
+  }
+
+  /* ── Gold divider line ── */
+  .gold-rule {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #c9a84c 30%, #c9a84c 70%, transparent);
+    opacity: 0.4;
+    margin: 0 auto;
+    max-width: 320px;
+  }
+
+  /* ── Card styles ── */
+  .value-card {
+    position: relative;
+    background: rgba(255,255,255,0.55);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(201,168,76,0.18);
+    border-radius: 16px;
+    padding: 2.25rem 1.75rem 2rem;
+    transition: transform 0.4s cubic-bezier(.23,1,.32,1),
+                box-shadow 0.4s cubic-bezier(.23,1,.32,1),
+                border-color 0.3s ease;
+    cursor: default;
+    overflow: hidden;
+  }
+
+  .value-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 60%);
+    pointer-events: none;
+  }
+
+  .value-card:hover {
+    transform: translateY(-8px) scale(1.015);
+    box-shadow: 0 24px 48px rgba(110,80,43,0.12), 0 0 0 1px rgba(201,168,76,0.3);
+    border-color: rgba(201,168,76,0.45);
+  }
+
+  .value-card:hover .icon-ring {
+    transform: scale(1.1) rotate(8deg);
+    background: rgba(201,168,76,0.18);
+    border-color: rgba(201,168,76,0.6);
+  }
+
+  .value-card:hover .card-number {
+    opacity: 0.12;
+    transform: scale(1.1);
+  }
+
+  /* ── Icon ring ── */
+  .icon-ring {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(201,168,76,0.35);
+    background: rgba(201,168,76,0.08);
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.4s cubic-bezier(.23,1,.32,1),
+                background 0.3s ease, border-color 0.3s ease;
+    flex-shrink: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  .icon-ring svg {
+    width: 28px; height: 28px;
+  }
+
+  /* ── Background number ── */
+  .card-number {
+    position: absolute;
+    bottom: -10px; right: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 6rem;
+    font-weight: 300;
+    color: #c9a84c;
+    opacity: 0.07;
+    line-height: 1;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    user-select: none;
+  }
+
+  /* ── Underline accent ── */
+  .card-headline-line {
+    display: block;
+    width: 32px; height: 2px;
+    background: linear-gradient(90deg, #c9a84c, #a8834a);
+    border-radius: 2px;
+    margin-top: 10px;
+    margin-bottom: 14px;
+    transition: width 0.4s ease;
+  }
+  .value-card:hover .card-headline-line { width: 54px; }
+
+  /* ── Animated particles ── */
+  .particle {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0;
+    animation: float-up 6s ease-in-out infinite;
+  }
+
+  @keyframes float-up {
+    0%   { transform: translateY(0) scale(1); opacity: 0; }
+    20%  { opacity: 0.6; }
+    80%  { opacity: 0.3; }
+    100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
+  }
+
+  /* ── Scroll reveal ── */
+  #eklyfe-promise .reveal-up { opacity: 0; transform: translateY(40px); }
+  #eklyfe-promise .reveal-left { opacity: 0; transform: translateX(-30px); }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    .values-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (min-width: 641px) and (max-width: 1023px) {
+    .values-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+</style>
+
+<section id="eklyfe-promise" class="relative py-20 px-4 sm:px-6 lg:px-8">
+
+  <!-- Floating particles (decorative) -->
+  {% for i in (1..8) %}
+    <span class="particle"
+      style="
+        width: {{ forloop.index | times: 3 | plus: 4 }}px;
+        height: {{ forloop.index | times: 3 | plus: 4 }}px;
+        left: {{ forloop.index | times: 11 | plus: 4 }}%;
+        bottom: {{ forloop.index | times: 7 | plus: 5 }}%;
+        background: {% if forloop.index < 5 %}rgba(201,168,76,0.5){% else %}rgba(82,122,64,0.4){% endif %};
+        animation-delay: {{ forloop.index | times: 0.7 }}s;
+        animation-duration: {{ forloop.index | times: 1.2 | plus: 4 }}s;
+      ">
+    </span>
+  {% endfor %}
+
+  <div class="relative z-10 max-w-6xl mx-auto">
+
+    <!-- ── Section Header ── -->
+    <div class="text-center mb-14 reveal-up" id="promise-header">
+      <p class="promise-eyebrow mb-5">Ancient Wisdom · Modern Science</p>
+      <h2 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-earth-800 leading-tight tracking-wide">
+        The <em class="not-italic text-earth-600" style="color:#8c6a38;">eklyfe</em> Promise
+      </h2>
+      <div class="gold-rule mt-5"></div>
+      <p class="mt-5 font-sans text-earth-600 text-base sm:text-lg  max-w-xl mx-auto leading-relaxed" style="opacity:0.8;">
+        Rooted in tradition. Verified by science. Crafted for you.
+      </p>
+    </div>
+
+    <!-- ── 4-Column Values Grid ── -->
+    <div class="values-grid grid grid-cols-4 gap-5 lg:gap-6">
+
+      <!-- Card 1 — Rooted in Ayurveda -->
+      <div class="value-card reveal-up" data-delay="0.1">
+        <span class="card-number">01</span>
+        <div class="icon-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8c6a38" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+            <path d="M12 2c0 0-4 4-4 10s4 10 4 10"/>
+            <path d="M12 2c0 0 4 4 4 10s-4 10-4 10"/>
+            <path d="M2 12h20"/>
+            <path d="M4.93 7h14.14"/>
+            <path d="M4.93 17h14.14"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl font-semibold text-earth-800" style="letter-spacing:0.01em;">
+          Rooted in<br>Ayurveda
+        </h3>
+        <span class="card-headline-line"></span>
+        <p class="font-sans text-sm text-earth-700 leading-relaxed font" style="opacity:0.85;">
+          We draw from thousands of years of Ayurvedic science — a system that heals from the root, not just the surface. Our formulations honor this heritage and make it accessible for modern life.
+        </p>
+      </div>
+
+      <!-- Card 2 — Honest Ingredients -->
+      <div class="value-card reveal-up" data-delay="0.22">
+        <span class="card-number">02</span>
+        <div class="icon-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8c6a38" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 12l2 2 4-4"/>
+            <path d="M12 2a10 10 0 100 20A10 10 0 0012 2z"/>
+            <path d="M8 6h8M8 10h5"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl  text-earth-800" style="letter-spacing:0.01em;">
+          Honest<br>Ingredients
+        </h3>
+        <span class="card-headline-line"></span>
+        <p class="font-sans text-sm text-earth-700 leading-relaxed " style="opacity:0.85;">
+          No hidden fillers, synthetic binders, or unnecessary additives. Every ingredient in our formula has a purpose — and we are proud to tell you exactly what it is.
+        </p>
+      </div>
+
+      <!-- Card 3 — Science You Can Trust -->
+      <div class="value-card reveal-up" data-delay="0.34">
+        <span class="card-number">03</span>
+        <div class="icon-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8c6a38" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"/>
+            <circle cx="12" cy="14" r="2"/>
+            <path d="M12 12v-2"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl  text-earth-800" style="letter-spacing:0.01em;">
+          Science You<br>Can Trust
+        </h3>
+        <span class="card-headline-line"></span>
+        <p class="font-sans text-sm text-earth-700 leading-relaxed " style="opacity:0.85;">
+          Every ingredient is selected based on clinical research, bioavailability data, and proven results. Ancient wisdom and modern science are not opposites — at eklyfe, they are partners.
+        </p>
+      </div>
+
+      <!-- Card 4 — For Every Body -->
+      <div class="value-card reveal-up" data-delay="0.46">
+        <span class="card-number">04</span>
+        <div class="icon-ring">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#8c6a38" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="6" r="2"/>
+            <circle cx="15" cy="6" r="2"/>
+            <path d="M9 10c-2 0-4 1-4 3v1h8v-1c0-2-2-3-4-3z"/>
+            <path d="M15 10c-2 0-4 1-4 3v1h8v-1c0-2-2-3-4-3z"/>
+            <path d="M12 17v4M10 21h4"/>
+          </svg>
+        </div>
+        <h3 class="font-serif text-xl text-earth-800" style="letter-spacing:0.01em;">
+          For Every<br>Body
+        </h3>
+        <span class="card-headline-line"></span>
+        <p class="font-sans text-sm text-earth-700 leading-relaxed " style="opacity:0.85;">
+          From Shilajit for men to Shatavari for women to Omega for everyone — our range is designed to support men and women at every stage of life.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ── Trust Bar ── -->
+    <div class="reveal-up mt-14" data-delay="0.55">
+      <div class="gold-rule mb-8"></div>
+      <div class="flex flex-wrap justify-center items-center gap-8 sm:gap-12">
+        {% assign trust_items = "5000+ Happy Customers|GMP Certified|No Artificial Additives|Clinically Backed" | split: "|" %}
+        {% for item in trust_items %}
+          <div class="flex items-center gap-2.5 text-earth-700">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 1L9.8 5.6L15 6.2L11.2 9.8L12.4 15L8 12.4L3.6 15L4.8 9.8L1 6.2L6.2 5.6L8 1Z" fill="#c9a84c" opacity="0.85"/>
+            </svg>
+            <span class="font-sans text-xs font-medium tracking-widest uppercase" style="letter-spacing:0.12em;">{{ item }}</span>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function() {
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Header reveal
+  gsap.fromTo('#promise-header', {
+    opacity: 0,
+    y: 50
+  }, {
+    opacity: 1,
+    y: 0,
+    duration: 1.1,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: '#promise-header',
+      start: 'top 85%',
+    }
+  });
+
+  // Cards staggered reveal
+  gsap.utils.toArray('.value-card').forEach(function(card, i) {
+    gsap.fromTo(card, {
+      opacity: 0,
+      y: 55,
+      scale: 0.96
+    }, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      duration: 0.9,
+      delay: i * 0.13,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: card,
+        start: 'top 88%',
+      }
+    });
+  });
+
+  // Trust bar reveal
+  gsap.utils.toArray('#eklyfe-promise .reveal-up:not(#promise-header):not(.value-card)').forEach(function(el) {
+    gsap.fromTo(el, {
+      opacity: 0,
+      y: 30
+    }, {
+      opacity: 1,
+      y: 0,
+      duration: 0.85,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 90%',
+      }
+    });
+  });
+
+  // Icon ring continuous pulse on hover (via JS for richer feel)
+  document.querySelectorAll('.value-card').forEach(function(card) {
+    var ring = card.querySelector('.icon-ring');
+    card.addEventListener('mouseenter', function() {
+      gsap.to(ring, { scale: 1.12, duration: 0.35, ease: 'back.out(1.5)' });
+    });
+    card.addEventListener('mouseleave', function() {
+      gsap.to(ring, { scale: 1, duration: 0.4, ease: 'power2.out' });
+    });
+  });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "eklyfe Promise",
+  "tag": "section",
+  "class": "eklyfe-promise-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow Text",
+      "default": "Ancient Wisdom · Modern Science"
+    },
+    {
+      "type": "text",
+      "id": "headline",
+      "label": "Section Headline",
+      "default": "The eklyfe Promise"
+    },
+    {
+      "type": "text",
+      "id": "subheadline",
+      "label": "Subheadline",
+      "default": "Rooted in tradition. Verified by science. Crafted for you."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_trust_bar",
+      "label": "Show Trust Bar",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "eklyfe Promise"
+    }
+  ]
+}
+{% endschema %}

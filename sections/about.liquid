@@ -115,6 +115,31 @@
       transform: translateY(-6px);
     }
 
+    /* Difference section */
+    .difference-card {
+      position: relative;
+      border-radius: 2rem;
+      border: 1px solid rgba(45,80,22,0.12);
+      background: rgba(255,255,255,0.92);
+      box-shadow: 0 28px 70px rgba(34,55,34,0.08);
+      overflow: hidden;
+    }
+    .difference-pill {
+      transition: transform 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+    }
+    .difference-pill.active {
+      background: rgba(45,80,22,0.08);
+      border-color: rgba(45,80,22,0.28);
+      transform: translateX(4px);
+    }
+    .difference-pill .status-dot {
+      transition: transform 0.25s ease, background 0.25s ease;
+    }
+    .difference-pill.active .status-dot {
+      background: #2D5016;
+      transform: scale(1.05);
+    }
+
     /* Green highlight underline */
     .highlight-underline {
       position: relative;
@@ -218,10 +243,7 @@
       </div>
 
       <!-- Scroll indicator -->
-      <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0" id="scroll-hint">
-        <span class="text-white/40 text-[10px] tracking-[0.2em] uppercase font-body">Scroll</span>
-        <div class="w-px h-12 bg-gradient-to-b from-gold to-transparent"></div>
-      </div>
+      
     </div>
   </section>
 
@@ -258,19 +280,13 @@
         <!-- Text -->
         <div data-aos="fade-right" data-aos-duration="900">
           <span class="text-green-sage text-[10px] font-semibold tracking-[0.3em] uppercase block mb-4">— The Problem</span>
-          <h2 class="font-display font-bold leading-tight mb-6 text-dark"
-              style="font-size: clamp(30px,4vw,52px);">
-            It's hard to trust<br>supplement brands<br><span class="text-green">today.</span>
-          </h2>
+         
           <p class="text-muted text-[15px] leading-relaxed mb-4">
-            We noticed that the supplement world was crowded — with products relying on harsh chemicals, making unrealistic promises, or simply ignoring the whole-person nature of true health.
-          </p>
+         We noticed that the supplement world was crowded — with products relying on harsh chemicals, making unrealistic promises, or simply ignoring the whole-person nature of true health. We wanted to do something meaningfully different. So we did </p>
           <p class="text-muted text-[15px] leading-relaxed mb-4">
-            You take it for a few days or weeks. Then you stop. And the next time, you have trust issues. So you don't start again.
-          </p>
-          <p class="text-dark text-[15px] leading-relaxed font-medium">
-            Because the truth is — <strong class="text-green">a lot of supplements don't work the way you expect them to.</strong>
-          </p>
+        eklyfe started with one woman’s health crisis and became a mission. After experiencing firsthand how modern life — with all its ambition, pressure, and pace — can quietly erode our inner health, Neha Jain spent two and a half years in deep research, learning, and product development to build something she wished had existed when she needed it most.
+  </p>
+       
         </div>
 
         <!-- Image -->
@@ -278,6 +294,48 @@
           <img src="{{ 'capsule.png' | asset_url }}"  alt="Colourful supplement pills" class="w-full h-full object-cover">
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       2.5. WHY EKLYFE IS DIFFERENT
+  ══════════════════════════════════════════ -->
+  <section class="pb-24 bg-[#f7f2e9] overflow-hidden">
+    <div class="max-w-6xl mx-auto px-6">
+      <div class="difference-card">
+        <div class="absolute left-0 top-0 h-full w-72 rounded-br-[3rem] bg-[radial-gradient(circle_at_top_left,rgba(45,80,22,0.16),transparent_65%)] pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 h-72 w-72 rounded-tl-[3rem] bg-[radial-gradient(circle_at_bottom_right,rgba(200,169,110,0.18),transparent_65%)] pointer-events-none"></div>
+        <div class="relative grid gap-10 lg:grid-cols-[1.2fr_0.9fr] p-10 lg:p-14">
+          <div class="space-y-6">
+            <span class="text-green-sage text-[10px] font-semibold tracking-[0.35em] uppercase block">— Why eklyfe is different</span>
+            <h2 class="font-display text-4xl sm:text-5xl lg:text-6xl font-bold text-dark leading-tight">What makes us different — and why that matters to you.</h2>
+            <p class="max-w-xl text-muted text-base leading-relaxed">
+            Each eklyfe product goes through a rigorous development process — from ingredient sourcing to finished capsule. We partner only with trusted suppliers who share our standards for purity and sustainability. Every formulation is reviewed for safety, efficacy, and bioavailability before it reaches your hands.
+When you open an eklyfe bottle, you are holding something we believe in deeply. Something our founder takes herself.
+</p>
+
+            <div id="difference-detail" class="rounded-[2rem] border border-border bg-[#fbf5ea] p-7 shadow-sm">
+              <p class="text-xs uppercase tracking-[0.3em] text-green-sage mb-3">Selected advantage</p>
+              <h3 id="difference-detail-title" class="text-2xl sm:text-3xl font-semibold text-dark leading-snug">Founded by someone who lived the journey — not just studied it</h3>
+              <p id="difference-detail-copy" class="mt-4 text-muted text-sm sm:text-base leading-relaxed">Every formula begins with lived experience, not theory. Our founder built eklyfe from the real challenges of modern health and the promise of Ayurvedic renewal.</p>
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1">
+            {% assign diff_items = "Founded by someone who lived the journey — not just studied it|Every formula rooted in Ayurvedic principles and supported by clinical research|Products for both men and women, across different life stages|Premium ingredients at therapeutic doses — not trace amounts|100% vegan, no artificial additives, colours, or preservatives|Fully transparent labeling — no proprietary blends, no hidden ingredients" | split: "|" %}
+            {% assign diff_descs = "Every formula begins with lived experience, not theory. Our founder built eklyfe from the real challenges of modern health and the promise of Ayurvedic renewal.|We combine time-tested Ayurvedic wisdom with clinical validation so each product can perform reliably in today's world.|Our range supports both men and women with thoughtfully balanced formulas for every life phase.|We use clinical-strength doses, not tracer amounts. Every ingredient is chosen to make a meaningful difference.|Every product is 100% vegan, with no artificial additives, colours, or preservatives — just clean wellness.|We never hide behind proprietary blends. Every ingredient and dose is listed clearly so you can make informed choices." | split: "|" %}
+            {% for item in diff_items %}
+              <button type="button" class="difference-pill group flex items-start gap-4 rounded-[1.75rem] border border-border bg-white p-5 text-left shadow-sm hover:border-green hover:bg-[#f5f0e3] focus:outline-none focus:ring-4 focus:ring-green/20" data-detail="{{ diff_descs[forloop.index0] | escape }}">
+                <span class="status-dot inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-green text-white font-semibold">{{ forloop.index }}</span>
+                <div>
+                  <p class="difference-title text-sm sm:text-base font-semibold text-dark leading-snug">{{ item }}</p>
+                  <p class="text-xs text-muted leading-snug mt-2 opacity-80">Tap to expand</p>
+                </div>
+              </button>
+            {% endfor %}
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -575,6 +633,50 @@
       y: 40, opacity: 0, stagger: 0.08, duration: 0.7, ease: 'power2.out',
       scrollTrigger: { trigger: '.card-lift', start: 'top 85%', toggleActions: 'play none none none' }
     });
+
+    /* ── GSAP: core difference panel reveal ── */
+    const differenceSection = document.querySelector('.difference-card');
+    if (differenceSection) {
+      gsap.from(differenceSection, {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: differenceSection, start: 'top 90%', toggleActions: 'play none none none' }
+      });
+    }
+
+    const detailTitle = document.getElementById('difference-detail-title');
+    const detailCopy = document.getElementById('difference-detail-copy');
+    const diffButtons = document.querySelectorAll('.difference-pill');
+
+    const details = [
+      "Every formula begins with lived experience, not theory. Our founder built eklyfe from the real challenges of modern health and the promise of Ayurvedic renewal.",
+      "We combine time-tested Ayurvedic wisdom with clinical validation so each product can perform reliably in today's world.",
+      "Our range supports both men and women with thoughtfully balanced formulas for every life phase.",
+      "We use clinical-strength doses, not tracer amounts. Every ingredient is chosen to make a meaningful difference.",
+      "Every product is 100% vegan, with no artificial additives, colours, or preservatives — just clean wellness.",
+      "We never hide behind proprietary blends. Every ingredient and dose is listed clearly so you can make informed choices."
+    ];
+
+    diffButtons.forEach((button, idx) => {
+      button.addEventListener('click', () => {
+        diffButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        if (detailTitle && detailCopy) {
+          detailTitle.textContent = button.querySelector('.difference-title').textContent;
+          detailCopy.textContent = details[idx];
+        }
+      });
+    });
+
+    if (diffButtons.length) {
+      diffButtons[0].classList.add('active');
+      if (detailTitle && detailCopy) {
+        detailTitle.textContent = diffButtons[0].querySelector('.difference-title').textContent;
+        detailCopy.textContent = details[0];
+      }
+    }
 
     /* ── AOS init ── */
     AOS.init({ once: true, offset: 80, easing: 'ease-out-cubic' });

@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "404": {
     "title": "404",
@@ -16,8 +25,23 @@
   "cart": {
     "checkout": "Checkout",
     "title": "Cart",
-    "update": "Update",
-    "remove": "Remove"
+    "update": "Update cart",
+    "continue_shopping": "Continue shopping",
+    "order_summary": "Order summary",
+    "summary_text": "Review your order and complete checkout with confidence.",
+    "subtotal": "Subtotal",
+    "taxes_shipping": "Taxes and shipping calculated at checkout",
+    "proceed_to_checkout": "Proceed to checkout",
+    "empty_title": "Your cart is currently empty.",
+    "empty_text": "Browse our products and add premium items to your cart.",
+    "start_shopping": "Start shopping",
+    "remove": "Remove",
+    "unit": "unit",
+    "line_total": "Total:",
+    "decrease_quantity": "Decrease quantity",
+    "increase_quantity": "Increase quantity",
+    "item": "item",
+    "items": "items"
   },
   "customers": {
     "login": {
@@ -41,6 +65,33 @@
     "title": "This shop is private",
     "password": "Password",
     "enter": "Enter"
+  },
+  "pages": {
+    "key_associates": {
+      "hero_label": "Key Associates",
+      "hero_title": "Key Associates – Wellness Experts at eklyfe™",
+      "hero_subtitle": "Trusted wellness experts guiding the eklyfe™ community toward healthier, more balanced living through holistic wellness support, nutrition guidance, and personalized consultations.",
+      "placeholder_photo": "Profile photo coming soon",
+      "esha_name": "Dt. Esha Sharma",
+      "esha_about_heading": "About Dt. Esha Sharma",
+      "esha_about_copy": "Dt. Esha Sharma is a wellness-focused nutrition expert who believes in creating sustainable health through balanced nutrition, mindful living, and holistic wellness practices. Her approach combines modern nutritional understanding with natural wellness principles to help individuals achieve long-term health goals naturally.",
+      "esha_focus_copy": "With a strong focus on lifestyle correction, hormonal wellness, gut health, energy management, and preventive care, she encourages healthier daily habits instead of short-term fixes.",
+      "esha_association_heading": "Why I am associated with eklyfe™",
+      "esha_association_quote": "“I strongly resonate with the eklyfe™ philosophy of supporting wellness naturally and holistically. In today’s fast-paced lifestyle, people need clean, trustworthy, and science-backed Ayurvedic wellness support that works with the body rather than against it.\n\nWhat I appreciate about eklyfe™ is its commitment to clean ingredients, transparency, and root-cause wellness support. Their formulations align beautifully with my belief that nutrition, mindful living, and natural supplementation together create long-term wellbeing.\n\nI often encourage individuals to adopt healthier lifestyle routines supported by Ayurvedic adaptogens, wellness supplementation, and sustainable daily habits to improve vitality, hormonal balance, stress management, and overall wellness.”",
+      "esha_consultation_copy": "Customers can now connect with Dt. Esha Sharma through eklyfe™ for personalized wellness guidance and lifestyle consultations.",
+      "ankita_name": "Dr. Ankita Jain",
+      "ankita_about_heading": "About Dr. Ankita Jain",
+      "ankita_about_copy": "Dr. Ankita Jain is a wellness and aesthetics professional focused on helping individuals feel confident both internally and externally. Her philosophy revolves around the deep connection between inner wellness, skin health, lifestyle balance, and self-care.",
+      "ankita_philosophy_copy": "She advocates a holistic approach where wellness begins from within — combining mindful routines, nutritional awareness, stress management, and natural wellness support to improve overall quality of life.",
+      "ankita_association_heading": "Why I am associated with eklyfe™",
+      "ankita_association_quote": "“I believe true wellness is not only about appearance, but about building strength, balance, confidence, and vitality from the inside out. This philosophy aligns closely with eklyfe™’s mission of creating clean, modern Ayurvedic wellness solutions for everyday life.\n\nI value eklyfe™’s focus on premium Ayurvedic ingredients, science-backed formulations, and holistic wellness support. Their approach reflects the importance of preventive wellness, mindful supplementation, and healthier daily routines that support long-term wellbeing naturally.\n\nThrough wellness guidance and lifestyle support, I encourage people to care for both their inner health and outer confidence in a balanced and sustainable way.”",
+      "ankita_consultation_copy": "Through eklyfe™, users can now book wellness and lifestyle consultations with Dr. Ankita Jain to receive personalized guidance based on their goals and lifestyle concerns.",
+      "first_consultation": "✔ First consultation absolutely free",
+      "page_cta_title": "Need personalized wellness guidance?",
+      "page_cta_copy": "Connect with our trusted wellness associates for expert consultation on nutrition, lifestyle, wellness routines, and holistic health support.",
+      "page_cta_note": "Your first consultation is free.",
+      "cta_button": "Fill consultation form"
+    }
   },
   "search": {
     "title": "Search",

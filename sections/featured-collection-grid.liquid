@@ -1,53 +1,47 @@
 <div class="eklyfe-section" style="background-color: {{ section.settings.bg_color }};">
   <div class="eklyfe-container">
-    <div class="eklyfe-header reveal-up">
+    <div class="eklyfe-header">
       {% if section.settings.title != blank %}
         <h2 class="eklyfe-title">{{ section.settings.title }}</h2>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="eklyfe-subheading">{{ section.settings.subheading }}</p>
       {% endif %}
     </div>
 
     <div class="eklyfe-grid">
       {% for product in section.settings.collection.products limit: section.settings.products_to_show %}
-        <div class="eklyfe-card reveal-up" style="--anim-delay: {{ forloop.index0 | times: 100 }}ms;" data-product-id="{{ product.id }}">
-          
+        <div class="eklyfe-card" data-product-id="{{ product.id }}">
           <a href="{{ product.url }}" class="eklyfe-card__image-link">
             <div class="eklyfe-card__media">
-              
-              {% if product.tags contains 'Best Seller' %}
-                <span class="eklyfe-badge top-left">BEST SELLER</span>
-              {% elsif product.tags contains 'New' %}
-                <span class="eklyfe-badge top-left new">NEW & BETTER</span>
-              {% endif %}
-              
               {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'eklyfe-img' }}
+                {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'eager', class: 'eklyfe-img' }}
               {% else %}
                 {{ 'product-1' | placeholder_svg_tag: 'eklyfe-img placeholder' }}
               {% endif %}
-              
               <div class="eklyfe-category-tag">
-                {{ product.metafields.custom.benefit_tag | default: "STAMINA & VITALITY" }}
+                {{ product.metafields.custom.benefit_tag | default: 'STAMINA & VITALITY' }}
               </div>
             </div>
           </a>
-          
+
           <div class="eklyfe-card__info">
             <h3 class="eklyfe-card__title">
               <a href="{{ product.url }}">{{ product.title }}</a>
             </h3>
-            
+
             <p class="eklyfe-card__subtitle">
-              {{ product.metafields.custom.short_description | default: "Supports strength, stamina & performance" }}
+              {{ product.metafields.custom.short_description | default: product.metafields.custom.product_description | default: product.description | strip_html | truncate: 120 }}
             </p>
-            
+
             <div class="eklyfe-stars">
               {% assign rating = product.metafields.reviews.rating.value | default: 4.7 %}
               {% assign rating_count = product.metafields.reviews.rating_count | default: 294 %}
               <span class="rating-number">{{ rating }}</span>
               <span class="star-icons">★★★★★</span>
-              <span class="rating-count">{{ rating }} {{ rating_count }} ratings</span>
+              <span class="rating-count">{{ rating_count }} ratings</span>
             </div>
-            
+
             <div class="eklyfe-card__price-row" id="price-{{ product.id }}">
               <span class="eklyfe-price-now">{{ product.selected_or_first_available_variant.price | money_without_trailing_zeros }}</span>
               {% if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price %}
@@ -61,7 +55,7 @@
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 17h4V5H2v12h3m14-5v5h-3m-4 0h4m-4-6h6l-2-5h-4zM6 17a2 2 0 100 4 2 2 0 000-4zm10 0a2 2 0 100 4 2 2 0 000-4z"/></svg>
               <span>Estimated Delivery in 2-3 Days</span>
             </div>
-            
+
             <div class="eklyfe-card__action">
               {% form 'product', product %}
                 <div class="eklyfe-action-row">
@@ -95,7 +89,6 @@
               <span class="promo-green">+₹60 OFF on Prepaid</span>
               <span class="promo-gray">COD Available</span>
             </div>
-
           </div>
         </div>
       {% else %}
@@ -140,111 +133,219 @@
 <style>
   .eklyfe-section { padding: 4rem 5%; font-family: sans-serif; background: #f9f9f9; }
   .eklyfe-container { max-width: 1300px; margin: 0 auto; }
-  .eklyfe-header { text-align: center; margin-bottom: 3rem; }
+  .eklyfe-header { text-align: center; margin-bottom: 3rem; opacity: 1 !important; transform: none !important; visibility: visible !important; }
   .eklyfe-title { font-size: 2.5rem; font-weight: 700; color: #111; }
+  .eklyfe-subheading { max-width: 860px; margin: 1rem auto 0; color: #555; font-size: 1rem; line-height: 1.75; }
   
   .eklyfe-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 20px;
+    opacity: 1 !important;
+    visibility: visible !important;
   }
   
   .eklyfe-card {
     background: #fff;
-    border: 1px solid #eaeaea;
-    border-radius: 8px;
+    border: 1px solid #ecebea;
+    border-radius: 24px;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: box-shadow 0.3s;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    height: 100%;
+    min-height: 580px;
+    opacity: 1 !important;
+    transform: none !important;
+    visibility: visible !important;
   }
-  .eklyfe-card:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-  
+  .eklyfe-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 80px rgba(54, 74, 92, 0.08);
+  }
+
   /* Media / Image */
   .eklyfe-card__media {
     position: relative;
-    background: #4a3b32; /* Default background, adjust per product */
-    padding-top: 100%; /* Square ratio */
+    padding-top: 100%;
+    background: #f8f7f3;
+    overflow: hidden;
   }
   .eklyfe-img {
     position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
+    transition: transform 0.5s ease;
   }
-  .eklyfe-badge {
-    position: absolute;
-    top: 12px; left: 12px;
-    background: rgba(255,255,255,0.2);
-    backdrop-filter: blur(4px);
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: 600;
-    padding: 4px 10px;
-    border-radius: 20px;
-    border: 1px solid rgba(255,255,255,0.4);
-    z-index: 2;
+  .eklyfe-card:hover .eklyfe-img {
+    transform: scale(1.05);
   }
   .eklyfe-category-tag {
     position: absolute;
-    bottom: 12px; left: 12px;
-    background: #111;
+    bottom: 16px;
+    left: 16px;
+    background: rgba(17,17,17,0.88);
     color: #fff;
     font-size: 0.7rem;
     font-weight: 700;
-    padding: 4px 12px;
-    border-radius: 20px;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 999px;
     z-index: 2;
   }
-  
+
   /* Info Content */
-  .eklyfe-card__info { padding: 16px; display: flex; flex-direction: column; flex: 1; }
-  .eklyfe-card__title { margin: 0 0 4px; font-size: 1rem; font-weight: 700; }
-  .eklyfe-card__title a { text-decoration: none; color: #111; }
-  .eklyfe-card__subtitle { margin: 0 0 12px; font-size: 0.8rem; color: #666; line-height: 1.3; }
-  
-  .eklyfe-stars { font-size: 0.8rem; margin-bottom: 16px; display: flex; align-items: center; gap: 4px; }
-  .eklyfe-stars .rating-number { font-weight: 700; color: #333; }
-  .eklyfe-stars .star-icons { color: #84cc16; letter-spacing: -1px; }
-  .eklyfe-stars .rating-count { color: #888; font-size: 0.75rem; }
-  
-  .eklyfe-card__price-row { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-  .eklyfe-price-now { font-size: 1.25rem; font-weight: 800; color: #111; }
-  .eklyfe-price-was { font-size: 0.85rem; color: #999; text-decoration: line-through; }
-  .eklyfe-discount-badge { margin-left: auto; background: #f0fdf4; color: #16a34a; font-size: 0.75rem; font-weight: 700; padding: 3px 8px; border-radius: 4px; }
-  
-  .eklyfe-shipping { display: flex; align-items: center; gap: 6px; font-size: 0.75rem; color: #666; margin-bottom: 16px; }
-  .eklyfe-shipping svg { width: 14px; opacity: 0.7; }
-  
-  /* Action Area */
-  .eklyfe-action-row { display: flex; gap: 10px; margin-bottom: 12px; }
-  .eklyfe-variant-select {
+  .eklyfe-card__info {
+    padding: 22px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     flex: 1;
-    padding: 8px 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  }
+  .eklyfe-card__title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+    line-height: 1.3;
+    height: 2.6em;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .eklyfe-card__title a {
+    color: #111;
+    text-decoration: none;
+  }
+  .eklyfe-card__subtitle {
+    margin: 0;
+    color: #4b5258;
     font-size: 0.85rem;
+    line-height: 1.45;
+    height: 38px;
+    max-height: 38px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .eklyfe-stars {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: #4b5258;
+  }
+  .eklyfe-stars .rating-number {
+    font-weight: 800;
+    color: #111;
+  }
+  .eklyfe-stars .star-icons {
+    color: #fbbf24;
+    letter-spacing: -0.1em;
+  }
+  .eklyfe-stars .rating-count {
+    color: #6b7280;
+  }
+
+  .eklyfe-card__price-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .eklyfe-price-now {
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #111;
+  }
+  .eklyfe-price-was {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    text-decoration: line-through;
+  }
+  .eklyfe-discount-badge {
+    background: #ecfdf5;
+    color: #16a34a;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 999px;
+  }
+
+  .eklyfe-shipping {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: #6b7280;
+  }
+  .eklyfe-shipping svg {
+    width: 16px;
+    height: 16px;
+    color: #16a34a;
+  }
+
+  .eklyfe-card__action {
+    margin-top: auto;
+  }
+  .eklyfe-action-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .eklyfe-variant-select {
+    flex: 1 1 160px;
+    min-width: 120px;
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
     background: #fff;
-    cursor: pointer;
-    outline: none;
+    color: #111;
+    font-size: 0.88rem;
   }
   .eklyfe-add-btn {
-    background: #0f172a;
+    background: #111827;
     color: #fff;
     border: none;
-    padding: 8px 24px;
-    border-radius: 4px;
+    padding: 12px 20px;
+    border-radius: 12px;
     font-weight: 700;
-    font-size: 0.85rem;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: background 0.2s ease;
   }
-  .eklyfe-add-btn:hover:not(:disabled) { background: #1e293b; }
-  
-  .eklyfe-card__footer-promos { display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 600; }
-  .eklyfe-promo-green { color: #16a34a; }
-  .eklyfe-promo-gray { color: #888; }
+  .eklyfe-add-btn:hover:not(:disabled) {
+    background: #1f2937;
+  }
+  .eklyfe-add-btn:disabled {
+    background: #d1d5db;
+    cursor: not-allowed;
+  }
+
+  .eklyfe-card__footer-promos {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.75rem;
+    color: #4b5563;
+    margin-top: 16px;
+  }
+  .promo-green {
+    color: #16a34a;
+    font-weight: 700;
+  }
+  .promo-gray {
+    color: #6b7280;
+    opacity: 0.9;
+  }
 </style>
 
 {% schema %}
@@ -256,6 +357,12 @@
       "id": "title",
       "label": "Heading",
       "default": "What's stopping you?"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Six powerful formulas. One shared purpose: helping you live at your absolute best."
     },
     {
       "type": "collection",

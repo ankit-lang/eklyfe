@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="{{ shop.locale }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — {{ shop.name }}</title>
+  <meta name="description" content="{{ page.description | default: shop.description }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {{ content_for_header }}
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+          colors: {
+            cream: '#F9F5EE',
+            green: { DEFAULT: '#2D5016', light: '#3a6b1e', sage: '#6B8F4E' },
+            gold: { DEFAULT: '#C8A96E', light: '#dfc08a' },
+            dark: '#1A1A1A',
+            muted: '#5C5C5C',
+            border: '#DDD8CC',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-family: 'DM Sans', sans-serif; }
+    body { background: #fff; color: #1A1A1A; }
+    .contact-hero { position: relative; min-height: 50vh; display: flex; align-items: center; background: linear-gradient(135deg, #f9f5ee 0%, #f3ede0 100%); overflow: hidden; }
+    .contact-hero::before { content: ''; position: absolute; top: -50%; right: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(200,169,110,0.1) 0%, transparent 70%); animation: rotate 20s linear infinite; }
+    @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .contact-content { max-width: 1000px; margin: 0 auto; padding: 4rem 2rem; }
+    .contact-content h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2rem; text-align: center; }
+    .contact-content .intro { font-size: 1.25rem; color: #6B8F4E; margin-bottom: 3rem; text-align: center; max-width: 600px; margin-left: auto; margin-right: auto; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 4rem; }
+    .contact-card { background: #f9f5ee; border: 1px solid #ddd8cc; border-radius: 1rem; padding: 2rem; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .contact-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+    .contact-card h3 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: #2D5016; margin-bottom: 1rem; }
+    .contact-card p, .contact-card ul { margin-bottom: 1rem; line-height: 1.6; }
+    .contact-card ul { list-style: none; padding: 0; }
+    .contact-card li { margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; }
+    .contact-card li::before { content: '•'; position: absolute; left: 0; color: #C8A96E; font-weight: bold; }
+    .policy-section { background: #fff; border: 1px solid #ddd8cc; border-radius: 1rem; padding: 3rem; margin-bottom: 2rem; }
+    .policy-section h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #2D5016; margin-bottom: 1.5rem; }
+    .policy-section p, .policy-section ul { margin-bottom: 1rem; line-height: 1.6; }
+    .policy-section ul { list-style: none; padding: 0; }
+    .policy-section li { margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; }
+    .policy-section li::before { content: '•'; position: absolute; left: 0; color: #C8A96E; font-weight: bold; }
+    .response-note { background: #2D5016; color: #fff; padding: 2rem; border-radius: 1rem; text-align: center; font-size: 1.1rem; }
+    @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; } .contact-hero { min-height: 40vh; } .contact-content h1 { font-size: 2rem; } }
+  </style>
+</head>
+<body>
+ 
+
+  <main>
+    <section class="contact-hero">
+      <div class="container mx-auto px-4">
+        <div class="text-center">
+          <h1 class="text-4xl md:text-6xl font-bold text-dark mb-4">Get in Touch</h1>
+          <p class="text-lg text-muted max-w-2xl mx-auto">We are always here to help. Whether you have a question about our products, need guidance on which supplement is right for you, or want to know more about your order — do not hesitate to reach out.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-content">
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>Contact Details</h3>
+          <p><strong>Brand Name:</strong> eklyfe</p>
+          <p><strong>Legal Company Name:</strong> Agada Pharmacy Private Limited</p>
+          <p><strong>Email:</strong> <a href="mailto:info.agadapharmacy@gmail.com" class="text-green hover:text-gold transition-colors">info.agadapharmacy@gmail.com</a></p>
+          <p><strong>Address:</strong> J-1203, Pioneer Park, Sector-61, Gurgaon – 122005, Haryana, India</p>
+          <p><strong>GST Number:</strong> 06ABECA7579A1ZQ</p>
+        </div>
+
+        <div class="contact-card">
+          <h3>Response Time</h3>
+          <p>We typically respond within 24–48 business hours.</p>
+        </div>
+      </div>
+
+      <div class="policy-section">
+        <h2>Refund & Return Policy</h2>
+        <p>eklyfe products are consumable health supplements. Due to the nature of these products, we do not accept returns or offer refunds on opened or used items.</p>
+        <p>If you receive a damaged, defective, or incorrect product, please email us at <a href="mailto:info.agadapharmacy@gmail.com" class="text-green hover:text-gold transition-colors">info.agadapharmacy@gmail.com</a> with your order number and photographs of the issue within 48 hours of delivery. We will review your case and work to resolve it promptly.</p>
+        <p>For unopened and unused products, please contact us within 7 days of delivery to discuss your concern.</p>
+        <p>eklyfe reserves the right to make the final decision on all return and refund requests.</p>
+      </div>
+    </section>
+  </main>
+
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from('.contact-hero h1', { opacity: 0, y: 50, duration: 1, ease: 'power3.out' });
+    gsap.from('.contact-hero p', { opacity: 0, y: 30, duration: 1, delay: 0.2, ease: 'power3.out' });
+    gsap.utils.toArray('.contact-card').forEach((card, i) => {
+      gsap.from(card, { opacity: 0, y: 50, duration: 0.8, delay: i * 0.1, ease: 'power3.out', scrollTrigger: { trigger: card, start: 'top 90%' } });
+    });
+    gsap.from('.policy-section', { opacity: 0, y: 50, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.policy-section', start: 'top 90%' } });
+  </script>
+</body>
+</html>

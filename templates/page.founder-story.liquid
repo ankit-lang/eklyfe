@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="{{ shop.locale }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} — {{ shop.name }}</title>
+  <meta name="description" content="{{ page.description | default: shop.description }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {{ content_for_header }}
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Playfair Display"', 'serif'],
+            body: ['"DM Sans"', 'sans-serif'],
+          },
+          colors: {
+            cream: '#F9F5EE',
+            green: { DEFAULT: '#2D5016', light: '#3a6b1e', sage: '#6B8F4E' },
+            gold: { DEFAULT: '#C8A96E', light: '#dfc08a' },
+            dark: '#1A1A1A',
+            muted: '#5C5C5C',
+            border: '#DDD8CC',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-family: 'DM Sans', sans-serif; }
+    body { background: #fff; color: #1A1A1A; }
+    .founder-hero { position: relative; min-height: 70vh; display: flex; align-items: center; background: linear-gradient(135deg, #f9f5ee 0%, #f3ede0 100%); }
+    .founder-content { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
+    .founder-content h1 { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: #1A1A1A; margin-bottom: 2rem; }
+    .founder-content .opening { font-size: 1.5rem; font-style: italic; color: #6B8F4E; margin-bottom: 3rem; }
+    .founder-content h2 { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 600; color: #2D5016; margin-top: 3rem; margin-bottom: 1rem; }
+    .founder-content p { line-height: 1.8; margin-bottom: 1.5rem; }
+    .founder-content ul { list-style: none; padding-left: 0; }
+    .founder-content li { margin-bottom: 0.5rem; padding-left: 1.5rem; position: relative; }
+    .founder-content li::before { content: '•'; position: absolute; left: 0; color: #C8A96E; font-weight: bold; }
+    .founder-quote { font-style: italic; font-size: 1.25rem; color: #2D5016; border-left: 4px solid #C8A96E; padding-left: 1rem; margin: 2rem 0; }
+  </style>
+</head>
+<body>
+  
+
+  <main>
+    <section class="founder-hero">
+      <div class="container mx-auto px-4">
+   <div class="w-[300px] h-[300px] rounded-2xl overflow-hidden mx-auto mb-8 shadow-2xl bg-[#f3ede0] flex items-center justify-center p-3">
+  <img 
+    src="{{ 'founder.jpg' | asset_url }}" 
+    alt="CA Neha Jain - Founder of eklyfe" 
+    class="max-w-full max-h-full object-contain"
+  >
+</div>
+    </section>
+
+    <section class="founder-content">
+      <h1>{{ page.title }}</h1>
+      <p class="opening">Some journeys are planned. Others choose you.</p>
+
+      <h2>Early Life & Career</h2>
+      <p>For Neha Jain, a Chartered Accountant who qualified in 2011, life seemed to be on a well-defined path. After her marriage in 2012 to fellow CA Nitin Jain, she continued to grow professionally, eventually taking a bold leap in 2019 to establish her own independent CA practice in Gurgaon.</p>
+      <p>Building something from the ground up demanded long hours, relentless effort, and an unwavering commitment to excellence. Like many high-achieving professionals, she prioritized deadlines over diet, clients over self-care, and performance over personal well-being.</p>
+      <p>Even though she maintained a routine of walking and going to the gym, one critical pillar remained overlooked — nutrition.</p>
+
+      <h2>Then Came 2022 — A Year That Changed Everything</h2>
+      <p>At just 35, Neha was diagnosed with Immune Thrombocytopenia — a rare and life-threatening condition affecting nearly 1 in 1 lakh individuals. Her platelet count crashed to a dangerously low 3,000. Severe internal bleeding followed. Despite multiple platelet transfusions, her body showed no response.</p>
+      <p>It was a moment where life stood still.</p>
+      <p>After a series of medical interventions, one treatment finally worked. She survived — but more importantly, she awakened.</p>
+      <p class="founder-quote">"That experience was not just survival. It was a rebirth."</p>
+
+      <h2>Rediscovering Health from Within</h2>
+      <p>Recovery made Neha confront a powerful truth — fitness is not health, and activity is not nourishment. True health begins at a deeper level: what we eat, how our body absorbs it, and how balanced our internal systems are.</p>
+      <p>This realization led her deep into the timeless science of Ayurveda — a holistic approach that does not just treat symptoms, but restores balance to the body, mind, and lifestyle. Ayurveda became her lens, her teacher, and eventually her calling.</p>
+      <ul>
+        <li>Root-cause healing, not temporary relief</li>
+        <li>Personalized nutrition based on body type (doshas)</li>
+        <li>Natural detoxification to eliminate accumulated toxins (ama)</li>
+        <li>Strengthening immunity (Ojas) for long-term resilience</li>
+        <li>Daily routines (Dinacharya) aligned with nature's rhythms</li>
+      </ul>
+
+      <h2>The Birth of eklyfe</h2>
+      <p>From this profound transformation was born eklyfe. After 2.5 years of dedicated research, learning, and development, Neha launched eklyfe — a dream built not just on knowledge, but on lived experience. Every product carries the weight of her journey and the sincerity of someone who built this brand because she genuinely needed it herself.</p>
+      <p>eklyfe is not just a brand. It is a mission:</p>
+      <ul>
+        <li>To bring back time-tested Ayurvedic wisdom into modern lifestyles</li>
+        <li>To promote clean, mindful nutrition over processed consumption</li>
+        <li>To help individuals prevent lifestyle diseases, not just manage them</li>
+        <li>To encourage people to listen to their bodies and nourish them right</li>
+      </ul>
+
+      <h2>A Message That Matters</h2>
+      <p>Today, Neha's journey stands as a reminder: you do not need a life-threatening moment to prioritize your health.</p>
+      <ul>
+        <li>Nutrition is not optional — it is foundational</li>
+        <li>Prevention is more powerful than cure</li>
+        <li>Natural healing systems like Ayurveda are not outdated — they are timeless</li>
+      </ul>
+      <p class="founder-quote">"eklyfe exists to help you take that step — towards balance, awareness, and a healthier life. Because true wellness does not begin in a clinic. It begins within you."</p>
+      <p>— CA Neha Jain, Founder, eklyfe</p>
+    </section>
+  </main>
+
+
+  <script>
+    // Any additional scripts if needed
+  </script>
+</body>
+</html>

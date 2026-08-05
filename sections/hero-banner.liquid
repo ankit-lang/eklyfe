@@ -1,410 +1,591 @@
-<section class="genz-carousel">
-  <div class="genz-carousel__track">
+<section class="premium-carousel">
+  <div class="premium-carousel__track">
+
     <!-- Slide 1 -->
-    <div class="genz-carousel__slide">
-      <img src="{{ '1.jpeg' | asset_url }}" class="genz-carousel__bg" alt="Banner 1" loading="eager">
-      <div class="genz-carousel__content">
-        <div class="genz-badge">🔥 NEW ARRIVALS</div>
-        <h1 class="genz-heading">MAIN CHARACTER ENERGY</h1>
-        <a href="{{ routes.all_products_collection_url }}" class="genz-btn">EXPLORE</a>
+    <div class="premium-carousel__slide">
+      <img
+        src="{{ 'banner1.png' | asset_url }}"
+        class="premium-carousel__bg"
+        alt="Wellness Banner"
+        loading="eager"
+      >
+
+      <div class="premium-carousel__overlay"></div>
+
+      <div class="premium-carousel__content">
+        <div class="premium-badge">
+          Premium Ayurvedic Wellness
+        </div>
+
+        <h1 class="premium-heading">
+          Live Fully.<br>
+          Feel Wholly.
+        </h1>
+
+        <p class="premium-subtext">
+          Premium Ayurvedic wellness designed to support balance,
+          vitality, and everyday well-being.
+        </p>
+
+        <a
+          href="{{ routes.all_products_collection_url }}"
+          class="premium-btn"
+        >
+          Shop Collection
+        </a>
       </div>
     </div>
 
     <!-- Slide 2 -->
-    <div class="genz-carousel__slide">
-      <img src="{{ '2.jpeg' | asset_url }}" class="genz-carousel__bg" alt="Banner 2" loading="eager">
-      <div class="genz-carousel__content">
-        <div class="genz-badge">✨ VIRAL PICKS</div>
-        <h1 class="genz-heading">DONT MISS OUT</h1>
-        <a href="{{ routes.all_products_collection_url }}" class="genz-btn">SHOP NOW</a>
+    <div class="premium-carousel__slide">
+      <img
+        src="{{ 'banner.png' | asset_url }}"
+        class="premium-carousel__bg"
+        alt="Wellness Banner"
+        loading="lazy"
+      >
+
+      <div class="premium-carousel__overlay"></div>
+
+      <div class="premium-carousel__content">
+        <div class="premium-badge">
+          Rooted In Ayurveda
+        </div>
+
+        <h1 class="premium-heading">
+          Wellness Rooted<br>
+          In Nature
+        </h1>
+
+        <p class="premium-subtext">
+          Modern formulations inspired by timeless Ayurvedic wisdom
+          for men and women.
+        </p>
+
+        <a
+          href="{{ routes.all_products_collection_url }}"
+          class="premium-btn"
+        >
+          Explore Products
+        </a>
       </div>
     </div>
+
   </div>
 
-  <!-- Dots Navigation Indicator -->
-  <div class="genz-carousel__nav" aria-hidden="true">
+  <!-- Dots -->
+  <div class="premium-carousel__nav">
     <div class="carousel-dots">
-      <button type="button" class="carousel-dot is-active" aria-label="Go to slide 1" data-index="0"></button>
-      <button type="button" class="carousel-dot" aria-label="Go to slide 2" data-index="1"></button>
+      <button class="carousel-dot is-active" data-index="0"></button>
+      <button class="carousel-dot" data-index="1"></button>
     </div>
   </div>
 
-  <!-- Left/Right Navigation -->
-  <button type="button" class="carousel-nav-btn prev-btn" aria-label="Previous slide">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  <!-- Navigation -->
+  <button class="carousel-nav-btn prev-btn" aria-label="Previous Slide">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2"/>
+    </svg>
   </button>
-  <button type="button" class="carousel-nav-btn next-btn" aria-label="Next slide">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+
+  <button class="carousel-nav-btn next-btn" aria-label="Next Slide">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+      <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2"/>
+    </svg>
   </button>
 </section>
 
-{% stylesheet %}
-  .genz-carousel {
-    position: relative;
-    width: 100%;
-    height: 90vh; /* Immersive full viewport height */
-    background: #0b0b0b;
-    overflow: hidden;
-  }
-  
-  .genz-carousel__track {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  
-  .genz-carousel__track::-webkit-scrollbar { 
-    display: none; 
-  }
-  
-  .genz-carousel__slide {
-    position: relative;
-    flex: 0 0 100%;
-    height: 100%;
-    scroll-snap-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  
-  .genz-carousel__bg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 1;
-    filter: brightness(0.65) contrast(1.1); /* Darken bg to make text pop */
-    transform: scale(1.05);
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.6s ease;
-  }
-  
-  .placeholder-bg { 
-    background: linear-gradient(135deg, #4A00E0, #8E2DE2); 
-  }
-  
-  .genz-carousel__slide:hover .genz-carousel__bg {
-    transform: scale(1);
-    filter: brightness(0.5) contrast(1.2);
-  }
-  
-  .genz-carousel__content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    padding: 2rem;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.5rem;
-    width: 100%;
-    max-width: 1200px;
-  }
-  
-  .genz-badge {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.6rem 1.8rem;
-    border-radius: 100px;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 0.85rem;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    color: #fff;
-  }
-  
-  .genz-heading {
-    font-size: clamp(3.5rem, 12vw, 8.5rem);
-    font-weight: 900;
-    line-height: 0.85;
-    text-transform: uppercase;
-    margin: 0;
-    /* Brutalist / Cyberpunk Text Outline Effect */
-    color: transparent;
-    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.9);
-    text-shadow: 0px 10px 30px rgba(0,0,0,0.5);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    letter-spacing: -3px;
-  }
-  
-  .genz-carousel__slide:hover .genz-heading {
-    color: #fff;
-    -webkit-text-stroke: 0px transparent;
-    transform: scale(1.05) skew(-3deg);
-  }
-  
-  .genz-btn {
-    margin-top: 1.5rem;
-    display: inline-block;
-    background: #1a4f44; /* High-contrast neon pop */
-    color: white;
-    font-weight: 900;
-    font-size: 1.1rem;
-    padding: 1.2rem 3.5rem;
-    border-radius: 100px;
-    text-transform: uppercase;
-    text-decoration: none;
-    box-shadow: 0 10px 25px rgba(204, 255, 0, 0.25);
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-    letter-spacing: 1px;
-  }
-  
-  .genz-btn:hover {
-    transform: translateY(-8px) scale(1.05);
-    box-shadow: 0 15px 35px rgba(204, 255, 0, 0.4);
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
-  }
-  
-  .genz-carousel__nav {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
-  }
-  
-  .carousel-dots {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: rgba(0, 0, 0, 0.4);
-    padding: 10px 20px;
-    border-radius: 100px;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.1);
-  }
-  
-  .carousel-dot {
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: all 0.3s ease;
-  }
-  
-  .carousel-dot:hover {
-    background: rgba(255, 255, 255, 0.7);
-  }
-  
-  .carousel-dot.is-active {
-    background: #1a4f44; /* Neon pop color matching button */
-    transform: scale(1.3);
-    box-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
-  }
-  
-  .carousel-nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    transition: all 0.3s ease;
-  }
-  
-  .carousel-nav-btn:hover {
-    background: #1a4f44;
-    color: white;
-    transform: translateY(-50%) scale(1.1);
-  }
-  
-  .prev-btn { left: 1rem; }
-  .next-btn { right: 1rem; }
-  
-  /* Mobile adjustments */
-  @media screen and (max-width: 768px) {
-    .genz-carousel {
-      height: 85vh;
-    }
-    .genz-heading {
-      -webkit-text-stroke: 1px rgba(255, 255, 255, 0.9);
-      letter-spacing: -1px;
-    }
-    .genz-btn {
-      padding: 1rem 2.5rem;
-      font-size: 1rem;
-    }
-  }
-{% endstylesheet %}
-
-{% schema %}
-{
-  "name": "Gen-Z Full Carousel",
-  "max_blocks": 6,
-  "blocks": [
-    {
-      "type": "slide",
-      "name": "Carousel Slide",
-      "settings": [
-        {
-          "type": "image_picker",
-          "id": "image",
-          "label": "Background Image"
-        },
-        {
-          "type": "text",
-          "id": "badge",
-          "label": "Badge Text",
-          "default": "🔥 TRENDING NOW"
-        },
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "Heading",
-          "default": "Unleash Your Vibe"
-        },
-        {
-          "type": "text",
-          "id": "button_label",
-          "label": "Button Label",
-          "default": "Shop The Drop"
-        },
-        {
-          "type": "url",
-          "id": "button_link",
-          "label": "Button Link"
-        }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Gen-Z Full Carousel",
-      "blocks": [
-        {
-          "type": "slide",
-          "settings": {
-            "badge": "🔥 NEW ARRIVALS",
-            "heading": "MAIN CHARACTER ENERGY",
-            "button_label": "EXPLORE"
-          }
-        },
-        {
-          "type": "slide",
-          "settings": {
-            "badge": "✨ VIRAL PICKS",
-            "heading": "DONT MISS OUT",
-            "button_label": "SHOP NOW"
-          }
-        }
-      ]
-    }
-  ]
+.premium-carousel {
+  position: relative;
+  width: 100%;
+  height: 88vh;
+  overflow: hidden;
+  background: #000;
+ 
 }
-{% endschema %}
+
+.premium-carousel__track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.premium-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.premium-carousel__slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+  overflow: hidden;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+}
+
+.premium-carousel__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  filter:
+    brightness(1)
+    contrast(1.5)
+    saturate(1.05);
+
+  animation: slowZoom 12s ease-in-out infinite alternate;
+}
+
+@keyframes slowZoom {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.08);
+  }
+}
+
+.premium-carousel__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0,0,0,0.72) 0%,
+      rgba(0,0,0,0.48) 38%,
+      rgba(0,0,0,0.15) 100%
+    );
+}
+
+.premium-carousel__overlay::after {
+  content: "";
+  position: absolute;
+
+  width: 700px;
+  height: 700px;
+
+  border-radius: 50%;
+
+  background: rgba(47,160,132,0.12);
+
+  filter: blur(120px);
+
+  top: -250px;
+  right: -180px;
+}
+
+.premium-carousel__content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 680px;
+
+  padding-left: 8%;
+  padding-right: 2rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.premium-badge {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.75rem 1.4rem;
+
+  border-radius: 999px;
+
+  background: rgba(255,255,255,0.08);
+
+  border: 1px solid rgba(255,255,255,0.12);
+
+  backdrop-filter: blur(12px);
+
+  color: rgba(255,255,255,0.92);
+
+  font-family: "Inter", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+
+  letter-spacing: 2px;
+  text-transform: uppercase;
+
+  margin-bottom: 1.8rem;
+}
+
+.premium-heading {
+  margin: 0;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(4rem, 7vw, 7rem);
+  line-height: 0.92;
+  font-weight: 700;
+
+  letter-spacing: -2px;
+
+  color: #fff;
+
+  text-shadow:
+    0 10px 30px rgba(0,0,0,0.35);
+}
+
+.premium-subtext {
+  margin-top: 1.7rem;
+
+  max-width: 540px;
+
+  color: rgba(255,255,255,0.82);
+
+  font-family: "Inter", sans-serif;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  font-weight: 400;
+}
+
+.premium-btn {
+  margin-top: 2.4rem;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1.15rem 2.8rem;
+
+  border-radius: 999px;
+
+  background: #2FA084;
+
+  color: #fff;
+
+  font-family: "Inter", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+
+  text-decoration: none;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+
+  transition: all 0.35s ease;
+
+  box-shadow:
+    0 14px 30px rgba(47,160,132,0.28);
+}
+
+.premium-btn:hover {
+  transform: translateY(-4px);
+
+  background: #38b596;
+
+  box-shadow:
+    0 18px 40px rgba(47,160,132,0.42);
+}
+
+/* DOTS */
+
+.premium-carousel__nav {
+  position: absolute;
+
+  bottom: 2rem;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  z-index: 10;
+}
+
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0.9rem 1.2rem;
+
+  border-radius: 999px;
+
+  background: rgba(0,0,0,0.3);
+
+  backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+
+  border-radius: 50%;
+
+  border: none;
+
+  background: rgba(255,255,255,0.3);
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.carousel-dot.is-active {
+  width: 34px;
+
+  border-radius: 30px;
+
+  background: #2FA084;
+}
+
+/* NAV BUTTONS */
+
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  z-index: 10;
+
+  width: 58px;
+  height: 58px;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255,255,255,0.12);
+
+  background: rgba(255,255,255,0.08);
+
+  backdrop-filter: blur(10px);
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.carousel-nav-btn:hover {
+  background: rgba(255,255,255,0.16);
+
+  transform: translateY(-50%) scale(1.06);
+}
+
+.prev-btn {
+  left: 24px;
+}
+
+.next-btn {
+  right: 24px;
+}
+
+/* MOBILE */
+
+@media screen and (max-width: 768px) {
+
+  .premium-carousel {
+    height: 70vh;
+   
+  }
+
+  .premium-carousel__overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(0,0,0,0.42) 0%,
+        rgba(0,0,0,0.48) 35%,
+        rgba(0,0,0,0.82) 100%
+      );
+  }
+
+  .premium-carousel__content {
+    max-width: 100%;
+
+    padding:
+      0 1.5rem 5rem;
+
+    height: 100%;
+
+    justify-content: flex-end;
+
+    align-items: center;
+
+    text-align: center;
+  }
+
+  .premium-heading {
+    font-size: 3.5rem;
+    line-height: 1;
+  }
+
+  .premium-subtext {
+    font-size: 0.96rem;
+    line-height: 1.7;
+  }
+
+  .premium-btn {
+    width: 100%;
+  }
+
+  .carousel-nav-btn {
+    display: none;
+  }
+}
+</style>
 
 <script>
-  document.addEventListener('DOMContentLoaded', initGenzCarousels);
-  // Also run immediately in case the script loads after DOM is ready
-  initGenzCarousels();
+document.addEventListener('DOMContentLoaded', initPremiumCarousel);
+initPremiumCarousel();
 
-  function initGenzCarousels() {
-    const carousels = document.querySelectorAll('.genz-carousel:not(.is-initialized)');
-    
-    carousels.forEach(carouselSection => {
-      carouselSection.classList.add('is-initialized');
-      
-      const track = carouselSection.querySelector('.genz-carousel__track');
-      const dots = carouselSection.querySelectorAll('.carousel-dot');
-      const prevBtn = carouselSection.querySelector('.prev-btn');
-      const nextBtn = carouselSection.querySelector('.next-btn');
-      
-      if (!track) return;
+function initPremiumCarousel() {
 
-      let autoPlayInterval;
+  const carousel = document.querySelector('.premium-carousel');
 
-      const startAutoPlay = () => {
-        clearInterval(autoPlayInterval);
-        autoPlayInterval = setInterval(() => {
-          const maxScrollLeft = track.scrollWidth - track.clientWidth;
-          if (track.scrollLeft >= maxScrollLeft - 10) {
-             track.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-             track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
-          }
-        }, 5000);
-      };
+  if (!carousel || carousel.classList.contains('initialized')) return;
 
-      const resetAutoPlay = () => {
-        startAutoPlay();
-      };
+  carousel.classList.add('initialized');
 
-      // Update dots on scroll
-      track.addEventListener('scroll', () => {
-        const scrollLeft = track.scrollLeft;
-        const slideWidth = track.clientWidth;
-        // Calculate current active index
-        const activeIndex = Math.round(scrollLeft / slideWidth);
-        
-        dots.forEach((dot, index) => {
-          dot.classList.toggle('is-active', index === activeIndex);
-        });
-      }, { passive: true });
+  const track = carousel.querySelector('.premium-carousel__track');
+  const dots = carousel.querySelectorAll('.carousel-dot');
+  const prevBtn = carousel.querySelector('.prev-btn');
+  const nextBtn = carousel.querySelector('.next-btn');
 
-      // Click dot to scroll
-      dots.forEach((dot) => {
-        dot.addEventListener('click', (e) => {
-          const index = parseInt(e.currentTarget.dataset.index);
-          const slideWidth = track.clientWidth;
-          track.scrollTo({
-            left: index * slideWidth,
-            behavior: 'smooth'
-          });
-          resetAutoPlay();
-        });
-      });
+  let autoPlay;
 
-      // Left/Right buttons
-      if (prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', () => {
-          const slideWidth = track.clientWidth;
-          // If at the beginning, go to the end
-          if (track.scrollLeft <= 10) {
-             track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' });
-          } else {
-             track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
-          }
-          resetAutoPlay();
-        });
-        
-        nextBtn.addEventListener('click', () => {
-          const slideWidth = track.clientWidth;
-          const maxScrollLeft = track.scrollWidth - slideWidth;
-          // If at the end, go to the beginning
-          if (track.scrollLeft >= maxScrollLeft - 10) {
-             track.scrollTo({ left: 0, behavior: 'smooth' });
-          } else {
-             track.scrollBy({ left: slideWidth, behavior: 'smooth' });
-          }
-          resetAutoPlay();
-        });
-      }
+  const interval = 5000;
 
-      // Start auto play initially
-      startAutoPlay();
+  const getSlideWidth = () => track.clientWidth;
+
+  const getMaxScroll = () =>
+    track.scrollWidth - getSlideWidth();
+
+  function updateDots() {
+    const index = Math.round(
+      track.scrollLeft / getSlideWidth()
+    );
+
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('is-active', i === index);
     });
   }
+
+  function scrollToSlide(index) {
+    track.scrollTo({
+      left: index * getSlideWidth(),
+      behavior: 'smooth'
+    });
+  }
+
+  function startAutoPlay() {
+
+    clearInterval(autoPlay);
+
+    autoPlay = setInterval(() => {
+
+      const maxScroll = getMaxScroll();
+
+      if (track.scrollLeft >= maxScroll - 10) {
+
+        track.scrollTo({
+          left: 0,
+          behavior: 'smooth'
+        });
+
+      } else {
+
+        track.scrollBy({
+          left: getSlideWidth(),
+          behavior: 'smooth'
+        });
+
+      }
+
+    }, interval);
+  }
+
+  dots.forEach(dot => {
+
+    dot.addEventListener('click', () => {
+
+      const index = parseInt(dot.dataset.index);
+
+      scrollToSlide(index);
+
+      startAutoPlay();
+    });
+
+  });
+
+  prevBtn.addEventListener('click', () => {
+
+    const width = getSlideWidth();
+
+    if (track.scrollLeft <= 10) {
+
+      track.scrollTo({
+        left: getMaxScroll(),
+        behavior: 'smooth'
+      });
+
+    } else {
+
+      track.scrollBy({
+        left: -width,
+        behavior: 'smooth'
+      });
+
+    }
+
+    startAutoPlay();
+  });
+
+  nextBtn.addEventListener('click', () => {
+
+    const width = getSlideWidth();
+
+    if (track.scrollLeft >= getMaxScroll() - 10) {
+
+      track.scrollTo({
+        left: 0,
+        behavior: 'smooth'
+      });
+
+    } else {
+
+      track.scrollBy({
+        left: width,
+        behavior: 'smooth'
+      });
+
+    }
+
+    startAutoPlay();
+  });
+
+  track.addEventListener('scroll', updateDots, {
+    passive: true
+  });
+
+  carousel.addEventListener('mouseenter', () => {
+    clearInterval(autoPlay);
+  });
+
+  carousel.addEventListener('mouseleave', startAutoPlay);
+
+  window.addEventListener('resize', updateDots);
+
+  startAutoPlay();
+}
 </script>
